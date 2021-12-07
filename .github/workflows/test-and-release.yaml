@@ -23,6 +23,8 @@ jobs:
         run: npm ci --no-audit
       - run: rm -rf node_modules/.cache/eslint-loader
       - name: Build
+        env:
+          SNOWPACK_PUBLIC_BASE_URL: /asset-tracker-cloud-app-golioth/
         run: npm run build
       - uses: actions/upload-artifact@v2
         with:

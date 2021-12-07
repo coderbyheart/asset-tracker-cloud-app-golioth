@@ -14,11 +14,8 @@ export default {
 		},
 	},
 	buildOptions: {
-		...(process.env.SNOWPACK_PUBLIC_DEVICE_UI_BASE_URL !== undefined && {
-			baseUrl: `${process.env.SNOWPACK_PUBLIC_DEVICE_UI_BASE_URL.replace(
-				/\/+$/,
-				'',
-			)}/`,
+		...(process.env.SNOWPACK_PUBLIC_BASE_URL !== undefined && {
+			baseUrl: `${process.env.SNOWPACK_PUBLIC_BASE_URL.replace(/\/+$/, '')}/`,
 		}),
 	},
 }
