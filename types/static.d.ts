@@ -8,3 +8,14 @@ declare module '*.png' {
 }
 
 declare module '*.css'
+
+interface ImportMeta {
+	hot: {
+		accept: Function
+		dispose: Function
+	}
+	env: {
+		MODE: string
+		REACT_API_ENDPOINT?: string
+	}
+}
