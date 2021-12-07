@@ -24,6 +24,22 @@ jobs:
       - run: rm -rf node_modules/.cache/eslint-loader
       - name: Build
         run: npm run build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: asset-tracker-cloud-app-golioth-${{ github.sha }}
+          path: public
+      - name: Publish to GitHub pages
+        if: github.ref == 'refs/heads/saga'
+        run: |
+          echo "machine github.com login accesskey password ${{ secrets.GITHUB_TOKEN }}" > ~/.netrc
+          git config --global user.email "actions@example.com"
+          git config --global user.name "GitHub Actions"
+          cd build
+          git init
+          git add -A
+          git commit -m "update web app"
+          git remote add origin https://github.com/${GITHUB_REPOSITORY}.git
+          git push -f origin HEAD:gh-pages
       - name: Semantic release
         continue-on-error: true
         run: npx semantic-release
