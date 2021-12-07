@@ -1,7 +1,7 @@
 import * as jose from 'jose'
 
 export const ENDPOINT = (
-	import.meta.env.REACT_API_ENDPOINT ?? 'https://api.golioth.io/v1/'
+	import.meta.env.SNOWPACK_PUBLIC_API_ENDPOINT ?? 'https://api.golioth.io/v1/'
 )?.replace(/\/$/, '')
 
 export const headers = {

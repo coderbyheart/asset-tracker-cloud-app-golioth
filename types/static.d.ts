@@ -16,6 +16,7 @@ interface ImportMeta {
 	}
 	env: {
 		MODE: string
-		REACT_API_ENDPOINT?: string
+		SNOWPACK_PUBLIC_API_ENDPOINT?: string
+		SNOWPACK_PUBLIC_BASE_URL?: string
 	}
 }

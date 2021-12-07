@@ -53,7 +53,8 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
 			storedJwtKey.destroy()
 			const current = new URL(document.location.href)
 			document.location.href = new URL(
-				`${current.protocol}//${current.host}`,
+				import.meta.env.SNOWPACK_PUBLIC_BASE_URL ?? '/',
+				`${current.protocol}//${current.host}${current.pathname}`,
 			).toString()
 		},
 		login: async ({ id, secret }) =>
