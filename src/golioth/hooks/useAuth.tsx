@@ -5,8 +5,7 @@ import React, {
 	FunctionComponent,
 } from 'react'
 import { withLocalStorage } from '../../utils/withLocalStorage'
-import type { JWTKey } from '../api'
-import { ApiError, useProjects } from './useProjects'
+import { api, ApiError, JWTKey } from '../api'
 
 type AuthInfo = {
 	jwtKey?: JWTKey
@@ -17,8 +16,8 @@ type AuthInfo = {
 
 export const AuthContext = createContext<AuthInfo>({
 	isAuthenticated: false,
-	logout: () => Promise.resolve(),
-	login: () => Promise.resolve(),
+	logout: async () => Promise.resolve(),
+	login: async () => Promise.resolve(),
 })
 
 export const useAuth = () => useContext(AuthContext)
@@ -32,8 +31,10 @@ export class AuthError extends Error {
 	}
 }
 
-export const AuthProvider: FunctionComponent = ({ children }) => {
-	const { fetchProjects } = useProjects()
+export const AuthProvider: FunctionComponent<{ apiEndpoint: URL }> = ({
+	children,
+	apiEndpoint,
+}) => {
 	const storedIsAuthenticated = withLocalStorage<boolean>(
 		'auth:isAuthenticated',
 		false,
@@ -53,21 +54,24 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
 			storedJwtKey.destroy()
 			const current = new URL(document.location.href)
 			document.location.href = new URL(
-				import.meta.env.SNOWPACK_PUBLIC_BASE_URL ?? '/',
+				import.meta.env.PUBLIC_URL ?? '/',
 				`${current.protocol}//${current.host}${current.pathname}`,
 			).toString()
 		},
 		login: async ({ id, secret }) =>
-			fetchProjects({ id, secret })
+			api({ endpoint: apiEndpoint, jwtKey: { id, secret } })
+				.projects()
 				.then(() => {
 					setIsAuthenticated(true)
 					storedIsAuthenticated.set(true)
+					storedJwtKey.set({ id, secret })
 					setJwtKey({ id, secret })
 				})
 				.catch((err) => {
 					console.error(err)
 					setIsAuthenticated(false)
 					storedIsAuthenticated.set(false)
+					storedJwtKey.destroy()
 					throw new AuthError(
 						`Failed to log-in!`,
 						(err as ApiError).httpStatusCode,

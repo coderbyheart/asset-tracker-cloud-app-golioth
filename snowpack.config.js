@@ -1,4 +1,12 @@
-process.env.SNOWPACK_PUBLIC_VERSION = process.env.VERSION || Date.now()
+import fs from 'fs'
+import path from 'path'
+
+const { version, homepage } = JSON.parse(
+	fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'),
+)
+const VERSION = process.env.VERSION ?? version ?? Date.now()
+const PUBLIC_URL = process.env.PUBLIC_URL
+const API_ENDPOINT = process.env.API_ENDPOINT
 
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
@@ -10,12 +18,18 @@ export default {
 	packageOptions: {
 		installTypes: true,
 		env: {
-			SNOWPACK_PUBLIC_VERSION: true,
+			VERSION: true,
 		},
 	},
 	buildOptions: {
-		...(process.env.SNOWPACK_PUBLIC_BASE_URL !== undefined && {
-			baseUrl: `${process.env.SNOWPACK_PUBLIC_BASE_URL.replace(/\/+$/, '')}/`,
+		...(PUBLIC_URL !== undefined && {
+			baseUrl: `${PUBLIC_URL.replace(/\/+$/, '')}/`,
 		}),
+	},
+	env: {
+		API_ENDPOINT,
+		PUBLIC_URL,
+		VERSION,
+		HOMEPAGE: homepage,
 	},
 }

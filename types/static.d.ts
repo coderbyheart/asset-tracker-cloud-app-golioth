@@ -16,7 +16,9 @@ interface ImportMeta {
 	}
 	env: {
 		MODE: string
-		SNOWPACK_PUBLIC_API_ENDPOINT?: string
-		SNOWPACK_PUBLIC_BASE_URL?: string
+		API_ENDPOINT?: string
+		PUBLIC_URL?: string
+		VERSION?: string
+		HOMEPAGE?: string
 	}
 }

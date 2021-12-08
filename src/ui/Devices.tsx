@@ -1,40 +1,62 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../golioth/hooks/useAuth'
-import { Device, useProjects } from '../golioth/hooks/useProjects'
+import type { Device, Project } from 'src/golioth/api'
+import { useApi } from '../golioth/hooks/useApi'
+import { Link } from 'react-router-dom'
 
 export const Devices = () => {
-	const { jwtKey } = useAuth()
-	const { projects, currentProject, project } = useProjects()
-	const selectedProjectId = currentProject?.id ?? projects[0]?.id
-	const selectedProject = projects.find(({ id }) => id === selectedProjectId)
+	const api = useApi()
+	const [projects, setProjects] = useState<Project[]>([])
 	const [devices, setDevices] = useState<Device[]>([])
 
+	const [currentProject, setCurrentProject] = useState<Project>()
+	if (projects.length > 0 && currentProject === undefined) {
+		setCurrentProject(projects[0])
+	}
+
+	// Fetch projects
 	useEffect(() => {
-		if (selectedProject === undefined) return
-		if (jwtKey === undefined) return
 		let isMounted = true
 
-		project(selectedProject)
-			.devices(jwtKey)
-			.then((devices) => {
-				if (isMounted) setDevices(devices)
+		api
+			.projects()
+			.then((projects) => {
+				if (isMounted) setProjects(projects)
 			})
+			.catch(console.error)
 
 		return () => {
 			isMounted = false
 		}
-	}, [selectedProject, jwtKey])
+	}, [api])
+
+	// Fetch devices
+	useEffect(() => {
+		if (currentProject === undefined) return
+		let isMounted = true
+
+		api
+			.project(currentProject)
+			.devices()
+			.then((devices) => {
+				if (isMounted) setDevices(devices)
+			})
+			.catch(console.error)
+
+		return () => {
+			isMounted = false
+		}
+	}, [api, currentProject])
 
 	return (
 		<div className="row justify-content-center">
 			<div className="col-md-6">
 				<div className="card">
 					<div className="card-header">
-						Devices
+						<h3 className="mt-2">Devices</h3>
 						<select
 							className="form-select"
 							aria-label="Select a project"
-							value={selectedProjectId}
+							value={currentProject?.id}
 							onChange={() => undefined}
 						>
 							{projects.map((project) => (
@@ -46,7 +68,12 @@ export const Devices = () => {
 					</div>
 					<div className="card-body">
 						{devices.map((device) => (
-							<p key={device.id}>{device.name}</p>
+							<Link
+								key={device.id}
+								to={`/project/${currentProject?.id}/device/${device.id}`}
+							>
+								{device.name}
+							</Link>
 						))}
 					</div>
 				</div>
