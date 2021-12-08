@@ -1,55 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import type { Device, Project } from 'src/golioth/api'
-import { useApi } from '../golioth/hooks/useApi'
+import React, { useState } from 'react'
+import type { Project } from 'src/api/api'
+import { useApi } from '../hooks/useApi'
 import { Link } from 'react-router-dom'
+import { useProjects } from '../hooks/useProjects'
+import { useDevices } from '../hooks/useDevices'
 
 export const Devices = () => {
-	const api = useApi()
-	const [projects, setProjects] = useState<Project[]>([])
-	const [devices, setDevices] = useState<Device[]>([])
-
+	const projects = useProjects()
 	const [currentProject, setCurrentProject] = useState<Project>()
 	if (projects.length > 0 && currentProject === undefined) {
 		setCurrentProject(projects[0])
 	}
-
-	// Fetch projects
-	useEffect(() => {
-		let isMounted = true
-
-		api
-			.projects()
-			.then((projects) => {
-				if (isMounted) setProjects(projects)
-			})
-			.catch(console.error)
-
-		return () => {
-			isMounted = false
-		}
-	}, [api])
-
-	// Fetch devices
-	useEffect(() => {
-		if (currentProject === undefined) return
-		let isMounted = true
-
-		api
-			.project(currentProject)
-			.devices()
-			.then((devices) => {
-				if (isMounted) setDevices(devices)
-			})
-			.catch(console.error)
-
-		return () => {
-			isMounted = false
-		}
-	}, [api, currentProject])
+	const devices = useDevices(currentProject)
 
 	return (
 		<div className="row justify-content-center">
-			<div className="col-md-6">
+			<div className="col-lg-8">
 				<div className="card">
 					<div className="card-header">
 						<h3 className="mt-2">Devices</h3>

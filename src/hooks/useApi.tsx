@@ -1,10 +1,16 @@
 import React, { createContext, useContext, FunctionComponent } from 'react'
-import { api, JWTKey, Project } from '../api'
+import { api, Device, JWTKey, Project } from '../api/api'
+
+const rejected = Promise.reject(new Error(`Not authenticated.`))
 
 export const ApiContext = createContext<ReturnType<typeof api>>({
 	projects: async () => Promise.resolve([]),
-	project: (_: Project) => ({
+	project: (_: Pick<Project, 'id'>) => ({
 		devices: async () => Promise.resolve([]),
+		device: (_: Pick<Device, 'id'>) => ({
+			get: async () => rejected,
+			state: async () => rejected,
+		}),
 	}),
 })
 

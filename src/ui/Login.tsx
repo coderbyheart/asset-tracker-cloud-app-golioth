@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useAuth } from '../golioth/hooks/useAuth'
+import { useAuth } from '../hooks/useAuth'
 
 export const Login = () => {
 	const [id, setId] = useState<string>('')
@@ -24,7 +24,7 @@ export const Login = () => {
 
 	return (
 		<div className="row justify-content-center">
-			<div className="col-md-6">
+			<div className="col-lg-8">
 				<div className="card">
 					<form>
 						<div className="card-header">
@@ -66,7 +66,7 @@ export const Login = () => {
 								</div>
 							</div>
 						</div>
-						<div className="card-footer d-flex flex-row-reverse ">
+						<div className="card-footer d-flex flex-row-reverse">
 							<button
 								type="button"
 								className="btn btn-primary"

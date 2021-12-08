@@ -1,17 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useGlobalDevice } from '../../hooks/useGlobalDevice'
 import styled from 'styled-components'
-import { useAuth } from '../golioth/hooks/useAuth'
-import { emojify } from './components/Emojify'
+import { useAuth } from '../../hooks/useAuth'
+import { emojify } from './Emojify'
 import logo from './logo.svg'
 
 const StyledLink = styled(Link)`
 	color: inherit;
 	text-decoration: none;
+	margin-right: 1rem;
 `
 
 export const Navbar = () => {
 	const { isAuthenticated, logout } = useAuth()
+	const { info } = useGlobalDevice()
 	return (
 		<nav
 			className="navbar navbar-light"
@@ -28,16 +31,21 @@ export const Navbar = () => {
 						height="24"
 						className="d-inline-block align-text-top"
 					/>
-					nRF Asset Tracker <small>(Golioth)</small>
+					{info && <span>{info.name}</span>}
+					{!info && (
+						<span>
+							nRF Asset Tracker <small>(Golioth)</small>
+						</span>
+					)}
 				</Link>
 				{isAuthenticated && (
-					<>
+					<div>
 						<StyledLink to="/devices">{emojify(`🐱 Devices`)}</StyledLink>
 						<StyledLink to="/about">{emojify(`💁 About`)}</StyledLink>
 						<button type="button" className="btn btn-light" onClick={logout}>
 							Log out
 						</button>
-					</>
+					</div>
 				)}
 			</div>
 		</nav>

@@ -4,8 +4,8 @@ import React, {
 	useState,
 	FunctionComponent,
 } from 'react'
-import { withLocalStorage } from '../../utils/withLocalStorage'
-import { api, ApiError, JWTKey } from '../api'
+import { withLocalStorage } from '../utils/withLocalStorage'
+import { api, ApiError, JWTKey } from '../api/api'
 
 type AuthInfo = {
 	jwtKey?: JWTKey
@@ -14,11 +14,20 @@ type AuthInfo = {
 	login: (_: JWTKey) => Promise<void>
 }
 
-export const AuthContext = createContext<AuthInfo>({
-	isAuthenticated: false,
+const storedIsAuthenticated = withLocalStorage<boolean>(
+	'auth:isAuthenticated',
+	false,
+)
+const storedJwtKey = withLocalStorage<JWTKey>('auth:jwt')
+
+export const defaults = {
+	isAuthenticated: storedIsAuthenticated.get() ?? false,
+	jwtKey: storedJwtKey.get(),
 	logout: async () => Promise.resolve(),
 	login: async () => Promise.resolve(),
-})
+}
+
+export const AuthContext = createContext<AuthInfo>(defaults)
 
 export const useAuth = () => useContext(AuthContext)
 
@@ -35,14 +44,9 @@ export const AuthProvider: FunctionComponent<{ apiEndpoint: URL }> = ({
 	children,
 	apiEndpoint,
 }) => {
-	const storedIsAuthenticated = withLocalStorage<boolean>(
-		'auth:isAuthenticated',
-		false,
-	)
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
 		storedIsAuthenticated.get() as boolean,
 	)
-	const storedJwtKey = withLocalStorage<JWTKey>('auth:jwt')
 	const [jwtKey, setJwtKey] = useState<JWTKey>(storedJwtKey.get() as JWTKey)
 
 	const auth: AuthInfo = {

@@ -42,6 +42,33 @@ export type Device = {
 	status: string
 }
 
+export type DeviceState = {
+	reported?: {
+		gps?: {
+			ts: number
+			v: {
+				acc: number
+				alt: number
+				hdg: number
+				lat: number
+				lng: number
+				spd: number
+			}
+		}
+	}
+	desired?: {
+		cfg?: {
+			acc?: number
+			acct?: number
+			act?: boolean
+			actwt?: number
+			gpst?: number
+			mvres?: number
+			mvt?: number
+		}
+	}
+}
+
 export const api = ({
 	jwtKey: { id, secret },
 	endpoint,
@@ -50,8 +77,12 @@ export const api = ({
 	endpoint: URL
 }): {
 	projects: () => Promise<Project[]>
-	project: (_: Project) => {
+	project: (_: Pick<Project, 'id'>) => {
 		devices: () => Promise<Device[]>
+		device: (_: Pick<Device, 'id'>) => {
+			get: () => Promise<Device>
+			state: () => Promise<Record<string, any>>
+		}
 	}
 } => {
 	const base = endpoint.toString().replace(/\/$/g, '')
@@ -78,8 +109,8 @@ export const api = ({
 			)
 			return projects
 		},
-		project: (project: Project) => ({
-			devices: async (): Promise<Device[]> => {
+		project: (project: Pick<Project, 'id'>) => ({
+			devices: async () => {
 				const res = await fetch(`${base}/projects/${project.id}/devices`, {
 					method: 'GET',
 					headers: {
@@ -97,6 +128,38 @@ export const api = ({
 					lastReport: new Date(d.lastReport),
 				})) as Device[]
 			},
+			device: (device: Pick<Device, 'id'>) => ({
+				get: async () => {
+					const res = await fetch(
+						`${base}/projects/${project.id}/devices/${device.id}`,
+						{
+							method: 'GET',
+							headers: {
+								...headers,
+								Authorization: `Bearer ${await getToken({ id, secret })}`,
+							},
+						},
+					)
+					const { ok, status: httpStatusCode } = res
+					if (!ok) throw new ApiError(`Failed to fetch device!`, httpStatusCode)
+					return (await res.json()).data
+				},
+				state: async () => {
+					const res = await fetch(
+						`${base}/projects/${project.id}/devices/${device.id}/data`,
+						{
+							method: 'GET',
+							headers: {
+								...headers,
+								Authorization: `Bearer ${await getToken({ id, secret })}`,
+							},
+						},
+					)
+					const { ok, status: httpStatusCode } = res
+					if (!ok) throw new ApiError(`Failed to fetch device!`, httpStatusCode)
+					return (await res.json()).data
+				},
+			}),
 		}),
 	}
 }
