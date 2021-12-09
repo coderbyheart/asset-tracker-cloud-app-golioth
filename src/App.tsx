@@ -32,7 +32,7 @@ const AppRoot = () => {
 
 	return (
 		<GlobalDeviceProvider>
-			<Router>
+			<Router basename={import.meta.env.PUBLIC_URL ?? '/'}>
 				<header>
 					<Navbar />
 				</header>
