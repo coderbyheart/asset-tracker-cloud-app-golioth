@@ -1,4 +1,17 @@
-export const withLocalStorage = <T>(
+type WithLocalStorage = {
+	<T>(key: string): {
+		set: (_: T) => void
+		get: () => T | undefined
+		destroy: () => void
+	}
+	<T>(key: string, defaultValue: T): {
+		set: (_: T) => void
+		get: () => T
+		destroy: () => void
+	}
+}
+
+export const withLocalStorage: WithLocalStorage = <T>(
 	key: string,
 	defaultValue?: T,
 ): {

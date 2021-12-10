@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useDevice } from '../hooks/useDevice'
 import { emojify } from './components/Emojify'
-import { Map } from './components/Map'
+import { Map } from './components/Map/Map'
 import { useGlobalDevice } from '../hooks/useGlobalDevice'
+import type { Device as ApiDevice } from '../api/api'
+import { Battery } from './components/Device/Battery'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
@@ -18,22 +20,16 @@ export const Device = () => {
 		}
 	}, [info, state, setDevice])
 
-	if (projectId === undefined || deviceId === undefined) return null
-	return <DeviceInfo projectId={projectId} deviceId={deviceId} />
+	if (info === undefined) return null
+	return <DeviceInfo device={info} />
 }
 
-const DeviceInfo = ({
-	projectId,
-	deviceId,
-}: {
-	projectId: string
-	deviceId: string
-}) => {
+const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 	const { info, state } = useGlobalDevice()
 	return (
 		<div className="row justify-content-center">
 			<div className="col-lg-8">
-				{info && state && <Map device={info} deviceState={state} />}
+				{info && state && <Map device={info} />}
 
 				<div className="card mt-4">
 					<div className="card-header">
@@ -42,11 +38,11 @@ const DeviceInfo = ({
 					<div className="card-body">
 						<dl>
 							<dt>Project ID</dt>
-							<dd>{projectId}</dd>
+							<dd>{device.projectId}</dd>
 						</dl>
 						<dl>
 							<dt>Device ID</dt>
-							<dd>{deviceId}</dd>
+							<dd>{device.id}</dd>
 						</dl>
 					</div>
 				</div>
@@ -83,6 +79,8 @@ const DeviceInfo = ({
 						</div>
 					</>
 				)}
+
+				<Battery device={device} />
 			</div>
 		</div>
 	)

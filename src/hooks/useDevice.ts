@@ -23,7 +23,7 @@ export const useDevice = ({
 		const d = api.project({ id: projectId }).device({ id: deviceId })
 		Promise.all([d.state(), d.get()])
 			.then(([state, info]) => {
-				setDevice({ state, info })
+				setDevice({ state, info: { ...info, projectId } })
 			})
 			.catch(console.error)
 	}, [projectId, deviceId, api])

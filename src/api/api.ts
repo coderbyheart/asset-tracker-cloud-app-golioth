@@ -32,6 +32,7 @@ export type Project = {
 
 export type Device = {
 	id: string
+	projectId: string
 	hardwareIds: string[]
 	name: string
 	createdAt: Date
@@ -44,16 +45,14 @@ export type Device = {
 
 export type DeviceState = {
 	reported?: {
-		gps?: {
-			ts: number
-			v: {
-				acc: number
-				alt: number
-				hdg: number
-				lat: number
-				lng: number
-				spd: number
-			}
+		cfg?: {
+			acc?: number
+			acct?: number
+			act?: boolean
+			actwt?: number
+			gpst?: number
+			mvres?: number
+			mvt?: number
 		}
 	}
 	desired?: {
@@ -69,6 +68,19 @@ export type DeviceState = {
 	}
 }
 
+export type Battery = number
+export type GNSS = {
+	acc: number
+	alt: number
+	hdg: number
+	lat: number
+	lng: number
+	spd: number
+}
+export type DeviceSensor = Battery | GNSS
+
+export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
+export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
 export const api = ({
 	jwtKey: { id, secret },
 	endpoint,
@@ -82,6 +94,11 @@ export const api = ({
 		device: (_: Pick<Device, 'id'>) => {
 			get: () => Promise<Device>
 			state: () => Promise<Record<string, any>>
+			history: <T extends DeviceSensor>(_: {
+				path: string[]
+				limit?: number
+				page?: number
+			}) => Promise<DeviceHistory<T>>
 		}
 	}
 } => {
@@ -103,10 +120,6 @@ export const api = ({
 				createdAt: new Date(p.createdAt),
 				updatedAt: new Date(p.updatedAt),
 			}))
-			console.log(
-				'[projects]',
-				projects.map(({ name }) => name),
-			)
 			return projects
 		},
 		project: (project: Pick<Project, 'id'>) => ({
@@ -126,6 +139,7 @@ export const api = ({
 					createdAt: new Date(d.createdAt),
 					updatedAt: new Date(d.updatedAt),
 					lastReport: new Date(d.lastReport),
+					projectId: project.id,
 				})) as Device[]
 			},
 			device: (device: Pick<Device, 'id'>) => ({
@@ -158,6 +172,58 @@ export const api = ({
 					const { ok, status: httpStatusCode } = res
 					if (!ok) throw new ApiError(`Failed to fetch device!`, httpStatusCode)
 					return (await res.json()).data
+				},
+				history: async <T extends DeviceSensor>({
+					path,
+					limit,
+					page,
+				}: {
+					path: string[]
+					limit?: number
+					page?: number
+				}) => {
+					const res = await fetch(
+						`${base}/projects/${project.id}/devices/${device.id}/stream`,
+						{
+							method: 'POST',
+							headers: {
+								...headers,
+								Authorization: `Bearer ${await getToken({ id, secret })}`,
+							},
+							body: JSON.stringify({
+								query: {
+									fields: [
+										{
+											path: path.join('.'),
+											alias: 'v',
+										},
+										{ path: 'time' },
+									],
+									filters: [
+										// Should be in requested path
+										{
+											path: path.join('.'),
+											op: '<>',
+											value: null,
+										},
+									],
+								},
+								page: page ?? 0,
+								perPage: limit ?? 100,
+							}),
+						},
+					)
+					const { ok, status: httpStatusCode } = res
+					if (!ok)
+						throw new ApiError(
+							`Failed to fetch device history!`,
+							httpStatusCode,
+						)
+					const items = (await res.json()).list as Record<string, any>[]
+					return items.map(({ time, ...rest }) => ({
+						...rest,
+						ts: new Date(time),
+					})) as DeviceHistory<T>
 				},
 			}),
 		}),

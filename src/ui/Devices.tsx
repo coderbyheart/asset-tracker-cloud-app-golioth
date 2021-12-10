@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import type { Project } from 'src/api/api'
-import { useApi } from '../hooks/useApi'
+import type { Project } from '../api/api'
 import { Link } from 'react-router-dom'
 import { useProjects } from '../hooks/useProjects'
 import { useDevices } from '../hooks/useDevices'

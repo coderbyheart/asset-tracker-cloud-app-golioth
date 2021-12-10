@@ -10,6 +10,7 @@ export const ApiContext = createContext<ReturnType<typeof api>>({
 		device: (_: Pick<Device, 'id'>) => ({
 			get: async () => rejected,
 			state: async () => rejected,
+			history: async () => rejected,
 		}),
 	}),
 })
