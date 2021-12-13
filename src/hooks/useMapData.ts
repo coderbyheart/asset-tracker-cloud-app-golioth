@@ -9,7 +9,7 @@ export type Location = {
 		altitude?: number
 		speed?: number
 	}
-	batch?: boolean
+	batch: boolean
 	ts: Date
 }
 
@@ -29,7 +29,10 @@ export type Roaming = {
 	ts: Date
 }
 
-const toLocation = (locationHistory: DeviceHistoryDatum<GNSS>) => ({
+const toLocation = (
+	locationHistory: DeviceHistoryDatum<GNSS>,
+	batch = false,
+) => ({
 	location: {
 		position: {
 			lat: locationHistory.v.lat,
@@ -39,6 +42,7 @@ const toLocation = (locationHistory: DeviceHistoryDatum<GNSS>) => ({
 			speed: locationHistory.v.spd,
 			heading: locationHistory.v.hdg,
 		},
+		batch,
 		ts: new Date(locationHistory.ts),
 	},
 	roaming: undefined, // FIXME: implement

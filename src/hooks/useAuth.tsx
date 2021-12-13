@@ -45,7 +45,7 @@ export const AuthProvider: FunctionComponent<{ apiEndpoint: URL }> = ({
 	apiEndpoint,
 }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
-		storedIsAuthenticated.get() as boolean,
+		storedIsAuthenticated.get(),
 	)
 	const [jwtKey, setJwtKey] = useState<JWTKey>(storedJwtKey.get() as JWTKey)
 

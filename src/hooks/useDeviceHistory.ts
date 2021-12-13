@@ -19,7 +19,7 @@ type PropertyName = SensorProperties | string
 
 type SharedArgs = { load?: boolean; limit?: number }
 
-type useDeviceHistory = {
+type useDeviceHistoryType = {
 	(
 		_: {
 			device: Device
@@ -34,7 +34,7 @@ type useDeviceHistory = {
 	): DeviceHistory<Battery>
 }
 
-export const useDeviceHistory: useDeviceHistory = <T extends DeviceSensor>({
+export const useDeviceHistory: useDeviceHistoryType = <T extends DeviceSensor>({
 	device,
 	sensor,
 	load,
