@@ -6,11 +6,11 @@ import { HistoricalDataChart } from '../HistoricalDataChart'
 import { ChartDateRange } from '../ChartDateRange'
 import { useChartDateRange } from 'hooks/useChartDateRange'
 
-export const Battery = ({ device }: { device: Device }) => {
+export const Temperature = ({ device }: { device: Device }) => {
 	const { startDate, endDate } = useChartDateRange()
-	const batteryHistory = useDeviceHistory({
+	const TemperatureHistory = useDeviceHistory({
 		device,
-		sensor: SensorProperties.Battery,
+		sensor: SensorProperties.Environment,
 		startDate,
 		endDate,
 	})
@@ -18,14 +18,14 @@ export const Battery = ({ device }: { device: Device }) => {
 	return (
 		<div className="card mt-4">
 			<div className="card-header">
-				<h3 className="mt-2">{emojify('🔋 Battery')}</h3>
+				<h3 className="mt-2">{emojify('🌡️ Temperature')}</h3>
 			</div>
 			<div className="card-body">
 				<ChartDateRange />
 				<HistoricalDataChart
-					data={batteryHistory.map(({ v, ts }) => ({
+					data={TemperatureHistory.map(({ v, ts }) => ({
 						date: new Date(ts),
-						value: v / 1000,
+						value: v.temp,
 					}))}
 					type="line"
 				/>

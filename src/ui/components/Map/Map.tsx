@@ -20,6 +20,7 @@ import { nullOrUndefined } from 'utils/nullOrUndefined'
 import { formatDistanceToNow } from 'date-fns'
 import { SignalQuality } from 'ui/components/ConnectionInformation'
 import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
+import { useChartDateRange } from 'hooks/useChartDateRange'
 
 const MapContainerContainer = styled.div`
 	> .leaflet-container {
@@ -89,10 +90,13 @@ const HeadingMarker = ({
 
 export const Map = ({ device }: { device: Device }) => {
 	const { settings, update: updateSettings } = useMapSettings()
+	const { startDate, endDate } = useChartDateRange()
 	const locationHistory = useDeviceHistory({
 		device,
 		sensor: SensorProperties.GNSS,
 		limit: settings.enabledLayers.history ? settings.numHistoryEntries : 1,
+		startDate,
+		endDate,
 	})
 	const { deviceLocation, center, history } = useMapData({
 		locationHistory,

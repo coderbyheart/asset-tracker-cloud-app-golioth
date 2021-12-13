@@ -1,3 +1,4 @@
+import type { number } from 'fp-ts'
 import * as jose from 'jose'
 
 export const headers = {
@@ -69,6 +70,10 @@ export type DeviceState = {
 }
 
 export type Battery = number
+export type Environment = {
+	temp: number
+	hum: number
+}
 export type GNSS = {
 	acc: number
 	alt: number
@@ -77,7 +82,7 @@ export type GNSS = {
 	lng: number
 	spd: number
 }
-export type DeviceSensor = Battery | GNSS
+export type DeviceSensor = Battery | GNSS | Environment
 
 export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
 export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
@@ -98,6 +103,8 @@ export const api = ({
 				path: string[]
 				limit?: number
 				page?: number
+				startDate: Date
+				endDate: Date
 			}) => Promise<DeviceHistory<T>>
 		}
 	}
@@ -177,10 +184,14 @@ export const api = ({
 					path,
 					limit,
 					page,
+					startDate,
+					endDate,
 				}: {
 					path: string[]
 					limit?: number
 					page?: number
+					startDate: Date
+					endDate: Date
 				}) => {
 					const res = await fetch(
 						`${base}/projects/${project.id}/devices/${device.id}/stream`,
@@ -191,8 +202,8 @@ export const api = ({
 								Authorization: `Bearer ${await getToken({ id, secret })}`,
 							},
 							body: JSON.stringify({
-								end: new Date().toISOString(),
-								start: '2021-01-01T00:00:00.0Z',
+								start: startDate.toISOString(),
+								end: endDate.toISOString(),
 								query: {
 									fields: [
 										{

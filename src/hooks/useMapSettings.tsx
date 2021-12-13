@@ -19,7 +19,10 @@ type Settings = {
 	zoom: number
 }
 
-const userZoomSetting = withLocalStorage<number>('map:zoom', 13)
+const userZoomSetting = withLocalStorage<number>({
+	key: 'map:zoom',
+	defaultValue: 13,
+})
 
 const defaults: Settings = {
 	numHistoryEntries: 10,

@@ -25,6 +25,7 @@
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
   "license": "LICENSE",
   "dependencies": {
+    "@amcharts/amcharts5": "5.0.16",
     "@nordicsemiconductor/rsrp-bar": "4.1.2",
     "bootstrap": "5.1.3",
     "date-fns": "2.27.0",
@@ -38,7 +39,8 @@
     "react-leaflet": "3.2.2",
     "react-router-dom": "6.1.1",
     "styled-components": "5.3.3",
-    "twemoji": "13.1.0"
+    "twemoji": "13.1.0",
+    "uuid": "8.3.2"
   },
   "devDependencies": {
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "9.2.31",
@@ -50,6 +52,7 @@
     "@types/react-dom": "17.0.11",
     "@types/styled-components": "5.1.17",
     "@types/twemoji": "12.1.2",
+    "@types/uuid": "8.3.3",
     "eslint-config-react-app": "6.0.0",
     "jest": "27.4.4",
     "snowpack": "3.8.8"

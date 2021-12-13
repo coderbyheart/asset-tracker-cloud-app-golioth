@@ -6,6 +6,8 @@ import { Map } from './components/Map/Map'
 import { useGlobalDevice } from '../hooks/useGlobalDevice'
 import type { Device as ApiDevice } from '../api/api'
 import { Battery } from './components/Device/Battery'
+import { Temperature } from './components/Device/Temperature'
+import { ChartDateRange } from './components/ChartDateRange'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
@@ -25,11 +27,16 @@ export const Device = () => {
 }
 
 const DeviceInfo = ({ device }: { device: ApiDevice }) => {
-	const { info, state } = useGlobalDevice()
+	const { state } = useGlobalDevice()
 	return (
 		<div className="row justify-content-center">
 			<div className="col-lg-8">
-				{info && state && <Map device={info} />}
+				{state && (
+					<>
+						<Map device={device} />
+						<ChartDateRange />
+					</>
+				)}
 
 				<div className="card mt-4">
 					<div className="card-header">
@@ -47,16 +54,14 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 					</div>
 				</div>
 
-				{info && (
-					<div className="card mt-4">
-						<div className="card-header">
-							<h3 className="mt-2">Info</h3>
-						</div>
-						<div className="card-body">
-							<pre>{JSON.stringify(info, null, 2)}</pre>
-						</div>
+				<div className="card mt-4">
+					<div className="card-header">
+						<h3 className="mt-2">Info</h3>
 					</div>
-				)}
+					<div className="card-body">
+						<pre>{JSON.stringify(device, null, 2)}</pre>
+					</div>
+				</div>
 
 				{state && (
 					<>
@@ -81,6 +86,7 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 				)}
 
 				<Battery device={device} />
+				<Temperature device={device} />
 			</div>
 		</div>
 	)

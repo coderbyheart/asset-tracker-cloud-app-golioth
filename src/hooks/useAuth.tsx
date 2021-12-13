@@ -14,11 +14,13 @@ type AuthInfo = {
 	login: (_: JWTKey) => Promise<void>
 }
 
-const storedIsAuthenticated = withLocalStorage<boolean>(
-	'auth:isAuthenticated',
-	false,
-)
-const storedJwtKey = withLocalStorage<JWTKey>('auth:jwt')
+const storedIsAuthenticated = withLocalStorage<boolean>({
+	key: 'auth:isAuthenticated',
+	defaultValue: false,
+})
+const storedJwtKey = withLocalStorage<JWTKey>({
+	key: 'auth:jwt',
+})
 
 export const defaults = {
 	isAuthenticated: storedIsAuthenticated.get() ?? false,
