@@ -5,6 +5,7 @@ import React, {
 	useState,
 } from 'react'
 import { withLocalStorage } from 'utils/withLocalStorage'
+import equal from 'fast-deep-equal'
 
 type Settings = {
 	enabledLayers: {
@@ -48,12 +49,14 @@ export const MapSettingsProvider: FunctionComponent = ({ children }) => {
 		<MapSettingsContext.Provider
 			value={{
 				settings,
-				update: (newSettings: Partial<Settings>) =>
+				update: (newSettings: Partial<Settings>) => {
 					update((settings) => {
 						const updated = { ...settings, ...newSettings }
+						if (equal(updated, settings)) return settings
 						userZoomSetting.set(updated.zoom)
 						return updated
-					}),
+					})
+				},
 			}}
 		>
 			{children}

@@ -29,6 +29,7 @@
     "bootstrap": "5.1.3",
     "date-fns": "2.27.0",
     "e118-iin-list": "1.7.0",
+    "fast-deep-equal": "3.1.3",
     "fp-ts": "2.11.5",
     "jose": "4.3.7",
     "mcc-mnc-list": "1.1.7",

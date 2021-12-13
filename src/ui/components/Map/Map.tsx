@@ -97,7 +97,6 @@ export const Map = ({ device }: { device: Device }) => {
 	const { deviceLocation, center, history } = useMapData({
 		locationHistory,
 	})
-	console.log({ history })
 	const [map, setmap] = useState<LeafletMap>()
 
 	if (deviceLocation === undefined || center === undefined) return <NoMap /> // No location data at all to display
