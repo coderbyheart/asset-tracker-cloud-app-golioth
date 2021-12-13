@@ -191,6 +191,8 @@ export const api = ({
 								Authorization: `Bearer ${await getToken({ id, secret })}`,
 							},
 							body: JSON.stringify({
+								end: new Date().toISOString(),
+								start: '2021-01-01T00:00:00.0Z',
 								query: {
 									fields: [
 										{
