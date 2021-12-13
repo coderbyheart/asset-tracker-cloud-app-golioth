@@ -7,9 +7,12 @@ import { emojify } from './Emojify'
 import logo from './logo.svg'
 
 const StyledLink = styled(Link)`
-	color: inherit;
+	color: #eee;
 	text-decoration: none;
 	margin-right: 1rem;
+	&:hover {
+		color: #fff;
+	}
 `
 
 export const Navbar = () => {
