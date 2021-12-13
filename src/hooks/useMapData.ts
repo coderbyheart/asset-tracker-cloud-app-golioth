@@ -29,24 +29,23 @@ export type Roaming = {
 	ts: Date
 }
 
-const toLocation = (
-	locationHistory: DeviceHistoryDatum<GNSS>,
-	batch = false,
-) => ({
-	location: {
-		position: {
-			lat: locationHistory.v.lat,
-			lng: locationHistory.v.lng,
-			accuracy: locationHistory.v.acc,
-			altitude: locationHistory.v.alt,
-			speed: locationHistory.v.spd,
-			heading: locationHistory.v.hdg,
+const toLocation =
+	(batch = false) =>
+	(locationHistory: DeviceHistoryDatum<GNSS>) => ({
+		location: {
+			position: {
+				lat: locationHistory.v.lat,
+				lng: locationHistory.v.lng,
+				accuracy: locationHistory.v.acc,
+				altitude: locationHistory.v.alt,
+				speed: locationHistory.v.spd,
+				heading: locationHistory.v.hdg,
+			},
+			batch,
+			ts: new Date(locationHistory.ts),
 		},
-		batch,
-		ts: new Date(locationHistory.ts),
-	},
-	roaming: undefined, // FIXME: implement
-})
+		roaming: undefined, // FIXME: implement
+	})
 
 export const useMapData = ({
 	locationHistory,
@@ -63,13 +62,13 @@ export const useMapData = ({
 	let deviceLocation: Location | undefined = undefined
 	const firstLocation = locationHistory[0]
 	if (firstLocation !== undefined) {
-		deviceLocation = toLocation(firstLocation).location
+		deviceLocation = toLocation(false)(firstLocation).location
 	}
 	const center = deviceLocation?.position
 
 	return {
 		deviceLocation,
 		center,
-		history: locationHistory.slice(1)?.map(toLocation) ?? [],
+		history: locationHistory.slice(1)?.map(toLocation(false)) ?? [],
 	}
 }
