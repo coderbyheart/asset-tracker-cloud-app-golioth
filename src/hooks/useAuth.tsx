@@ -4,8 +4,8 @@ import React, {
 	useState,
 	FunctionComponent,
 } from 'react'
-import { withLocalStorage } from '../utils/withLocalStorage'
-import { api, ApiError, JWTKey } from '../api/api'
+import { withLocalStorage } from 'utils/withLocalStorage'
+import { api, ApiError, JWTKey } from 'api/api'
 
 type AuthInfo = {
 	jwtKey?: JWTKey

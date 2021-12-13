@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { Device, DeviceState } from '../../../api/api'
+import type { Device } from 'api/api'
 import styled from 'styled-components'
 import {
 	MapContainer,
@@ -13,16 +13,13 @@ import {
 } from 'react-leaflet'
 import type { LeafletEvent, Map as LeafletMap } from 'leaflet'
 import { NoMap } from './NoMap'
-import { useMapData, Position } from '../../../hooks/useMapData'
-import { useMapSettings } from '../../../hooks/useMapSettings'
-import { toFixed } from '../../../utils/toFixed'
-import { nullOrUndefined } from '../../../utils/nullOrUndefined'
+import { useMapData, Position } from 'hooks/useMapData'
+import { useMapSettings } from 'hooks/useMapSettings'
+import { toFixed } from 'utils/toFixed'
+import { nullOrUndefined } from 'utils/nullOrUndefined'
 import { formatDistanceToNow } from 'date-fns'
-import { SignalQuality } from '../ConnectionInformation'
-import {
-	SensorProperties,
-	useDeviceHistory,
-} from '../../../hooks/useDeviceHistory'
+import { SignalQuality } from 'ui/components/ConnectionInformation'
+import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 
 const MapContainerContainer = styled.div`
 	> .leaflet-container {

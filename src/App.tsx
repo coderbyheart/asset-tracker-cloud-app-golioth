@@ -3,21 +3,21 @@ import {
 	AuthProvider,
 	useAuth,
 	defaults as authContextDefaults,
-} from './hooks/useAuth'
-import { ApiProvider } from './hooks/useApi'
-import { Devices } from './ui/Devices'
-import { Login } from './ui/Login'
-import { Navbar } from './ui/components/Navbar'
+} from 'hooks/useAuth'
+import { ApiProvider } from 'hooks/useApi'
+import { Devices } from 'ui/Devices'
+import { Login } from 'ui/Login'
+import { Navbar } from 'ui/components/Navbar'
 import {
 	BrowserRouter as Router,
 	Navigate,
 	Route,
 	Routes,
 } from 'react-router-dom'
-import { Device } from './ui/Device'
-import { About } from './ui/About'
-import { GlobalDeviceProvider } from './hooks/useGlobalDevice'
-import { MapSettingsProvider } from './hooks/useMapSettings'
+import { Device } from 'ui/Device'
+import { About } from 'ui/About'
+import { GlobalDeviceProvider } from 'hooks/useGlobalDevice'
+import { MapSettingsProvider } from 'hooks/useMapSettings'
 
 const API_ENDPOINT = new URL(
 	(import.meta.env.API_ENDPOINT ?? 'https://api.golioth.io/v1/')?.replace(

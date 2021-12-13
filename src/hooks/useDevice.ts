@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import type { Device, DeviceState } from '../api/api'
-import { useApi } from './useApi'
+import type { Device, DeviceState } from 'api/api'
+import { useApi } from 'hooks/useApi'
 
 export const useDevice = ({
 	projectId,

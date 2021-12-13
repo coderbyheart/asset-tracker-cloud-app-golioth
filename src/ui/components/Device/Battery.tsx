@@ -1,10 +1,7 @@
 import React from 'react'
-import { emojify } from '../Emojify'
-import {
-	SensorProperties,
-	useDeviceHistory,
-} from '../../../hooks/useDeviceHistory'
-import type { Device } from '../../../api/api'
+import { emojify } from 'ui/components/Emojify'
+import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
+import type { Device } from 'api/api'
 
 export const Battery = ({ device }: { device: Device }) => {
 	const batteryHistory = useDeviceHistory({

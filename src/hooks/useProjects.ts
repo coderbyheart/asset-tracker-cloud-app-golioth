@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import type { Project } from '../api/api'
-import { useApi } from './useApi'
+import type { Project } from 'api/api'
+import { useApi } from 'hooks/useApi'
 
 export const useProjects = (): Project[] => {
 	const [projects, setProjects] = useState<Project[]>([])

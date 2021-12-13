@@ -3,9 +3,8 @@ import React, {
 	useContext,
 	FunctionComponent,
 	useState,
-	useReducer,
 } from 'react'
-import { withLocalStorage } from '../utils/withLocalStorage'
+import { withLocalStorage } from 'utils/withLocalStorage'
 
 type Settings = {
 	enabledLayers: {

@@ -4,7 +4,7 @@ import React, {
 	FunctionComponent,
 	useState,
 } from 'react'
-import type { Device, DeviceState } from '../api/api'
+import type { Device, DeviceState } from 'api/api'
 
 export const GlobalDeviceContext = createContext<{
 	info?: Device

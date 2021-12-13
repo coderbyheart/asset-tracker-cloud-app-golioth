@@ -5,9 +5,8 @@ import type {
 	DeviceHistory,
 	DeviceSensor,
 	GNSS,
-} from '../api/api'
-import { useApi } from './useApi'
-import { useMapSettings } from './useMapSettings'
+} from 'api/api'
+import { useApi } from 'hooks/useApi'
 
 export enum SensorProperties {
 	Battery = 'bat',

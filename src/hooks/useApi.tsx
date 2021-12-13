@@ -1,5 +1,5 @@
 import React, { createContext, useContext, FunctionComponent } from 'react'
-import { api, Device, JWTKey, Project } from '../api/api'
+import { api, Device, JWTKey, Project } from 'api/api'
 
 const rejected = Promise.reject(new Error(`Not authenticated.`))
 
