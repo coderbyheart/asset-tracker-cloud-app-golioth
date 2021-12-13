@@ -32,4 +32,10 @@ export default {
 		VERSION,
 		HOMEPAGE: homepage,
 	},
+	alias: {
+		api: './src/api',
+		hooks: './src/hooks',
+		ui: './src/ui',
+		utils: './src/utils',
+	},
 }

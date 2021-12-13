@@ -13,9 +13,12 @@
     "jsx": "preserve",
     "noFallthroughCasesInSwitch": true,
     "importsNotUsedAsValues": "error",
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "paths": {
-      "app": ["/"]
+      "api/*": ["api/*"],
+      "hooks/*": ["hooks/*"],
+      "ui/*": ["ui/*"],
+      "utils/*": ["utils/*"]
     }
   },
   "include": ["src", "types"]
