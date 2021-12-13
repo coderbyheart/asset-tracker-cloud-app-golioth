@@ -38,4 +38,11 @@ export default {
 		ui: './src/ui',
 		utils: './src/utils',
 	},
+	routes: [
+		{
+			match: 'routes',
+			src: '.*',
+			dest: '/index.html',
+		},
+	],
 }
