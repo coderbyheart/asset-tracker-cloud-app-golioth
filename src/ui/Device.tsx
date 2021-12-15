@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useDevice } from '../hooks/useDevice'
 import { emojify } from './components/Emojify'
-import { Map } from './components/Map/Map'
 import { useGlobalDevice } from '../hooks/useGlobalDevice'
 import type { Device as ApiDevice } from '../api/api'
 import { Battery } from './components/Device/Battery'
 import { Temperature } from './components/Device/Temperature'
 import { ChartDateRange } from './components/ChartDateRange'
+import { MapWithSettings } from './components/Map/MapWithSettings'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
@@ -31,12 +31,15 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 	return (
 		<div className="row justify-content-center">
 			<div className="col-lg-8">
-				{state && (
-					<>
-						<Map device={device} />
-						<ChartDateRange />
-					</>
-				)}
+				<div className="card">
+					{state && (
+						<div className="card-header pt-0 pe-0 pb-0 ps-0">
+							<MapWithSettings device={device} />
+							<hr className="mt-0 mb-0" />
+							<ChartDateRange />
+						</div>
+					)}
+				</div>
 
 				<div className="card mt-4">
 					<div className="card-header">

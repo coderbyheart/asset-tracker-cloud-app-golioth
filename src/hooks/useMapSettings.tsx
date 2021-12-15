@@ -7,7 +7,7 @@ import React, {
 import { withLocalStorage } from 'utils/withLocalStorage'
 import equal from 'fast-deep-equal'
 
-type Settings = {
+export type Settings = {
 	enabledLayers: {
 		headings: boolean
 		singlecellLocations: boolean

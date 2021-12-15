@@ -134,13 +134,14 @@ export const Map = ({ device }: { device: Device }) => {
 						radius={deviceLocation.position.accuracy}
 					/>
 				)}
-				{deviceLocation?.position.heading !== undefined && (
-					<HeadingMarker
-						position={deviceLocation.position}
-						heading={deviceLocation.position.heading}
-						mapZoom={settings.zoom}
-					/>
-				)}
+				{settings.enabledLayers.headings &&
+					deviceLocation?.position.heading !== undefined && (
+						<HeadingMarker
+							position={deviceLocation.position}
+							heading={deviceLocation.position.heading}
+							mapZoom={settings.zoom}
+						/>
+					)}
 				{(history?.length ?? 0) > 0 &&
 					history?.map(
 						(
