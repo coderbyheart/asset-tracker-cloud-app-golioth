@@ -36,20 +36,24 @@ export const ReportedTime = ({
 	...restProps
 }: {
 	reportedAt: Date
-	receivedAt: Date
+	receivedAt?: Date
 	staleAfterSeconds?: number
 }) => {
 	const reportedTimeIsOutDated =
-		(receivedAt.getTime() - reportedAt.getTime()) / 1000 > 300
+		receivedAt === undefined
+			? false
+			: (receivedAt.getTime() - reportedAt.getTime()) / 1000 > 300
 	const relativeTimesHaveDiff =
-		formatDistanceToNow(receivedAt, {
-			includeSeconds: true,
-			addSuffix: true,
-		}) !==
-		formatDistanceToNow(reportedAt, {
-			includeSeconds: true,
-			addSuffix: true,
-		})
+		receivedAt === undefined
+			? false
+			: formatDistanceToNow(receivedAt, {
+					includeSeconds: true,
+					addSuffix: true,
+			  }) !==
+			  formatDistanceToNow(reportedAt, {
+					includeSeconds: true,
+					addSuffix: true,
+			  })
 	const reportIsOld =
 		(Date.now() - reportedAt.getTime()) / 1000 >
 		(staleAfterSeconds ?? Number.MAX_SAFE_INTEGER)
@@ -58,12 +62,14 @@ export const ReportedTime = ({
 			<span className={'reportedTime'} {...restProps}>
 				{reportIsOld ? emojify('🤷 ') : emojify('🕒 ')}
 				<RelativeTime ts={reportedAt} key={reportedAt.toISOString()} />
-				{reportedTimeIsOutDated && relativeTimesHaveDiff && (
-					<OutDatedSpan>
-						{emojify('☁️ ')}
-						<RelativeTime ts={receivedAt} key={receivedAt.toISOString()} />
-					</OutDatedSpan>
-				)}
+				{receivedAt !== undefined &&
+					reportedTimeIsOutDated &&
+					relativeTimesHaveDiff && (
+						<OutDatedSpan>
+							{emojify('☁️ ')}
+							<RelativeTime ts={receivedAt} key={receivedAt.toISOString()} />
+						</OutDatedSpan>
+					)}
 				{staleAfterSeconds !== undefined && (
 					<OldWarning
 						reportIsOld={reportIsOld}
@@ -76,7 +82,9 @@ export const ReportedTime = ({
 		return (
 			<span className={'reportedTime'} {...restProps}>
 				{emojify('☁️ ')}
-				<RelativeTime ts={receivedAt} key={receivedAt.toISOString()} />
+				{receivedAt !== undefined && (
+					<RelativeTime ts={receivedAt} key={receivedAt.toISOString()} />
+				)}
 				{staleAfterSeconds !== undefined && (
 					<OldWarning
 						reportIsOld={reportIsOld}

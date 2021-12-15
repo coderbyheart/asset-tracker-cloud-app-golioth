@@ -8,6 +8,7 @@ import { Battery } from './components/Device/Battery'
 import { Temperature } from './components/Device/Temperature'
 import { ChartDateRange } from './components/ChartDateRange'
 import { MapWithSettings } from './components/Map/MapWithSettings'
+import { InfoHeader } from './components/Device/Info'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
@@ -36,6 +37,7 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 						<div className="card-header pt-0 pe-0 pb-0 ps-0">
 							<MapWithSettings device={device} />
 							<hr className="mt-0 mb-0" />
+							<InfoHeader device={device} />
 							<ChartDateRange />
 						</div>
 					)}

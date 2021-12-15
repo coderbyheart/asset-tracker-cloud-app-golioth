@@ -3,9 +3,11 @@ import type {
 	Battery,
 	Device,
 	DeviceHistory,
+	DeviceInfo,
 	DeviceSensor,
 	Environment,
 	GNSS,
+	Roaming,
 } from 'api/api'
 import { useApi } from 'hooks/useApi'
 
@@ -15,6 +17,8 @@ export enum SensorProperties {
 	GNSS = 'gps',
 	// FIXME: https://github.com/NordicSemiconductor/asset-tracker-cloud-docs/pull/352
 	// GNSS = 'gnss',
+	Roaming = 'roam',
+	Device = 'dev',
 }
 
 type PropertyName = SensorProperties | string
@@ -22,8 +26,8 @@ type PropertyName = SensorProperties | string
 type SharedArgs = {
 	load?: boolean
 	limit?: number
-	startDate: Date
-	endDate: Date
+	startDate?: Date
+	endDate?: Date
 }
 
 type useDeviceHistoryType = {
@@ -45,6 +49,18 @@ type useDeviceHistoryType = {
 			sensor: SensorProperties.Environment
 		} & SharedArgs,
 	): DeviceHistory<Environment>
+	(
+		_: {
+			device: Device
+			sensor: SensorProperties.Roaming
+		} & SharedArgs,
+	): DeviceHistory<Roaming>
+	(
+		_: {
+			device: Device
+			sensor: SensorProperties.Device
+		} & SharedArgs,
+	): DeviceHistory<DeviceInfo>
 }
 
 export const useDeviceHistory: useDeviceHistoryType = <T extends DeviceSensor>({
@@ -59,16 +75,14 @@ export const useDeviceHistory: useDeviceHistoryType = <T extends DeviceSensor>({
 	sensor: PropertyName
 	load?: boolean
 	limit?: number
-	startDate: Date
-	endDate: Date
+	startDate?: Date
+	endDate?: Date
 }): DeviceHistory<T> => {
 	const [history, setHistory] = useState<DeviceHistory<T>>([])
 	const api = useApi()
 
 	useEffect(() => {
 		if (load === false) return
-		if (startDate === undefined) return
-		if (endDate === undefined) return
 		api
 			.project({ id: device.projectId })
 			.device({ id: device.id })

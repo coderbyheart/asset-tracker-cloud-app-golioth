@@ -45,7 +45,7 @@ export const ConnectionInformation = ({
 	iccid?: string
 	rsrp: number
 	mccmnc: number
-	receivedAt: Date
+	receivedAt?: Date
 	reportedAt: Date
 	dataStaleAfterSeconds: number
 }) => {

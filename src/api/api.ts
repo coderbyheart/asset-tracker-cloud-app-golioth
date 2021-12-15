@@ -1,3 +1,4 @@
+import { sub } from 'date-fns'
 import type { number } from 'fp-ts'
 import * as jose from 'jose'
 
@@ -82,7 +83,21 @@ export type GNSS = {
 	lng: number
 	spd: number
 }
-export type DeviceSensor = Battery | GNSS | Environment
+export type Roaming = {
+	area: number
+	mccmnc: number
+	cell: number
+	ip: string
+	rsrp: number
+	band: string
+	nw: string
+}
+export type DeviceInfo = {
+	iccid: string
+	modV: string
+	brdV: string
+}
+export type DeviceSensor = Battery | GNSS | Environment | Roaming | DeviceInfo
 
 export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
 export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
@@ -103,8 +118,8 @@ export const api = ({
 				path: string[]
 				limit?: number
 				page?: number
-				startDate: Date
-				endDate: Date
+				startDate?: Date
+				endDate?: Date
 			}) => Promise<DeviceHistory<T>>
 		}
 	}
@@ -190,8 +205,8 @@ export const api = ({
 					path: string[]
 					limit?: number
 					page?: number
-					startDate: Date
-					endDate: Date
+					startDate?: Date
+					endDate?: Date
 				}) => {
 					const res = await fetch(
 						`${base}/projects/${project.id}/devices/${device.id}/stream`,
@@ -202,8 +217,10 @@ export const api = ({
 								Authorization: `Bearer ${await getToken({ id, secret })}`,
 							},
 							body: JSON.stringify({
-								start: startDate.toISOString(),
-								end: endDate.toISOString(),
+								start: (
+									startDate ?? sub(new Date(), { months: 1 })
+								).toISOString(),
+								end: (endDate ?? new Date()).toISOString(),
 								query: {
 									fields: [
 										{
