@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 
 export const Toggle = ({
 	children,
+	className,
 }: {
 	children: React.ReactElement<any> | (React.ReactElement<any> | null)[]
+	className?: string
 }) => {
 	const [toggled, setToggled] = useState(false)
 
@@ -13,7 +15,10 @@ export const Toggle = ({
 	}
 
 	return (
-		<div className={`toggle ${toggled && 'toggle-on'}`} onClick={toggle}>
+		<div
+			className={`toggle ${toggled && 'toggle-on'} ${className}`}
+			onClick={toggle}
+		>
 			{children}
 		</div>
 	)

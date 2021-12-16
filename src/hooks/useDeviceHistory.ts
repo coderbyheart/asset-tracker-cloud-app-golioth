@@ -24,7 +24,6 @@ export enum SensorProperties {
 type PropertyName = SensorProperties | string
 
 type SharedArgs = {
-	load?: boolean
 	limit?: number
 	startDate?: Date
 	endDate?: Date
@@ -66,14 +65,12 @@ type useDeviceHistoryType = {
 export const useDeviceHistory: useDeviceHistoryType = <T extends DeviceSensor>({
 	device,
 	sensor,
-	load,
 	limit,
 	startDate,
 	endDate,
 }: {
 	device: Device
 	sensor: PropertyName
-	load?: boolean
 	limit?: number
 	startDate?: Date
 	endDate?: Date
@@ -82,14 +79,13 @@ export const useDeviceHistory: useDeviceHistoryType = <T extends DeviceSensor>({
 	const api = useApi()
 
 	useEffect(() => {
-		if (load === false) return
 		api
 			.project({ id: device.projectId })
 			.device({ id: device.id })
 			.history<T>({ path: [sensor, 'v'], limit, startDate, endDate })
 			.then(setHistory)
 			.catch(console.error)
-	}, [device, api, sensor, limit, load, startDate, endDate])
+	}, [device, api, sensor, limit, startDate, endDate])
 
 	return history
 }

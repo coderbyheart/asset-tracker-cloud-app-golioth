@@ -18,7 +18,7 @@ import { useMapSettings } from 'hooks/useMapSettings'
 import { toFixed } from 'utils/toFixed'
 import { nullOrUndefined } from 'utils/nullOrUndefined'
 import { formatDistanceToNow } from 'date-fns'
-import { SignalQuality } from 'ui/components/ConnectionInformation'
+import { SignalQuality } from 'ui/components/Device/SignalQuality'
 import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 import { useChartDateRange } from 'hooks/useChartDateRange'
 

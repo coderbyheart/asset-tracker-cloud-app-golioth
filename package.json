@@ -55,7 +55,8 @@
     "@types/uuid": "8.3.3",
     "eslint-config-react-app": "7.0.0",
     "jest": "27.4.5",
-    "snowpack": "3.8.8"
+    "snowpack": "3.8.8",
+    "ts-jest": "27.1.2"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -88,5 +89,9 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "prettier": "@nordicsemiconductor/asset-tracker-cloud-code-style/.prettierrc"
+  "prettier": "@nordicsemiconductor/asset-tracker-cloud-code-style/.prettierrc",
+  "jest": {
+    "preset": "ts-jest",
+    "testRegex": ".+\\.spec\\.ts$"
+  }
 }

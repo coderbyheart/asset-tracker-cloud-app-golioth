@@ -1,6 +1,7 @@
 import { sub } from 'date-fns'
 import type { number } from 'fp-ts'
 import * as jose from 'jose'
+import { filterNull } from 'utils/filterNull'
 
 export const headers = {
 	'content-type': 'application/json; charset=utf-8',
@@ -99,6 +100,13 @@ export type DeviceInfo = {
 }
 export type DeviceSensor = Battery | GNSS | Environment | Roaming | DeviceInfo
 
+type QueryParameters = {
+	limit?: number
+	page?: number
+	startDate?: Date
+	endDate?: Date
+}
+
 export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
 export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
 export const api = ({
@@ -114,13 +122,16 @@ export const api = ({
 		device: (_: Pick<Device, 'id'>) => {
 			get: () => Promise<Device>
 			state: () => Promise<Record<string, any>>
-			history: <T extends DeviceSensor>(_: {
-				path: string[]
-				limit?: number
-				page?: number
-				startDate?: Date
-				endDate?: Date
-			}) => Promise<DeviceHistory<T>>
+			history: <T extends DeviceSensor>(
+				_: {
+					path: string[]
+				} & QueryParameters,
+			) => Promise<DeviceHistory<T>>
+			multiHistory: <T extends Record<string, DeviceSensor>>(
+				_: {
+					sensors: string[]
+				} & QueryParameters,
+			) => Promise<{ [K in keyof T]: DeviceHistoryDatum<T[K]> }>
 		}
 	}
 } => {
@@ -254,6 +265,64 @@ export const api = ({
 						...rest,
 						ts: new Date(time),
 					})) as DeviceHistory<T>
+				},
+				multiHistory: async <T extends Record<string, DeviceSensor>>({
+					sensors,
+					limit,
+					page,
+					startDate,
+					endDate,
+				}: {
+					sensors: string[]
+					limit?: number
+					page?: number
+					startDate?: Date
+					endDate?: Date
+				}): Promise<{ [K in keyof T]: DeviceHistoryDatum<T[K]> }> => {
+					// Build a query for all requested sensors
+					const res = await fetch(
+						`${base}/projects/${project.id}/devices/${device.id}/stream`,
+						{
+							method: 'POST',
+							headers: {
+								...headers,
+								Authorization: `Bearer ${await getToken({ id, secret })}`,
+							},
+							body: JSON.stringify({
+								start: (
+									startDate ?? sub(new Date(), { months: 1 })
+								).toISOString(),
+								end: (endDate ?? new Date()).toISOString(),
+								query: {
+									fields: [
+										...sensors.map((sensor) => ({
+											path: `${sensor}.v`,
+											alias: sensor,
+										})),
+										{ path: 'time' },
+									],
+								},
+								page: page ?? 0,
+								perPage: limit ?? 100,
+							}),
+						},
+					)
+
+					// Go over the items
+					const result = {} as { [K in keyof T]: DeviceHistoryDatum<T[K]> }
+					const items = (await res.json()).list as Record<string, any>[]
+					for (const sensor of sensors) {
+						const reading = items
+							.map(filterNull)
+							.find((item) => item[sensor] !== undefined)
+						if (reading !== undefined) {
+							result[sensor as keyof T] = {
+								v: reading[sensor],
+								ts: new Date(reading.time as string),
+							} as any
+						}
+					}
+					return result
 				},
 			}),
 		}),

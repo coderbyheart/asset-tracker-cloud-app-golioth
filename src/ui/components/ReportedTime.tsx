@@ -9,7 +9,7 @@ const OutDatedSpan = styled.span`
 `
 
 const Warning = styled.abbr`
-	padding: 0.25rem;
+	padding-left: 0.25rem;
 `
 
 const OldWarning = ({
