@@ -6,7 +6,6 @@ import { useGlobalDevice } from '../hooks/useGlobalDevice'
 import type { Device as ApiDevice } from '../api/api'
 import { Battery } from './components/Device/Battery'
 import { Temperature } from './components/Device/Temperature'
-import { ChartDateRange } from './components/ChartDateRange'
 import { MapWithSettings } from './components/Map/MapWithSettings'
 import { InfoHeader } from './components/Device/Info'
 
@@ -38,7 +37,6 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 							<MapWithSettings device={device} />
 							<hr className="mt-0 mb-0" />
 							<InfoHeader device={device} />
-							<ChartDateRange />
 						</div>
 					)}
 				</div>

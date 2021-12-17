@@ -14,7 +14,6 @@ export type Settings = {
 		multicellLocations: boolean
 		history: boolean
 	}
-	numHistoryEntries: number
 	follow: boolean
 	zoom: number
 }
@@ -25,7 +24,6 @@ const userZoomSetting = withLocalStorage<number>({
 })
 
 const defaults: Settings = {
-	numHistoryEntries: 10,
 	follow: true,
 	enabledLayers: {
 		headings: true,

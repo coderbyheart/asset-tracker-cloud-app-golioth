@@ -94,7 +94,7 @@ export const Map = ({ device }: { device: Device }) => {
 	const locationHistory = useDeviceHistory({
 		device,
 		sensor: SensorProperties.GNSS,
-		limit: settings.enabledLayers.history ? settings.numHistoryEntries : 1,
+		limit: settings.enabledLayers.history ? undefined : 1,
 		startDate,
 		endDate,
 	})
