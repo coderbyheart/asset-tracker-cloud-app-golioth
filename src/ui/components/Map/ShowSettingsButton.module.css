@@ -1,0 +1,27 @@
+.ShowSettingsButton {
+  border: 0;
+  padding: 0;
+  background-color: #ffffffaf;
+  display: block;
+  height: 50px;
+  width: 65px;
+  transition-duration: 250ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.ShowSettingsButton span,
+.ShowSettingsButton span img {
+  width: 25px;
+  height: 25px;
+}
+
+.ShowSettingsButtonToggled {
+  composes: ShowSettingsButton;
+  background-color: #f7f7f7;
+}

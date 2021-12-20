@@ -9,14 +9,12 @@ export const About = ({
 }) => {
 	return (
 		<div className="row justify-content-center">
-			<div className="col-lg-8">
+			<div className="col-md-10 col-lg-8 col-xl-6">
 				<div
 					className="card"
 					data-intro="Did you know that this application is open source? Check out the links!"
 				>
-					<div className="card-header">
-						<h3 className="mt-2">About</h3>
-					</div>
+					<div className="card-header">About</div>
 					<div className="card-body">
 						<p>
 							This is the web application of the <em>nRF Asset Tracker</em>{' '}
@@ -54,9 +52,7 @@ export const About = ({
 					</div>
 				</div>
 				<div className="card mt-4">
-					<div className="card-header">
-						<h3 className="mt-2">Environment</h3>
-					</div>
+					<div className="card-header">Environment</div>
 					<div className="card-body">
 						<dl>
 							{Object.entries(import.meta.env).map(([k, v]) => (

@@ -1,16 +1,7 @@
 import React from 'react'
 import { formatDistanceToNow } from 'date-fns'
-import styled from 'styled-components'
 import { RelativeTime } from './RelativeTime'
 import { emojify } from './Emojify'
-
-const OutDatedSpan = styled.span`
-	margin-left: 0.5rem;
-`
-
-const Warning = styled.abbr`
-	padding-left: 0.25rem;
-`
 
 const OldWarning = ({
 	reportIsOld,
@@ -21,11 +12,12 @@ const OldWarning = ({
 }) => {
 	if (!reportIsOld) return null
 	return (
-		<Warning
+		<abbr
+			className="ps-1"
 			title={`The device is expected to report updates roughly every ${staleAfterSeconds} seconds, but the data is older.`}
 		>
 			{emojify('⚠️')}
-		</Warning>
+		</abbr>
 	)
 }
 
@@ -65,10 +57,10 @@ export const ReportedTime = ({
 				{receivedAt !== undefined &&
 					reportedTimeIsOutDated &&
 					relativeTimesHaveDiff && (
-						<OutDatedSpan>
+						<span className="ms-2">
 							{emojify('☁️ ')}
 							<RelativeTime ts={receivedAt} key={receivedAt.toISOString()} />
-						</OutDatedSpan>
+						</span>
 					)}
 				{staleAfterSeconds !== undefined && (
 					<OldWarning

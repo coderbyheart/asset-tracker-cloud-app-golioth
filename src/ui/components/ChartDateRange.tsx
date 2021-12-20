@@ -31,7 +31,11 @@ export const ChartDateRange = () => {
 								value={startDate.toISOString().substring(0, 10)}
 								onChange={({ target: { value } }) => {
 									try {
-										setStartDate(value === '' ? defaultStart : new Date(value))
+										setStartDate(
+											value === ''
+												? defaultStart
+												: new Date(`${value}T00:00:00.000Z`),
+										)
 									} catch {
 										// pass
 									}
@@ -58,7 +62,11 @@ export const ChartDateRange = () => {
 								value={endDate.toISOString().substring(0, 10)}
 								onChange={({ target: { value } }) => {
 									try {
-										setEndDate(value === '' ? defaultEnd : new Date(value))
+										setEndDate(
+											value === ''
+												? defaultEnd
+												: new Date(`${value}T23:59:59.999Z`),
+										)
 									} catch {
 										// pass
 									}

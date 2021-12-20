@@ -24,12 +24,10 @@ export const Login = () => {
 
 	return (
 		<div className="row justify-content-center">
-			<div className="col-lg-6">
+			<div className="col-md-10 col-lg-8 col-xl-6">
 				<div className="card">
 					<form>
-						<div className="card-header">
-							<h3 className="mt-2">Login</h3>
-						</div>
+						<div className="card-header">Login</div>
 						<div className="card-body">
 							<div className="mb-3">
 								<label htmlFor="jwtKey" className="form-label">

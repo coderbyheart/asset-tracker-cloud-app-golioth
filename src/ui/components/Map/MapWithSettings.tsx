@@ -2,23 +2,18 @@ import React, { useState } from 'react'
 import { Map } from 'ui/components/Map/Map'
 import type { Device as ApiDevice } from 'api/api'
 import { ShowSettingsButton } from 'ui/components/Map/ShowSettingsButton'
-import styled from 'styled-components'
 import { MapSettings } from './Settings'
-
-const MapWithSettingsContainer = styled.div`
-	position: relative;
-`
 
 export const MapWithSettings = ({ device }: { device: ApiDevice }) => {
 	const [showSettings, toggleSettings] = useState<boolean>(false)
 	return (
 		<>
-			<MapWithSettingsContainer>
+			<div style={{ position: 'relative' }}>
 				<Map device={device} />
 				<ShowSettingsButton
 					onToggle={(collapsed) => toggleSettings(!collapsed)}
 				/>
-			</MapWithSettingsContainer>
+			</div>
 			{showSettings && <MapSettings />}
 		</>
 	)

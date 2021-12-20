@@ -30,7 +30,7 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 	const { state } = useGlobalDevice()
 	return (
 		<div className="row justify-content-center">
-			<div className="col-lg-8">
+			<div className="col-md-10 col-lg-8 col-xl-6">
 				<div className="card">
 					{state && (
 						<div className="card-header pt-0 pe-0 pb-0 ps-0">
@@ -42,9 +42,7 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 				</div>
 
 				<div className="card mt-4">
-					<div className="card-header">
-						<h3 className="mt-2">{emojify('ℹ️ Device Information')}</h3>
-					</div>
+					<div className="card-header">{emojify('ℹ️ Device Information')}</div>
 					<div className="card-body">
 						<dl>
 							<dt>Project ID</dt>
@@ -58,9 +56,7 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 				</div>
 
 				<div className="card mt-4">
-					<div className="card-header">
-						<h3 className="mt-2">Info</h3>
-					</div>
+					<div className="card-header">Info</div>
 					<div className="card-body">
 						<pre>{JSON.stringify(device, null, 2)}</pre>
 					</div>
@@ -69,18 +65,14 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 				{state && (
 					<>
 						<div className="card mt-4">
-							<div className="card-header">
-								<h3 className="mt-2">Desired</h3>
-							</div>
+							<div className="card-header">Desired</div>
 							<div className="card-body">
 								<pre>{JSON.stringify(state?.desired, null, 2)}</pre>
 							</div>
 						</div>
 
 						<div className="card mt-4">
-							<div className="card-header">
-								<h3 className="mt-2">Reported</h3>
-							</div>
+							<div className="card-header">Reported</div>
 							<div className="card-body">
 								<pre>{JSON.stringify(state?.reported, null, 2)}</pre>
 							</div>

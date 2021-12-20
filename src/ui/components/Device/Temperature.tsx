@@ -17,9 +17,7 @@ export const Temperature = ({ device }: { device: Device }) => {
 
 	return (
 		<div className="card mt-4">
-			<div className="card-header">
-				<h3 className="mt-2">{emojify('🌡️ Temperature')}</h3>
-			</div>
+			<div className="card-header">{emojify('🌡️ Temperature')}</div>
 			<div className="card-body">
 				<ChartDateRange />
 				<HistoricalDataChart

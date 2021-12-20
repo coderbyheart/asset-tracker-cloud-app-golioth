@@ -1,33 +1,7 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import { emojify } from 'ui/components/Emojify'
 
-const MapToggleButton = styled.button`
-	border: 0;
-	padding: 0;
-	background-color: #ffffffaf;
-	display: block;
-	height: 50px;
-	width: 65px;
-	transition-duration: 250ms;
-	img.emoji,
-	& > span {
-		width: 25px;
-		height: 25px;
-	}
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	z-index: 1000;
-`
-const ActiveButton = styled(MapToggleButton)``
-
-const Chevron = styled.span``
-
-const InactiveButton = styled(MapToggleButton)``
+import styles from 'ui/components/Map/ShowSettingsButton.module.css'
 
 export const ShowSettingsButton = ({
 	onToggle,
@@ -44,9 +18,14 @@ export const ShowSettingsButton = ({
 
 	if (collapsed)
 		return (
-			<ActiveButton title={'Expand'} onClick={toggle}>
+			<button
+				type="button"
+				title={'Expand'}
+				onClick={toggle}
+				className={styles.ShowSettingsButton}
+			>
 				{emojify('⚙️')}
-				<Chevron>
+				<span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -60,14 +39,20 @@ export const ShowSettingsButton = ({
 					>
 						<polyline points="6 9 12 15 18 9"></polyline>
 					</svg>
-				</Chevron>
-			</ActiveButton>
+				</span>
+			</button>
 		)
 
 	return (
-		<InactiveButton color={'link'} title={'Collapse'} onClick={toggle}>
+		<button
+			type="button"
+			color={'link'}
+			title={'Collapse'}
+			onClick={toggle}
+			className={styles.ShowSettingsButtonToggled}
+		>
 			{emojify('⚙️')}
-			<Chevron>
+			<span>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -81,7 +66,7 @@ export const ShowSettingsButton = ({
 				>
 					<polyline points="18 15 12 9 6 15"></polyline>
 				</svg>
-			</Chevron>
-		</InactiveButton>
+			</span>
+		</button>
 	)
 }

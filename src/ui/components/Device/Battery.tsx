@@ -17,9 +17,7 @@ export const Battery = ({ device }: { device: Device }) => {
 
 	return (
 		<div className="card mt-4">
-			<div className="card-header">
-				<h3 className="mt-2">{emojify('🔋 Battery')}</h3>
-			</div>
+			<div className="card-header">{emojify('🔋 Battery')}</div>
 			<div className="card-body">
 				<ChartDateRange />
 				<HistoricalDataChart

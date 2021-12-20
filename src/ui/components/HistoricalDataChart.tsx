@@ -2,12 +2,6 @@ import * as am5 from '@amcharts/amcharts5'
 import * as am5xy from '@amcharts/amcharts5/xy'
 import React, { useLayoutEffect, useRef } from 'react'
 import { v4 } from 'uuid'
-import styled from 'styled-components'
-
-const HistoricalDataChartDiv = styled.div`
-	width: 100%;
-	height: 300px;
-`
 
 export const HistoricalDataChart = ({
 	data,
@@ -80,5 +74,5 @@ export const HistoricalDataChart = ({
 		}
 	}, [data, type, min, max, uuid])
 
-	return <HistoricalDataChartDiv id={uuid.current} />
+	return <div style={{ width: '100%', height: '300px' }} id={uuid.current} />
 }

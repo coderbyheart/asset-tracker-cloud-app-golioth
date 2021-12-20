@@ -14,10 +14,10 @@ export const Devices = () => {
 
 	return (
 		<div className="row justify-content-center">
-			<div className="col-lg-8">
+			<div className="col-md-10 col-lg-8 col-xl-6">
 				<div className="card">
-					<div className="card-header">
-						<h3 className="mt-2">Devices</h3>
+					<div className="card-header d-flex align-items-center">
+						<span className="me-4">Devices</span>
 						<select
 							className="form-select"
 							aria-label="Select a project"

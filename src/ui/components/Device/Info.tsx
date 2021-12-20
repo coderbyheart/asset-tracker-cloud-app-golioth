@@ -14,54 +14,8 @@ import type {
 	Roaming,
 } from 'api/api'
 import { useDeviceInfo } from 'hooks/useDeviceInfo'
-import styled from 'styled-components'
 
-const Info = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	align-content: center;
-	font-size: 85%;
-	opacity: 0.75;
-	> span:first-child {
-		display: flex;
-		> * {
-			padding-right: 1rem;
-		}
-	}
-	span.reportedTime {
-		display: flex;
-		font-size: 85%;
-		opacity: 0.75;
-		text-align: right;
-		span.textWithIcon {
-			width: auto;
-			display: inline-block;
-		}
-	}
-	padding: 0.5rem;
-`
-
-const StyledToggle = styled(Toggle)`
-	& + & {
-		border-top: 1px solid #dcdcdc;
-	}
-	.reportedTime {
-		time {
-			display: none;
-		}
-	}
-	&.toggle-on {
-		${Info} {
-			.reportedTime {
-				time {
-					display: inline;
-				}
-			}
-		}
-	}
-`
+import styles from 'ui/components/Device/Info.module.css'
 
 const RoamInfo = ({
 	roam,
@@ -73,8 +27,8 @@ const RoamInfo = ({
 	const { expectedSendIntervalInSeconds } = useGlobalDevice()
 	if (roam === undefined) return null
 	return (
-		<StyledToggle>
-			<Info>
+		<Toggle className={styles.Toggle}>
+			<div className={styles.Info}>
 				<ConnectionInformation
 					mccmnc={roam.v.mccmnc}
 					rsrp={roam.v.rsrp}
@@ -83,8 +37,8 @@ const RoamInfo = ({
 					iccid={dev?.v.iccid}
 					dataStaleAfterSeconds={expectedSendIntervalInSeconds}
 				/>
-			</Info>
-		</StyledToggle>
+			</div>
+		</Toggle>
 	)
 }
 
@@ -93,8 +47,8 @@ const BatteryInfo = ({ bat }: { bat?: DeviceHistoryDatum<Battery> }) => {
 	if (bat === undefined) return null
 
 	return (
-		<StyledToggle>
-			<Info>
+		<Toggle className={styles.Toggle}>
+			<div className={styles.Info}>
 				<span>
 					<span>{emojify(`🔋 ${bat.v / 1000}V`)}</span>
 				</span>
@@ -102,8 +56,8 @@ const BatteryInfo = ({ bat }: { bat?: DeviceHistoryDatum<Battery> }) => {
 					reportedAt={new Date(bat.ts)}
 					staleAfterSeconds={expectedSendIntervalInSeconds}
 				/>
-			</Info>
-		</StyledToggle>
+			</div>
+		</Toggle>
 	)
 }
 
@@ -112,8 +66,8 @@ const GNSSInfo = ({ gnss }: { gnss?: DeviceHistoryDatum<GNSS> }) => {
 
 	if (gnss?.v?.spd === undefined && gnss?.v?.alt === undefined) return null
 	return (
-		<StyledToggle>
-			<Info>
+		<Toggle className={styles.Toggle}>
+			<div className={styles.Info}>
 				<span>
 					{gnss.v.spd !== undefined && (
 						<span>{emojify(` 🏃${Math.round(gnss.v.spd)}m/s`)}</span>
@@ -126,8 +80,8 @@ const GNSSInfo = ({ gnss }: { gnss?: DeviceHistoryDatum<GNSS> }) => {
 					reportedAt={new Date(gnss.ts)}
 					staleAfterSeconds={expectedSendIntervalInSeconds}
 				/>
-			</Info>
-		</StyledToggle>
+			</div>
+		</Toggle>
 	)
 }
 
@@ -141,8 +95,8 @@ const EnvInfo = ({ env }: { env?: DeviceHistoryDatum<Environment> }) => {
 		return null
 
 	return (
-		<StyledToggle>
-			<Info>
+		<Toggle className={styles.Toggle}>
+			<div className={styles.Info}>
 				<span>
 					{env.v.temp && <span>{emojify(`🌡️ ${env.v.temp}°C`)}</span>}
 					{env.v.hum && <span>{emojify(`💦 ${Math.round(env.v.hum)}%`)}</span>}
@@ -151,8 +105,8 @@ const EnvInfo = ({ env }: { env?: DeviceHistoryDatum<Environment> }) => {
 					reportedAt={new Date(env.ts)}
 					staleAfterSeconds={expectedSendIntervalInSeconds}
 				/>
-			</Info>
-		</StyledToggle>
+			</div>
+		</Toggle>
 	)
 }
 
