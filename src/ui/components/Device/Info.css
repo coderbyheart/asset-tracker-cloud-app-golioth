@@ -1,4 +1,4 @@
-.Info {
+.deviceInfoToggle .info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -9,36 +9,36 @@
   padding: 0.5rem;
 }
 
-.Info > span:first-child {
+.deviceInfoToggle .info > span:first-child {
   display: flex;
 }
 
-.Info > span:first-child > * {
+.deviceInfoToggle .info > span:first-child > * {
   padding-right: 1rem;
 }
 
-.Info span:global(.reportedTime) {
+.deviceInfoToggle .info .reportedTime {
   display: flex;
   font-size: 85%;
   opacity: 0.75;
   text-align: right;
 }
 
-.Info span:global(.reportedTime) span:global(.textWithIcon) {
+.deviceInfoToggle .info .reportedTime .textWithIcon {
   width: auto;
   display: inline-block;
 }
 
-.Info span:global(.reportedTime) time {
+.deviceInfoToggle .info .reportedTime time {
   margin-left: 0.25rem;
 }
 
-.Toggle + .Toggle {
+.deviceInfoToggle + .deviceInfoToggle {
   border-top: 1px solid #dcdcdc;
 }
-.Toggle[data-toggled="0"] time {
+.deviceInfoToggle[data-toggled="0"] time {
   display: none;
 }
-.Toggle[data-toggled="1"] time {
+.deviceInfoToggle[data-toggled="1"] time {
   display: inline-block;
 }

@@ -1,4 +1,4 @@
-.ShowSettingsButton {
+.showSettingsButton {
   border: 0;
   padding: 0;
   background-color: #ffffffaf;
@@ -15,13 +15,12 @@
   z-index: 1000;
 }
 
-.ShowSettingsButton span,
-.ShowSettingsButton span img {
+.showSettingsButton span,
+.showSettingsButton span img {
   width: 25px;
   height: 25px;
 }
 
-.ShowSettingsButtonToggled {
-  composes: ShowSettingsButton;
+.showSettingsButton.toggled {
   background-color: #f7f7f7;
 }

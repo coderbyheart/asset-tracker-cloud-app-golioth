@@ -1,10 +1,10 @@
 import React from 'react'
 import twemoji from 'twemoji'
-import styles from 'ui/components/Emojify.module.css'
+import 'ui/components/Emojify.css'
 
 export const emojify = (text: string) => (
 	<span
-		className={styles.emojiContainer}
+		className="emojiContainer"
 		dangerouslySetInnerHTML={{
 			__html: twemoji.parse(text, {
 				base: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/',
