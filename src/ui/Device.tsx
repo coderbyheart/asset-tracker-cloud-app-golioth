@@ -8,6 +8,8 @@ import { Battery } from './components/Device/Battery'
 import { Temperature } from './components/Device/Temperature'
 import { MapWithSettings } from './components/Map/MapWithSettings'
 import { InfoHeader } from './components/Device/Info'
+import { Personalization } from './components/Personalization'
+import { Collapsable } from './components/Collapsable'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
@@ -39,6 +41,14 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 							<InfoHeader device={device} />
 						</div>
 					)}
+					<div className="card-body">
+						<Collapsable
+							title={emojify('⭐ Personalization')}
+							id="cat:personalization"
+						>
+							<Personalization />
+						</Collapsable>
+					</div>
 				</div>
 
 				<div className="card mt-4">

@@ -58,8 +58,12 @@ export const Navbar = () => {
 
 					{isAuthenticated && (
 						<form className="d-flex">
-							<button type="button" className="btn btn-light" onClick={logout}>
-								Log out
+							<button
+								type="button"
+								className="btn btn-outline-light"
+								onClick={logout}
+							>
+								{emojify('🚪')} Log out
 							</button>
 						</form>
 					)}
