@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import classnames from 'classnames'
 
 export const Toggle = ({
 	children,
@@ -17,13 +16,7 @@ export const Toggle = ({
 
 	return (
 		<div
-			className={classnames(
-				{
-					'toggle-on': toggled,
-				},
-				'toggle',
-				className,
-			)}
+			className={`${className} toggle`}
 			onClick={toggle}
 			data-toggled={toggled ? '1' : '0'}
 		>
