@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useGlobalDevice } from '../../hooks/useGlobalDevice'
 import { useAuth } from '../../hooks/useAuth'
 import { emojify } from './Emojify'
-import logo from './logo.svg'
+import logo from '/logo.svg'
 
 export const Navbar = () => {
 	const { isAuthenticated, logout } = useAuth()

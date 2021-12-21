@@ -11,6 +11,7 @@ import {
 	useMapEvents,
 } from 'react-leaflet'
 import type { LeafletEvent, Map as LeafletMap } from 'leaflet'
+import { icon, Point } from 'leaflet'
 import { NoMap } from './NoMap'
 import { useMapData } from 'hooks/useMapData'
 import type { Position } from 'hooks/useMapData'
@@ -23,6 +24,13 @@ import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 import { useChartDateRange } from 'hooks/useChartDateRange'
 
 import styles from 'ui/components/Map/Map.module.css'
+
+import logo from '/logo.svg'
+const marker = icon({
+	iconUrl: logo,
+	iconSize: new Point(50, 50),
+	iconAnchor: new Point(25, 30),
+})
 
 const EventHandler = ({
 	onZoomEnd,
@@ -105,7 +113,7 @@ export const Map = ({ device }: { device: Device }) => {
 				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			<Marker position={center}>
+			<Marker position={center} icon={marker}>
 				<Popup>{device.name}</Popup>
 			</Marker>
 			{deviceLocation?.position.accuracy !== undefined && (
