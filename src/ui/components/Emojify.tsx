@@ -7,7 +7,9 @@ export const emojify = (text: string) => (
 		className={styles.emojiContainer}
 		dangerouslySetInnerHTML={{
 			__html: twemoji.parse(text, {
-				base: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/',
+				base: `https://cdnjs.cloudflare.com/ajax/libs/twemoji/${
+					import.meta.env.PUBLIC_TWEMOJI_VERSION
+				}/`,
 				folder: 'svg',
 				ext: '.svg',
 			}),

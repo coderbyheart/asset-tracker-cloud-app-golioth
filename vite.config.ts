@@ -3,12 +3,17 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 
-const { version, homepage } = JSON.parse(
+const {
+	version,
+	homepage,
+	dependencies: { twemoji },
+} = JSON.parse(
 	fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'),
 )
 
 process.env.PUBLIC_VERSION ?? version ?? Date.now()
 process.env.PUBLIC_HOMEPAGE = homepage
+process.env.PUBLIC_TWEMOJI_VERSION = twemoji
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,4 +38,5 @@ export default defineConfig({
 	build: {
 		outDir: './build',
 	},
+	envPrefix: 'PUBLIC_',
 })

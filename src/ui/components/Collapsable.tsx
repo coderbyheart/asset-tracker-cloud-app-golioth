@@ -2,8 +2,6 @@ import { useCollapsed } from 'hooks/useCollapsed'
 import React from 'react'
 import styles from 'ui/components/Collapsable.module.css'
 
-console.log(styles.collapsable)
-
 const Chevron = () => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
