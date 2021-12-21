@@ -15,10 +15,12 @@ interface ImportMeta {
 		dispose: Function
 	}
 	env: {
+		// Vite built-in
 		MODE: string
-		API_ENDPOINT?: string
-		PUBLIC_URL?: string
-		VERSION?: string
-		HOMEPAGE?: string
+		BASE_URL?: string
+		// Custom
+		PUBLIC_API_ENDPOINT?: string
+		PUBLIC_VERSION: string
+		PUBLIC_HOMEPAGE?: string
 	}
 }

@@ -24,7 +24,7 @@ jobs:
       - run: rm -rf node_modules/.cache/eslint-loader
       - name: Build
         env:
-          PUBLIC_URL: /asset-tracker-cloud-app-golioth/
+          BASE_URL: /asset-tracker-cloud-app-golioth/
           VERSION: ${{ github.sha }}
         run: npm run build
       - uses: actions/upload-artifact@v2

@@ -10,9 +10,9 @@ const Chevron = () => (
 		viewBox="0 0 24 24"
 		fill="none"
 		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="square"
-		stroke-linejoin="square"
+		strokeWidth="2"
+		strokeLinecap="square"
+		strokeLinejoin="miter"
 	>
 		<polyline points="6 9 12 15 18 9"></polyline>
 	</svg>

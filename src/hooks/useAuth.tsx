@@ -5,7 +5,8 @@ import React, {
 	FunctionComponent,
 } from 'react'
 import { withLocalStorage } from 'utils/withLocalStorage'
-import { api, ApiError, JWTKey } from 'api/api'
+import { api, ApiError } from 'api/api'
+import type { JWTKey } from 'api/api'
 
 type AuthInfo = {
 	jwtKey?: JWTKey
@@ -60,7 +61,7 @@ export const AuthProvider: FunctionComponent<{ apiEndpoint: URL }> = ({
 			storedJwtKey.destroy()
 			const current = new URL(document.location.href)
 			document.location.href = new URL(
-				import.meta.env.PUBLIC_URL ?? '/',
+				import.meta.env.BASE_URL ?? '/',
 				`${current.protocol}//${current.host}${current.pathname}`,
 			).toString()
 		},

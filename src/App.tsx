@@ -20,11 +20,10 @@ import { GlobalDeviceProvider } from 'hooks/useGlobalDevice'
 import { MapSettingsProvider } from 'hooks/useMapSettings'
 import { GlobalChartDateRangeProvider } from 'hooks/useChartDateRange'
 
-const API_ENDPOINT = new URL(
-	(import.meta.env.API_ENDPOINT ?? 'https://api.golioth.io/v1/')?.replace(
-		/\/$/,
-		'',
-	),
+const PUBLIC_API_ENDPOINT = new URL(
+	(
+		import.meta.env.PUBLIC_API_ENDPOINT ?? 'https://api.golioth.io/v1/'
+	)?.replace(/\/$/, ''),
 )
 
 const AppRoot = () => {
@@ -35,7 +34,7 @@ const AppRoot = () => {
 	return (
 		<GlobalDeviceProvider>
 			<GlobalChartDateRangeProvider>
-				<Router basename={import.meta.env.PUBLIC_URL ?? '/'}>
+				<Router basename={import.meta.env.BASE_URL ?? '/'}>
 					<header>
 						<Navbar />
 					</header>
@@ -48,7 +47,7 @@ const AppRoot = () => {
 								</Routes>
 							)}
 							{isAuthenticated && jwtKey !== undefined && (
-								<ApiProvider jwtKey={jwtKey} endpoint={API_ENDPOINT}>
+								<ApiProvider jwtKey={jwtKey} endpoint={PUBLIC_API_ENDPOINT}>
 									<Routes>
 										<Route path="/login" element={<Navigate to="/devices" />} />
 										<Route path="/" element={<Navigate to="/devices" />} />
@@ -65,10 +64,12 @@ const AppRoot = () => {
 									path="/about"
 									element={
 										<About
-											version={import.meta.env.VERSION ?? '0.0.0-development'}
+											version={
+												import.meta.env.PUBLIC_VERSION ?? '0.0.0-development'
+											}
 											homepage={
 												new URL(
-													import.meta.env.HOMEPAGE ??
+													import.meta.env.PUBLIC_HOMEPAGE ??
 														'https://github.com/NordicSemiconductor/asset-tracker-cloud-app-golioth-js',
 												)
 											}
@@ -85,7 +86,7 @@ const AppRoot = () => {
 }
 
 export const App = () => (
-	<AuthProvider apiEndpoint={API_ENDPOINT}>
+	<AuthProvider apiEndpoint={PUBLIC_API_ENDPOINT}>
 		<AppRoot />
 	</AuthProvider>
 )
