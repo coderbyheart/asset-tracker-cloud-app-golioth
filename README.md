@@ -7,15 +7,13 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier/)
 [![ESLint: TypeScript](https://img.shields.io/badge/ESLint-TypeScript-blue.svg)](https://github.com/typescript-eslint/typescript-eslint)
+[![React](https://github.com/aleen42/badges/raw/master/src/react.svg)](https://reactjs.org/)
+[![CSS modules](https://img.shields.io/badge/CSS-modules-yellow)](https://github.com/css-modules/css-modules)
+[![Vite](https://github.com/aleen42/badges/raw/master/src/vitejs.svg)](https://vitejs.dev/)
 
-Provides a user interface via a web application to interact with a software Cat
-Tracker running in Node.js.
-
-The software Cat Trackers are provided by the respective cloud flavours of the
-nRF Asset Tracker:
-
-- [AWS](https://github.com/NordicSemiconductor/asset-tracker-cloud-aws-js)
-- [Azure](https://github.com/NordicSemiconductor/asset-tracker-cloud-azure-js)
+The Cat Tracker Web Application is a reference single-page application (SPA)
+developed using [Vite](https://vitejs.dev/) with [React](https://reactjs.org/)
+in [TypeScript](https://www.typescriptlang.org/).
 
 > :information_source:
 > [Read the complete nRF Asset Tracker documentation](https://nordicsemiconductor.github.io/asset-tracker-cloud-docs/).
@@ -27,7 +25,3 @@ nRF Asset Tracker:
 ## Running
 
     npm start
-
-After executing the above command, copy the connection string printed from
-`npm exec -- @nordicsemiconductor/asset-tracker-cloud-device-simulator-aws "</path/to/certificate.json>"`
-(e.g. `http://localhost:24272`) and provide it in the endpoint input field.
