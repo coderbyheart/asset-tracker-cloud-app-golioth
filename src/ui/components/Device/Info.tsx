@@ -15,7 +15,7 @@ import type {
 } from 'api/api'
 import { useDeviceInfo } from 'hooks/useDeviceInfo'
 
-import './Info.css'
+import styles from './Info.module.css'
 
 const RoamInfo = ({
 	roam,
@@ -27,8 +27,8 @@ const RoamInfo = ({
 	const { expectedSendIntervalInSeconds } = useGlobalDevice()
 	if (roam === undefined) return null
 	return (
-		<Toggle className="deviceInfoToggle">
-			<div className="info">
+		<Toggle className={styles.deviceInfoToggle}>
+			<div className={styles.info}>
 				<ConnectionInformation
 					mccmnc={roam.v.mccmnc}
 					rsrp={roam.v.rsrp}
@@ -47,8 +47,8 @@ const BatteryInfo = ({ bat }: { bat?: DeviceHistoryDatum<Battery> }) => {
 	if (bat === undefined) return null
 
 	return (
-		<Toggle className="deviceInfoToggle">
-			<div className="info">
+		<Toggle className={styles.deviceInfoToggle}>
+			<div className={styles.info}>
 				<span>
 					<span>{emojify(`🔋 ${bat.v / 1000}V`)}</span>
 				</span>
@@ -66,8 +66,8 @@ const GNSSInfo = ({ gnss }: { gnss?: DeviceHistoryDatum<GNSS> }) => {
 
 	if (gnss?.v?.spd === undefined && gnss?.v?.alt === undefined) return null
 	return (
-		<Toggle className="deviceInfoToggle">
-			<div className="info">
+		<Toggle className={styles.deviceInfoToggle}>
+			<div className={styles.info}>
 				<span>
 					{gnss.v.spd !== undefined && (
 						<span>{emojify(` 🏃${Math.round(gnss.v.spd)}m/s`)}</span>
@@ -95,8 +95,8 @@ const EnvInfo = ({ env }: { env?: DeviceHistoryDatum<Environment> }) => {
 		return null
 
 	return (
-		<Toggle className="deviceInfoToggle">
-			<div className="info">
+		<Toggle className={styles.deviceInfoToggle}>
+			<div className={styles.info}>
 				<span>
 					{env.v.temp && <span>{emojify(`🌡️ ${env.v.temp}°C`)}</span>}
 					{env.v.hum && <span>{emojify(`💦 ${Math.round(env.v.hum)}%`)}</span>}

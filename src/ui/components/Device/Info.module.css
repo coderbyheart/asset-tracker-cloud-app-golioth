@@ -17,19 +17,19 @@
   padding-right: 1rem;
 }
 
-.deviceInfoToggle .info .reportedTime {
+.deviceInfoToggle .info :global(.reportedTime) {
   display: flex;
   font-size: 85%;
   opacity: 0.75;
   text-align: right;
 }
 
-.deviceInfoToggle .info .reportedTime .textWithIcon {
+.deviceInfoToggle .info :global(.reportedTime) :global(.textWithIcon) {
   width: auto;
   display: inline-block;
 }
 
-.deviceInfoToggle .info .reportedTime time {
+.deviceInfoToggle .info :global(.reportedTime) time {
   margin-left: 0.25rem;
 }
 

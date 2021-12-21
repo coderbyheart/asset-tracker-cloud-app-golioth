@@ -1,6 +1,8 @@
 import { useCollapsed } from 'hooks/useCollapsed'
 import React from 'react'
-import 'ui/components/Collapsable.css'
+import styles from 'ui/components/Collapsable.module.css'
+
+console.log(styles.collapsable)
 
 const Chevron = () => (
 	<svg
@@ -31,19 +33,19 @@ export const Collapsable = ({
 
 	if (collapsed)
 		return (
-			<div className="collapsable" data-collapsed={collapsed ? '1' : '0'}>
-				<div className="collapsableHeader" onClick={toggle}>
+			<section className={styles.collapsable} aria-expanded="false">
+				<header onClick={toggle}>
 					<div>{title}</div>
 					<button className="toggle" title={'Expand'} onClick={toggle}>
 						<Chevron />
 					</button>
-				</div>
-			</div>
+				</header>
+			</section>
 		)
 
 	return (
-		<div className="collapsable" data-collapsed={collapsed ? '1' : '0'}>
-			<div className="collapsableHeader" onClick={toggle}>
+		<section className={styles.collapsable} aria-expanded="true">
+			<header onClick={toggle}>
 				<div>{title}</div>
 				<button
 					className="toggle"
@@ -53,8 +55,8 @@ export const Collapsable = ({
 				>
 					<Chevron />
 				</button>
-			</div>
-			<div className="collapsableContent">{children}</div>
-		</div>
+			</header>
+			<div>{children}</div>
+		</section>
 	)
 }

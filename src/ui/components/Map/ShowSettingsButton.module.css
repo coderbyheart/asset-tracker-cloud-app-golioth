@@ -21,6 +21,6 @@
   height: 25px;
 }
 
-.showSettingsButton.toggled {
+.showSettingsButton[aria-expanded="true"] {
   background-color: #f7f7f7;
 }

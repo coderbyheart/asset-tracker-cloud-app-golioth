@@ -22,7 +22,7 @@ import { SignalQuality } from 'ui/components/Device/SignalQuality'
 import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 import { useChartDateRange } from 'hooks/useChartDateRange'
 
-import 'ui/components/Map/Map.css'
+import styles from 'ui/components/Map/Map.module.css'
 
 const EventHandler = ({
 	onZoomEnd,
@@ -94,7 +94,7 @@ export const Map = ({ device }: { device: Device }) => {
 			center={[center.lat, center.lng]}
 			zoom={settings.zoom}
 			whenCreated={setmap}
-			className="mapContainer"
+			className={styles.mapContainer}
 		>
 			<EventHandler
 				onZoomEnd={({ map }) => {
@@ -178,7 +178,7 @@ export const Map = ({ device }: { device: Device }) => {
 									stroke={false}
 								>
 									<Popup position={{ lat, lng }}>
-										<div className="historyInfo">
+										<div className={styles.historyInfo}>
 											{!nullOrUndefined(accuracy) && (
 												<>
 													<dt>Accuracy</dt>
@@ -215,7 +215,7 @@ export const Map = ({ device }: { device: Device }) => {
 										</div>
 										{roaming !== undefined && !batch && (
 											<>
-												<div className="historyInfo">
+												<div className={styles.historyInfo}>
 													<dt>Connection</dt>
 													<dd style={{ textAlign: 'right' }}>
 														<SignalQuality dbm={roaming.roaming.rsrp} />

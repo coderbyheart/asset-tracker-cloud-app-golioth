@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { emojify } from 'ui/components/Emojify'
 
-import 'ui/components/Map/ShowSettingsButton.css'
+import styles from 'ui/components/Map/ShowSettingsButton.module.css'
 
 export const ShowSettingsButton = ({
 	onToggle,
@@ -22,7 +22,8 @@ export const ShowSettingsButton = ({
 				type="button"
 				title={'Expand'}
 				onClick={toggle}
-				className="showSettingsButton"
+				aria-expanded="false"
+				className={styles.showSettingsButton}
 			>
 				{emojify('⚙️')}
 				<span>
@@ -49,7 +50,8 @@ export const ShowSettingsButton = ({
 			color={'link'}
 			title={'Collapse'}
 			onClick={toggle}
-			className="showSettingsButton toggled"
+			aria-expanded="true"
+			className={styles.showSettingsButton}
 		>
 			{emojify('⚙️')}
 			<span>

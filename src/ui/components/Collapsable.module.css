@@ -1,0 +1,30 @@
+.collapsable > header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.collapsable > header button {
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  transition-duration: 250ms;
+}
+
+.collapsable > header button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.collapsable[aria-expanded="false"] > header button {
+  transform: rotate(0);
+}
+
+.collapsable[aria-expanded="true"] > header button {
+  transform: rotate(180deg);
+}
+
+.collapsable > div {
+  margin-top: 1rem;
+}
