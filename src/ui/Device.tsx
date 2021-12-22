@@ -13,7 +13,7 @@ import { Collapsable } from './components/Collapsable'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
-	const { setDevice } = useGlobalDevice()
+	const { setDevice, info: device } = useGlobalDevice()
 	const { info, state } = useDevice({ projectId, deviceId })
 
 	// Store the current device globally
@@ -24,8 +24,8 @@ export const Device = () => {
 		}
 	}, [info, state, setDevice])
 
-	if (info === undefined) return null
-	return <DeviceInfo device={info} />
+	if (device === undefined) return null
+	return <DeviceInfo device={device} />
 }
 
 const DeviceInfo = ({ device }: { device: ApiDevice }) => {
@@ -46,7 +46,7 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 							title={emojify('⭐ Personalization')}
 							id="cat:personalization"
 						>
-							<Personalization />
+							<Personalization device={device} />
 						</Collapsable>
 					</div>
 				</div>

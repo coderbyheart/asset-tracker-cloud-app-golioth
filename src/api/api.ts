@@ -106,6 +106,15 @@ type QueryParameters = {
 	endDate?: Date
 }
 
+const toDevice = (project: Pick<Project, 'id'>) => (d: any) =>
+	({
+		...d,
+		createdAt: new Date(d.createdAt),
+		updatedAt: new Date(d.updatedAt),
+		lastReport: new Date(d.lastReport),
+		projectId: project.id,
+	} as Device)
+
 export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
 export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
 export const api = ({
@@ -131,6 +140,7 @@ export const api = ({
 					sensors: string[]
 				} & QueryParameters,
 			) => Promise<{ [K in keyof T]: DeviceHistoryDatum<T[K]> }>
+			update: (_: { name: string }) => Promise<Device>
 		}
 	}
 } => {
@@ -166,13 +176,7 @@ export const api = ({
 				const { ok, status: httpStatusCode } = res
 				if (!ok) throw new ApiError(`Failed to fetch devices!`, httpStatusCode)
 				const { list } = await res.json()
-				return Object.values(list as Record<string, any>).map((d) => ({
-					...d,
-					createdAt: new Date(d.createdAt),
-					updatedAt: new Date(d.updatedAt),
-					lastReport: new Date(d.lastReport),
-					projectId: project.id,
-				})) as Device[]
+				return Object.values(list as Record<string, any>).map(toDevice(project))
 			},
 			device: (device: Pick<Device, 'id'>) => ({
 				get: async () => {
@@ -188,7 +192,7 @@ export const api = ({
 					)
 					const { ok, status: httpStatusCode } = res
 					if (!ok) throw new ApiError(`Failed to fetch device!`, httpStatusCode)
-					return (await res.json()).data
+					return toDevice(project)((await res.json()).data)
 				},
 				state: async () => {
 					const res = await fetch(
@@ -322,6 +326,22 @@ export const api = ({
 						}
 					}
 					return result
+				},
+				update: async (patch) => {
+					const res = await fetch(
+						`${base}/projects/${project.id}/devices/${device.id}`,
+						{
+							method: 'PATCH',
+							headers: {
+								...headers,
+								Authorization: `Bearer ${await getToken({ id, secret })}`,
+							},
+							body: JSON.stringify({
+								name: patch.name,
+							}),
+						},
+					)
+					return toDevice(project)((await res.json()).data)
 				},
 			}),
 		}),
