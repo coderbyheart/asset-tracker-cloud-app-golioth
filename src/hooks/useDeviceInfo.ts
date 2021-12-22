@@ -4,7 +4,6 @@ import type {
 	Device,
 	DeviceHistoryDatum,
 	DeviceInfo as Dev,
-	DeviceSensor,
 	Environment,
 	GNSS,
 	Roaming,

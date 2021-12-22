@@ -1,0 +1,22 @@
+.deviceInformation dl {
+  display: grid;
+  grid-template: auto / 1fr 2fr;
+}
+.deviceInformation dt,
+dd {
+  font-weight: normal;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.deviceInformation dt {
+  padding-right: 1rem;
+}
+.deviceInformation dt {
+  flex-grow: 1;
+}
+
+.deviceInformation :global(.reportedTime) {
+  font-size: 85%;
+  opacity: 0.75;
+}

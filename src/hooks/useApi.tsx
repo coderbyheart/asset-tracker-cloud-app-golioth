@@ -13,6 +13,7 @@ export const ApiContext = createContext<ReturnType<typeof api>>({
 			state: async () => rejected,
 			history: async () => rejected,
 			multiHistory: async () => rejected,
+			update: async () => rejected,
 		}),
 	}),
 })

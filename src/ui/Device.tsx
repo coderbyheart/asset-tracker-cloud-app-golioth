@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
-import { useDevice } from '../hooks/useDevice'
-import { emojify } from './components/Emojify'
-import { useGlobalDevice } from '../hooks/useGlobalDevice'
-import type { Device as ApiDevice } from '../api/api'
-import { Battery } from './components/Device/Battery'
-import { Temperature } from './components/Device/Temperature'
-import { MapWithSettings } from './components/Map/MapWithSettings'
-import { InfoHeader } from './components/Device/Info'
-import { Personalization } from './components/Personalization'
-import { Collapsable } from './components/Collapsable'
+import { useDevice } from 'hooks/useDevice'
+import { emojify } from 'ui/components/Emojify'
+import {
+	useExpectedSendIntervalInSeconds,
+	useGlobalDevice,
+} from 'hooks/useGlobalDevice'
+import type { Device as ApiDevice, DeviceState } from 'api/api'
+import { Battery } from 'ui/components/Device/Battery'
+import { Temperature } from 'ui/components/Device/Temperature'
+import { MapWithSettings } from 'ui/components/Map/MapWithSettings'
+import { InfoHeader } from 'ui/components/Device/Info'
+import { Personalization } from 'ui/components/Personalization'
+import { Collapsable } from 'ui/components/Collapsable'
+import { DeviceInformation } from 'ui/components/DeviceInformation'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
-	const { setDevice, info: device } = useGlobalDevice()
+	const { setDevice, info: device, state: deviceState } = useGlobalDevice()
 	const { info, state } = useDevice({ projectId, deviceId })
 
 	// Store the current device globally
@@ -25,13 +29,18 @@ export const Device = () => {
 	}, [info, state, setDevice])
 
 	if (device === undefined) return null
-	return <DeviceInfo device={device} />
+	return <DeviceInfo device={device} state={deviceState} />
 }
 
-const DeviceInfo = ({ device }: { device: ApiDevice }) => {
-	const { state } = useGlobalDevice()
+const DeviceInfo = ({
+	device,
+	state,
+}: {
+	device: ApiDevice
+	state?: DeviceState
+}) => {
 	return (
-		<div className="row justify-content-center">
+		<div className="row justify-content-center mb-4">
 			<div className="col-md-10 col-lg-8 col-xl-6">
 				<div className="card">
 					{state && (
@@ -48,50 +57,21 @@ const DeviceInfo = ({ device }: { device: ApiDevice }) => {
 						>
 							<Personalization device={device} />
 						</Collapsable>
+						<Collapsable
+							title={emojify('ℹ️ Device Information')}
+							id="cat:information"
+						>
+							<DeviceInformation device={device} state={state} />
+						</Collapsable>
+						<Collapsable title={emojify('🔋 Battery')} id="cat:battery">
+							<Battery device={device} />
+						</Collapsable>
+
+						<Collapsable title={emojify('🌡️ Temperature')} id="cat:temperature">
+							<Temperature device={device} />
+						</Collapsable>
 					</div>
 				</div>
-
-				<div className="card mt-4">
-					<div className="card-header">{emojify('ℹ️ Device Information')}</div>
-					<div className="card-body">
-						<dl>
-							<dt>Project ID</dt>
-							<dd>{device.projectId}</dd>
-						</dl>
-						<dl>
-							<dt>Device ID</dt>
-							<dd>{device.id}</dd>
-						</dl>
-					</div>
-				</div>
-
-				<div className="card mt-4">
-					<div className="card-header">Info</div>
-					<div className="card-body">
-						<pre>{JSON.stringify(device, null, 2)}</pre>
-					</div>
-				</div>
-
-				{state && (
-					<>
-						<div className="card mt-4">
-							<div className="card-header">Desired</div>
-							<div className="card-body">
-								<pre>{JSON.stringify(state?.desired, null, 2)}</pre>
-							</div>
-						</div>
-
-						<div className="card mt-4">
-							<div className="card-header">Reported</div>
-							<div className="card-body">
-								<pre>{JSON.stringify(state?.reported, null, 2)}</pre>
-							</div>
-						</div>
-					</>
-				)}
-
-				<Battery device={device} />
-				<Temperature device={device} />
 			</div>
 		</div>
 	)

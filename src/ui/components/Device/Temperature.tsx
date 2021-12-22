@@ -1,5 +1,4 @@
 import React from 'react'
-import { emojify } from 'ui/components/Emojify'
 import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 import type { Device } from 'api/api'
 import { HistoricalDataChart } from '../HistoricalDataChart'
@@ -16,18 +15,15 @@ export const Temperature = ({ device }: { device: Device }) => {
 	})
 
 	return (
-		<div className="card mt-4">
-			<div className="card-header">{emojify('🌡️ Temperature')}</div>
-			<div className="card-body">
-				<ChartDateRange />
-				<HistoricalDataChart
-					data={TemperatureHistory.map(({ v, ts }) => ({
-						date: new Date(ts),
-						value: v.temp,
-					}))}
-					type="line"
-				/>
-			</div>
-		</div>
+		<>
+			<ChartDateRange />
+			<HistoricalDataChart
+				data={TemperatureHistory.map(({ v, ts }) => ({
+					date: new Date(ts),
+					value: v.temp,
+				}))}
+				type="line"
+			/>
+		</>
 	)
 }

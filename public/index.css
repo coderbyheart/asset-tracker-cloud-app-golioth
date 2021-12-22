@@ -15,3 +15,7 @@ html {
     --bs-font-sans-serif: "Inter var", "system-ui";
   }
 }
+
+main h4 {
+  font-size: 100%;
+}

@@ -1,4 +1,7 @@
-import { useGlobalDevice } from 'hooks/useGlobalDevice'
+import {
+	useExpectedSendIntervalInSeconds,
+	useGlobalDevice,
+} from 'hooks/useGlobalDevice'
 import React from 'react'
 import { Toggle } from 'ui/components/Toggle'
 import { emojify } from 'ui/components/Emojify'
@@ -9,6 +12,7 @@ import type {
 	Device,
 	DeviceHistoryDatum,
 	DeviceInfo,
+	DeviceState,
 	Environment,
 	GNSS,
 	Roaming,
@@ -20,11 +24,12 @@ import styles from './Info.module.css'
 const RoamInfo = ({
 	roam,
 	dev,
+	expectedSendIntervalInSeconds,
 }: {
+	expectedSendIntervalInSeconds: number
 	roam?: DeviceHistoryDatum<Roaming>
 	dev?: DeviceHistoryDatum<DeviceInfo>
 }) => {
-	const { expectedSendIntervalInSeconds } = useGlobalDevice()
 	if (roam === undefined) return null
 	return (
 		<Toggle className={styles.deviceInfoToggle}>
@@ -42,8 +47,13 @@ const RoamInfo = ({
 	)
 }
 
-const BatteryInfo = ({ bat }: { bat?: DeviceHistoryDatum<Battery> }) => {
-	const { expectedSendIntervalInSeconds } = useGlobalDevice()
+const BatteryInfo = ({
+	bat,
+	expectedSendIntervalInSeconds,
+}: {
+	bat?: DeviceHistoryDatum<Battery>
+	expectedSendIntervalInSeconds: number
+}) => {
 	if (bat === undefined) return null
 
 	return (
@@ -61,9 +71,13 @@ const BatteryInfo = ({ bat }: { bat?: DeviceHistoryDatum<Battery> }) => {
 	)
 }
 
-const GNSSInfo = ({ gnss }: { gnss?: DeviceHistoryDatum<GNSS> }) => {
-	const { expectedSendIntervalInSeconds } = useGlobalDevice()
-
+const GNSSInfo = ({
+	gnss,
+	expectedSendIntervalInSeconds,
+}: {
+	gnss?: DeviceHistoryDatum<GNSS>
+	expectedSendIntervalInSeconds: number
+}) => {
 	if (gnss?.v?.spd === undefined && gnss?.v?.alt === undefined) return null
 	return (
 		<Toggle className={styles.deviceInfoToggle}>
@@ -85,9 +99,13 @@ const GNSSInfo = ({ gnss }: { gnss?: DeviceHistoryDatum<GNSS> }) => {
 	)
 }
 
-const EnvInfo = ({ env }: { env?: DeviceHistoryDatum<Environment> }) => {
-	const { expectedSendIntervalInSeconds } = useGlobalDevice()
-
+const EnvInfo = ({
+	env,
+	expectedSendIntervalInSeconds,
+}: {
+	env?: DeviceHistoryDatum<Environment>
+	expectedSendIntervalInSeconds: number
+}) => {
 	if (
 		env === undefined ||
 		(env?.v.temp === undefined && env?.v.hum === undefined)
@@ -110,15 +128,35 @@ const EnvInfo = ({ env }: { env?: DeviceHistoryDatum<Environment> }) => {
 	)
 }
 
-export const InfoHeader = ({ device }: { device: Device }) => {
+export const InfoHeader = ({
+	device,
+	state,
+}: {
+	device: Device
+	state?: DeviceState
+}) => {
 	const { bat, env, roam, gnss, dev } = useDeviceInfo({ device })
+	const expectedSendIntervalInSeconds = useExpectedSendIntervalInSeconds(state)
 
 	return (
 		<>
-			<RoamInfo roam={roam} dev={dev} />
-			<GNSSInfo gnss={gnss} />
-			<BatteryInfo bat={bat} />
-			<EnvInfo env={env} />
+			<RoamInfo
+				roam={roam}
+				expectedSendIntervalInSeconds={expectedSendIntervalInSeconds}
+				dev={dev}
+			/>
+			<GNSSInfo
+				gnss={gnss}
+				expectedSendIntervalInSeconds={expectedSendIntervalInSeconds}
+			/>
+			<BatteryInfo
+				bat={bat}
+				expectedSendIntervalInSeconds={expectedSendIntervalInSeconds}
+			/>
+			<EnvInfo
+				env={env}
+				expectedSendIntervalInSeconds={expectedSendIntervalInSeconds}
+			/>
 		</>
 	)
 }

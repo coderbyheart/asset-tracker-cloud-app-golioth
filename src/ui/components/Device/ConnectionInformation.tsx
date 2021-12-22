@@ -15,7 +15,6 @@ export const ConnectionInformation = ({
 	networkMode,
 	rsrp,
 	mccmnc,
-	receivedAt,
 	reportedAt,
 	iccid,
 	dataStaleAfterSeconds,
@@ -24,7 +23,6 @@ export const ConnectionInformation = ({
 	iccid?: string
 	rsrp: number
 	mccmnc: number
-	receivedAt?: Date
 	reportedAt: Date
 	dataStaleAfterSeconds: number
 }) => {
@@ -50,7 +48,6 @@ export const ConnectionInformation = ({
 				</abbr>
 			</span>
 			<ReportedTime
-				receivedAt={receivedAt}
 				reportedAt={reportedAt}
 				staleAfterSeconds={dataStaleAfterSeconds}
 			/>
