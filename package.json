@@ -47,7 +47,7 @@
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "9.2.36",
     "@types/jest": "27.0.3",
     "@types/leaflet": "1.7.6",
-    "@types/react": "17.0.37",
+    "@types/react": "17.0.38",
     "@types/react-dom": "17.0.11",
     "@types/twemoji": "12.1.2",
     "@types/uuid": "8.3.3",
