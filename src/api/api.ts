@@ -9,7 +9,7 @@ import { DataModules } from 'device/state'
 import * as jose from 'jose'
 import rfdc from 'rfdc'
 import { filterNull } from 'utils/filterNull'
-import { objectToArray } from './objectToArray'
+import { objectFlagsToArray } from './objectFlagsToArray'
 
 const clone = rfdc()
 
@@ -169,22 +169,23 @@ export const api = ({
 							throw new ApiError(`Failed to fetch device!`, httpStatusCode)
 
 						const state = (await res.json()).data
-						return {
+						const result = {
 							desired: {
 								...state.desired,
 								cfg: {
 									...state.desired?.cfg,
-									nod: objectToArray(state.desired.nod),
+									nod: objectFlagsToArray(state.desired?.cfg?.nod),
 								},
 							},
 							reported: {
 								...state.reported,
 								cfg: {
-									...state.desired?.cfg,
-									nod: objectToArray(state.reported.nod),
+									...state.reported?.cfg,
+									nod: objectFlagsToArray(state.reported?.cfg?.nod),
 								},
 							},
 						}
+						return result
 					},
 					update: async (patch) => {
 						const update = clone(patch) as any

@@ -47,7 +47,7 @@ export const Settings = () => {
 
 	return (
 		<form className={styles.SettingsForm}>
-			<fieldset data-intro={'This sets the operation mode of the tracker.'}>
+			<fieldset data-intro={'This sets the operation mode of the device.'}>
 				<legend>Mode</legend>
 				<div className="input-group mb-2">
 					<div className="btn-group" role="group">
@@ -81,7 +81,7 @@ export const Settings = () => {
 							type="button"
 							className={buttonClass('info', isActive)}
 							data-intro={
-								'In <em>Passive</em> mode, the tracker will wait for movement (triggered by the accelerometer) before sending an update to the cloud.'
+								'In <em>Passive</em> mode, the device will wait for movement (triggered by the accelerometer) before sending an update to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({ act: false })
@@ -93,7 +93,7 @@ export const Settings = () => {
 							type="button"
 							className={buttonClass('success', !isActive)}
 							data-intro={
-								'In <em>Active</em> mode, the tracker will send an update in a configurable interval.'
+								'In <em>Active</em> mode, the device will send an update in a configurable interval.'
 							}
 							onClick={() => {
 								updateConfig({ act: true })
@@ -221,7 +221,7 @@ export const Settings = () => {
 								newDesired.nod?.includes(DataModules.GNSS) ?? false,
 							)}
 							data-intro={
-								'In <em>Enabled</em> mode, the tracker will use GPS to send location data to the cloud.'
+								'In <em>Enabled</em> mode, the device will use GPS to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
@@ -241,7 +241,7 @@ export const Settings = () => {
 									!newDesired.nod?.includes(DataModules.GNSS),
 							)}
 							data-intro={
-								'In <em>Disabled</em> mode, the tracker will not use GPS to send location data to the cloud.'
+								'In <em>Disabled</em> mode, the device will not use GPS to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
@@ -302,7 +302,7 @@ export const Settings = () => {
 								) ?? false,
 							)}
 							data-intro={
-								'In <em>Enabled</em> mode, the tracker will use Neighbor Cell Measurements to send location data to the cloud.'
+								'In <em>Enabled</em> mode, the device will use Neighbor Cell Measurements to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
@@ -324,7 +324,7 @@ export const Settings = () => {
 									),
 							)}
 							data-intro={
-								'In <em>Disabled</em> mode, the tracker will not use Neighbor Cell Measurements to send location data to the cloud.'
+								'In <em>Disabled</em> mode, the device will not use Neighbor Cell Measurements to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({

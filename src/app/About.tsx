@@ -51,7 +51,10 @@ export const About = ({
 						</dl>
 					</div>
 				</div>
-				<div className="card mt-4">
+				<div
+					className="card mt-4"
+					data-intro="This card shows the environment variables configure during build time of the application."
+				>
 					<div className="card-header">Environment</div>
 					<div className="card-body">
 						<dl>

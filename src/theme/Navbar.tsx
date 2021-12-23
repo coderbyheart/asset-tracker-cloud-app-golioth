@@ -1,9 +1,12 @@
+import introJs from 'intro.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useGlobalDevice } from '../hooks/useGlobalDevice'
 import { emojify } from './Emojify'
 import logo from '/logo.svg'
+
+const intro = introJs()
 
 export const Navbar = () => {
 	const { isAuthenticated, logout } = useAuth()
@@ -51,8 +54,20 @@ export const Navbar = () => {
 						</li>
 						<li className="nav-item">
 							<Link className="nav-link" to="/about">
-								{emojify(`💁 About`)}
+								{emojify(`ℹ️ About`)}
 							</Link>
+						</li>
+						<li className="nav-item">
+							<button
+								type="button"
+								className="btn btn-link nav-link"
+								style={{ fontWeight: 'var(--bs-body-font-weight)' }}
+								onClick={() => {
+									intro.start()
+								}}
+							>
+								{emojify(`💁 Help`)}
+							</button>
 						</li>
 					</ul>
 

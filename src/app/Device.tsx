@@ -1,5 +1,6 @@
 import type { GoliothDevice as ApiDevice } from 'api/api'
 import type { DeviceTwin } from 'device/state'
+import { useAutoUpdateDevice } from 'hooks/useAutoUpdateDevice'
 import { useDevice } from 'hooks/useDevice'
 import { useGlobalDevice } from 'hooks/useGlobalDevice'
 import React, { useEffect } from 'react'
@@ -12,12 +13,14 @@ import { Personalization } from 'theme/Device/Personalization'
 import { Temperature } from 'theme/Device/Temperature'
 import { emojify } from 'theme/Emojify'
 import { MapWithSettings } from 'theme/Map/MapWithSettings'
+import { HelpNote } from 'theme/Settings/HelpNote'
 import { Settings } from '../theme/Settings/Settings'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
 	const { setDevice, info: device, state: deviceState } = useGlobalDevice()
 	const { info, state } = useDevice({ projectId, deviceId })
+	useAutoUpdateDevice()
 
 	// Store the current device globally
 	useEffect(() => {
@@ -44,17 +47,24 @@ const DeviceInfo = ({
 				<div className="card">
 					{state && (
 						<div className="card-header pt-0 pe-0 pb-0 ps-0">
-							<MapWithSettings device={device} />
+							<div data-intro="This map shows the location of your device.">
+								<MapWithSettings device={device} />
+							</div>
 							<hr className="mt-0 mb-0" />
-							<InfoHeader device={device} />
+							<div data-intro="This provides on overview of important device information.">
+								<InfoHeader device={device} />
+							</div>
 						</div>
 					)}
 					<div className="card-body">
 						<Collapsable title={emojify('⚙️ Settings')} id="cat:settings">
 							<h4>Personalization</h4>
 							<Personalization device={device} />
-							<h4 className="mt-4 ">Device configuration</h4>
-							<Settings />
+							<div data-intro="This allows you change the run-time configuration of the device.">
+								<h4 className="mt-4 ">Device configuration</h4>
+								<HelpNote />
+								<Settings />
+							</div>
 						</Collapsable>
 						<Collapsable
 							title={emojify('ℹ️ Device Information')}

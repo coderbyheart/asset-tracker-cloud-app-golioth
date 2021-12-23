@@ -25,11 +25,17 @@ export const Login = () => {
 	return (
 		<div className="row justify-content-center">
 			<div className="col-md-10 col-lg-8 col-xl-6">
-				<div className="card">
+				<div
+					className="card"
+					data-intro="The login credentials for this application are your Golioth JWT key and secret. You can acquire them from the Golioth Console. Make sure to select the type 'JWT Token'."
+				>
 					<form>
 						<div className="card-header">Login</div>
 						<div className="card-body">
-							<div className="mb-3">
+							<div
+								className="mb-3"
+								data-intro="Enter your Golioth API JWT key identifier."
+							>
 								<label htmlFor="jwtKey" className="form-label">
 									JWT key
 								</label>
@@ -46,7 +52,10 @@ export const Login = () => {
 									The identifier of your Golioth API JWT key.
 								</div>
 							</div>
-							<div className="mb-3">
+							<div
+								className="mb-3"
+								data-intro="Enter your Golioth API JWT key secret."
+							>
 								<label htmlFor="jwtSecret" className="form-label">
 									JWT secret
 								</label>
@@ -72,6 +81,7 @@ export const Login = () => {
 								onClick={() => {
 									setLoggingIn(true)
 								}}
+								data-intro="Finally, click this button to log in."
 							>
 								Log in
 							</button>

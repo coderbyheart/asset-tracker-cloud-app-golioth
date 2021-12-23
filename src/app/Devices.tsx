@@ -15,7 +15,10 @@ export const Devices = () => {
 	return (
 		<div className="row justify-content-center">
 			<div className="col-md-10 col-lg-8 col-xl-6">
-				<div className="card">
+				<div
+					className="card"
+					data-intro="This card lists the devices in your project. Click on one to see its details."
+				>
 					<div className="card-header d-flex align-items-center">
 						<span className="me-4">Devices</span>
 						<select
@@ -23,6 +26,7 @@ export const Devices = () => {
 							aria-label="Select a project"
 							value={currentProject?.id}
 							onChange={() => undefined}
+							data-intro="You can switch between the projects in your account here."
 						>
 							{projects.map((project) => (
 								<option key={project.id} value={project.id}>
@@ -32,10 +36,15 @@ export const Devices = () => {
 						</select>
 					</div>
 					<div className="card-body">
-						{devices.map((device) => (
+						{devices.map((device, key) => (
 							<Link
 								key={device.id}
 								to={`/project/${currentProject?.id}/device/${device.id}`}
+								data-intro={
+									key === 0
+										? `Click on a device to view its details.`
+										: undefined
+								}
 							>
 								{device.name}
 							</Link>
