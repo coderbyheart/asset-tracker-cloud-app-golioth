@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import type { Project } from '../api/api'
 import { Link } from 'react-router-dom'
-import { useProjects } from '../hooks/useProjects'
+import type { GoliothProject } from '../api/api'
 import { useDevices } from '../hooks/useDevices'
+import { useProjects } from '../hooks/useProjects'
 
 export const Devices = () => {
 	const projects = useProjects()
-	const [currentProject, setCurrentProject] = useState<Project>()
+	const [currentProject, setCurrentProject] = useState<GoliothProject>()
 	if (projects.length > 0 && currentProject === undefined) {
 		setCurrentProject(projects[0])
 	}

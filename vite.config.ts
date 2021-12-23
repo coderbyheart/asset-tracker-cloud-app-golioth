@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
+import { defineConfig } from 'vite'
 
 const {
 	version,
@@ -29,9 +29,12 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: [
+			{ find: 'app/', replacement: '/src/app/' },
 			{ find: 'api/', replacement: '/src/api/' },
+			{ find: 'device/', replacement: '/src/device/' },
 			{ find: 'hooks/', replacement: '/src/hooks/' },
-			{ find: 'ui/', replacement: '/src/ui/' },
+			{ find: 'components/', replacement: '/src/components/' },
+			{ find: 'theme/', replacement: '/src/theme/' },
 			{ find: 'utils/', replacement: '/src/utils/' },
 		],
 	},

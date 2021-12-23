@@ -1,5 +1,5 @@
-import React from 'react'
 import { useChartDateRange } from 'hooks/useChartDateRange'
+import React from 'react'
 
 export const ChartDateRange = () => {
 	const {

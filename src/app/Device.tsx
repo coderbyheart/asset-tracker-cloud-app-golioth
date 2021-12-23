@@ -1,19 +1,18 @@
+import type { GoliothDevice as ApiDevice } from 'api/api'
+import type { DeviceTwin } from 'device/state'
+import { useDevice } from 'hooks/useDevice'
+import { useGlobalDevice } from 'hooks/useGlobalDevice'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
-import { useDevice } from 'hooks/useDevice'
-import { emojify } from 'ui/components/Emojify'
-import {
-	useExpectedSendIntervalInSeconds,
-	useGlobalDevice,
-} from 'hooks/useGlobalDevice'
-import type { Device as ApiDevice, DeviceState } from 'api/api'
-import { Battery } from 'ui/components/Device/Battery'
-import { Temperature } from 'ui/components/Device/Temperature'
-import { MapWithSettings } from 'ui/components/Map/MapWithSettings'
-import { InfoHeader } from 'ui/components/Device/Info'
-import { Personalization } from 'ui/components/Personalization'
-import { Collapsable } from 'ui/components/Collapsable'
-import { DeviceInformation } from 'ui/components/DeviceInformation'
+import { Collapsable } from 'theme/Collapsable'
+import { Battery } from 'theme/Device/Battery'
+import { DeviceInformation } from 'theme/Device/DeviceInformation'
+import { InfoHeader } from 'theme/Device/Info'
+import { Personalization } from 'theme/Device/Personalization'
+import { Temperature } from 'theme/Device/Temperature'
+import { emojify } from 'theme/Emojify'
+import { MapWithSettings } from 'theme/Map/MapWithSettings'
+import { Settings } from '../theme/Settings/Settings'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
@@ -37,7 +36,7 @@ const DeviceInfo = ({
 	state,
 }: {
 	device: ApiDevice
-	state?: DeviceState
+	state?: DeviceTwin
 }) => {
 	return (
 		<div className="row justify-content-center mb-4">
@@ -51,11 +50,11 @@ const DeviceInfo = ({
 						</div>
 					)}
 					<div className="card-body">
-						<Collapsable
-							title={emojify('⭐ Personalization')}
-							id="cat:personalization"
-						>
+						<Collapsable title={emojify('⚙️ Settings')} id="cat:settings">
+							<h4>Personalization</h4>
 							<Personalization device={device} />
+							<h4 className="mt-4 ">Device configuration</h4>
+							<Settings />
 						</Collapsable>
 						<Collapsable
 							title={emojify('ℹ️ Device Information')}
@@ -66,7 +65,6 @@ const DeviceInfo = ({
 						<Collapsable title={emojify('🔋 Battery')} id="cat:battery">
 							<Battery device={device} />
 						</Collapsable>
-
 						<Collapsable title={emojify('🌡️ Temperature')} id="cat:temperature">
 							<Temperature device={device} />
 						</Collapsable>

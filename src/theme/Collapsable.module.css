@@ -17,11 +17,11 @@
   height: 16px;
 }
 
-.collapsable[aria-expanded="false"] > header button {
+.collapsable > header button[aria-expanded="false"] {
   transform: rotate(0);
 }
 
-.collapsable[aria-expanded="true"] > header button {
+.collapsable > header button[aria-expanded="true"] {
   transform: rotate(180deg);
 }
 

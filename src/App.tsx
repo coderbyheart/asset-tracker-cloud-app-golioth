@@ -1,24 +1,24 @@
-import React from 'react'
+import { About } from 'app/About'
+import { Device } from 'app/Device'
+import { Devices } from 'app/Devices'
+import { Login } from 'app/Login'
+import { ApiProvider } from 'hooks/useApi'
 import {
 	AuthProvider,
-	useAuth,
 	defaults as authContextDefaults,
+	useAuth,
 } from 'hooks/useAuth'
-import { ApiProvider } from 'hooks/useApi'
-import { Devices } from 'ui/Devices'
-import { Login } from 'ui/Login'
-import { Navbar } from 'ui/components/Navbar'
+import { GlobalChartDateRangeProvider } from 'hooks/useChartDateRange'
+import { GlobalDeviceProvider } from 'hooks/useGlobalDevice'
+import { MapSettingsProvider } from 'hooks/useMapSettings'
+import React from 'react'
 import {
 	BrowserRouter as Router,
 	Navigate,
 	Route,
 	Routes,
 } from 'react-router-dom'
-import { Device } from 'ui/Device'
-import { About } from 'ui/About'
-import { GlobalDeviceProvider } from 'hooks/useGlobalDevice'
-import { MapSettingsProvider } from 'hooks/useMapSettings'
-import { GlobalChartDateRangeProvider } from 'hooks/useChartDateRange'
+import { Navbar } from 'theme/Navbar'
 
 const PUBLIC_API_ENDPOINT = new URL(
 	(

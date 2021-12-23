@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-import type { Project } from 'api/api'
+import type { GoliothProject } from 'api/api'
 import { useApi } from 'hooks/useApi'
+import { useEffect, useState } from 'react'
 
-export const useProjects = (): Project[] => {
-	const [projects, setProjects] = useState<Project[]>([])
+export const useProjects = (): GoliothProject[] => {
+	const [projects, setProjects] = useState<GoliothProject[]>([])
 	const api = useApi()
 
 	useEffect(() => {

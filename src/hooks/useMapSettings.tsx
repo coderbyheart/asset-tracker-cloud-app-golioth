@@ -1,11 +1,11 @@
+import equal from 'fast-deep-equal'
 import React, {
 	createContext,
-	useContext,
 	FunctionComponent,
+	useContext,
 	useState,
 } from 'react'
 import { withLocalStorage } from 'utils/withLocalStorage'
-import equal from 'fast-deep-equal'
 
 export type Settings = {
 	enabledLayers: {

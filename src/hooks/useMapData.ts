@@ -1,4 +1,4 @@
-import type { DeviceHistory, DeviceHistoryDatum, GNSS } from 'api/api'
+import type { DeviceHistory, DeviceHistoryDatum, GNSS } from 'device/state'
 
 export type Position = { lat: number; lng: number }
 

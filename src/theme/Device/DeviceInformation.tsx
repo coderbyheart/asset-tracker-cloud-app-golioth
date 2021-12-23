@@ -1,17 +1,17 @@
-import type { Device, DeviceState } from 'api/api'
-import React from 'react'
-import { ReportedTime } from 'ui/components/ReportedTime'
-
-import styles from 'ui/components/DeviceInformation.module.css'
+import type { GoliothDevice } from 'api/api'
+import type { DeviceTwin } from 'device/state'
 import { useDeviceInfo } from 'hooks/useDeviceInfo'
 import { useExpectedSendIntervalInSeconds } from 'hooks/useGlobalDevice'
+import React from 'react'
+import styles from 'theme/Device/DeviceInformation.module.css'
+import { ReportedTime } from 'theme/ReportedTime'
 
 export const DeviceInformation = ({
 	device,
 	state,
 }: {
-	device: Device
-	state?: DeviceState
+	device: GoliothDevice
+	state?: DeviceTwin
 }) => {
 	const { roam, dev } = useDeviceInfo({ device })
 	const expectedSendIntervalInSeconds = useExpectedSendIntervalInSeconds(state)

@@ -1,5 +1,5 @@
-import React from 'react'
 import { RSRP, SignalQualityTriangle } from '@nordicsemiconductor/rsrp-bar'
+import React from 'react'
 import { emojify } from '../Emojify'
 
 export const SignalQuality = ({ dbm }: { dbm: number }) => (

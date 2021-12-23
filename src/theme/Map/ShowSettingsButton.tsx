@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { emojify } from 'ui/components/Emojify'
-
-import styles from 'ui/components/Map/ShowSettingsButton.module.css'
+import { emojify } from 'theme/Emojify'
+import styles from 'theme/Map/ShowSettingsButton.module.css'
 
 export const ShowSettingsButton = ({
 	onToggle,

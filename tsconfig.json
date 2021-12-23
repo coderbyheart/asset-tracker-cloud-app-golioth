@@ -16,8 +16,11 @@
     "baseUrl": "src",
     "paths": {
       "api/*": ["api/*"],
+      "app/*": ["app/*"],
+      "device/*": ["device/*"],
       "hooks/*": ["hooks/*"],
-      "ui/*": ["ui/*"],
+      "components/*": ["components/*"],
+      "theme/*": ["theme/*"],
       "utils/*": ["utils/*"]
     }
   },

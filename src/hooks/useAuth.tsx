@@ -1,12 +1,12 @@
+import type { JWTKey } from 'api/api'
+import { api, ApiError } from 'api/api'
 import React, {
 	createContext,
+	FunctionComponent,
 	useContext,
 	useState,
-	FunctionComponent,
 } from 'react'
 import { withLocalStorage } from 'utils/withLocalStorage'
-import { api, ApiError } from 'api/api'
-import type { JWTKey } from 'api/api'
 
 type AuthInfo = {
 	jwtKey?: JWTKey

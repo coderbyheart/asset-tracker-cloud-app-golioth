@@ -1,7 +1,7 @@
+import type { GoliothDevice as ApiDevice } from 'api/api'
 import React, { useState } from 'react'
-import { Map } from 'ui/components/Map/Map'
-import type { Device as ApiDevice } from 'api/api'
-import { ShowSettingsButton } from 'ui/components/Map/ShowSettingsButton'
+import { Map } from 'theme/Map/Map'
+import { ShowSettingsButton } from 'theme/Map/ShowSettingsButton'
 import { MapSettings } from './Settings'
 
 export const MapWithSettings = ({ device }: { device: ApiDevice }) => {

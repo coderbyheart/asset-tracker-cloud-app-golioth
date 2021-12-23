@@ -1,10 +1,10 @@
-import React from 'react'
-import { filter as filterOperator, Operator as Op } from 'mcc-mnc-list'
 import { identifyIssuer } from 'e118-iin-list'
 import { isSome, none } from 'fp-ts/lib/Option'
-import { TextWithIcon } from '../TextWithIcon'
+import { filter as filterOperator, Operator as Op } from 'mcc-mnc-list'
+import React from 'react'
 import { emojify } from '../Emojify'
 import { ReportedTime } from '../ReportedTime'
+import { TextWithIcon } from '../TextWithIcon'
 import { SignalQuality } from './SignalQuality'
 
 export const Operator = ({ op }: { op?: Op }) => (

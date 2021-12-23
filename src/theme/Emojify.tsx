@@ -1,6 +1,6 @@
 import React from 'react'
+import styles from 'theme/Emojify.module.css'
 import twemoji from 'twemoji'
-import styles from 'ui/components/Emojify.module.css'
 
 export const emojify = (text: string) => (
 	<span

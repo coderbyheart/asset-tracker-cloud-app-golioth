@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
+import type { GoliothDevice } from 'api/api'
 import type {
 	Battery,
-	Device,
 	DeviceHistoryDatum,
 	DeviceInfo as Dev,
 	Environment,
 	GNSS,
 	Roaming,
-} from 'api/api'
+} from 'device/state'
 import { useApi } from 'hooks/useApi'
+import { useEffect, useState } from 'react'
 
 type DeviceInfo = {
 	bat?: DeviceHistoryDatum<Battery>
@@ -18,7 +18,11 @@ type DeviceInfo = {
 	dev?: DeviceHistoryDatum<Dev>
 }
 
-export const useDeviceInfo = ({ device }: { device: Device }): DeviceInfo => {
+export const useDeviceInfo = ({
+	device,
+}: {
+	device: GoliothDevice
+}): DeviceInfo => {
 	const [history, setHistory] = useState<DeviceInfo>({})
 	const api = useApi()
 

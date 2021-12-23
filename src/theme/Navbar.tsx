@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useGlobalDevice } from '../../hooks/useGlobalDevice'
-import { useAuth } from '../../hooks/useAuth'
+import { useAuth } from '../hooks/useAuth'
+import { useGlobalDevice } from '../hooks/useGlobalDevice'
 import { emojify } from './Emojify'
 import logo from '/logo.svg'
 

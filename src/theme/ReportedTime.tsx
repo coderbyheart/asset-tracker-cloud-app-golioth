@@ -1,7 +1,7 @@
-import React, { HTMLProps } from 'react'
-import { RelativeTime } from './RelativeTime'
-import { emojify } from './Emojify'
 import { useReportedTime } from 'hooks/useReportedTime'
+import React, { HTMLProps } from 'react'
+import { emojify } from './Emojify'
+import { RelativeTime } from './RelativeTime'
 
 const OldWarning = ({
 	reportIsOld,

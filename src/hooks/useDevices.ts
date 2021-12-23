@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-import type { Device, Project } from 'api/api'
+import type { GoliothDevice, GoliothProject } from 'api/api'
 import { useApi } from 'hooks/useApi'
+import { useEffect, useState } from 'react'
 
-export const useDevices = (project?: Project): Device[] => {
-	const [devices, setDevices] = useState<Device[]>([])
+export const useDevices = (project?: GoliothProject): GoliothDevice[] => {
+	const [devices, setDevices] = useState<GoliothDevice[]>([])
 	const api = useApi()
 
 	useEffect(() => {

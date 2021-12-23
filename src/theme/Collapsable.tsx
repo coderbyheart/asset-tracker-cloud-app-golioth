@@ -1,6 +1,6 @@
 import { useCollapsed } from 'hooks/useCollapsed'
 import React from 'react'
-import styles from 'ui/components/Collapsable.module.css'
+import styles from 'theme/Collapsable.module.css'
 
 const Chevron = () => (
 	<svg
@@ -31,10 +31,16 @@ export const Collapsable = ({
 
 	if (collapsed)
 		return (
-			<section className={styles.collapsable} aria-expanded="false">
+			<section className={styles.collapsable} id={id}>
 				<header onClick={toggle}>
 					<div>{title}</div>
-					<button className="toggle" title={'Expand'} onClick={toggle}>
+					<button
+						className="toggle"
+						title={'Expand'}
+						onClick={toggle}
+						aria-expanded="false"
+						aria-controls={id}
+					>
 						<Chevron />
 					</button>
 				</header>
@@ -42,7 +48,7 @@ export const Collapsable = ({
 		)
 
 	return (
-		<section className={styles.collapsable} aria-expanded="true">
+		<section className={styles.collapsable}>
 			<header onClick={toggle}>
 				<div>{title}</div>
 				<button
@@ -50,6 +56,8 @@ export const Collapsable = ({
 					color={'link'}
 					title={'Collapse'}
 					onClick={toggle}
+					aria-expanded="true"
+					aria-controls={id}
 				>
 					<Chevron />
 				</button>

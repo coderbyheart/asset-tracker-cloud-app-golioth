@@ -1,24 +1,20 @@
-import {
-	useExpectedSendIntervalInSeconds,
-	useGlobalDevice,
-} from 'hooks/useGlobalDevice'
-import React from 'react'
-import { Toggle } from 'ui/components/Toggle'
-import { emojify } from 'ui/components/Emojify'
-import { ReportedTime } from 'ui/components/ReportedTime'
-import { ConnectionInformation } from 'ui/components/Device/ConnectionInformation'
+import type { GoliothDevice } from 'api/api'
 import type {
 	Battery,
-	Device,
 	DeviceHistoryDatum,
 	DeviceInfo,
-	DeviceState,
+	DeviceTwin,
 	Environment,
 	GNSS,
 	Roaming,
-} from 'api/api'
+} from 'device/state'
 import { useDeviceInfo } from 'hooks/useDeviceInfo'
-
+import { useExpectedSendIntervalInSeconds } from 'hooks/useGlobalDevice'
+import React from 'react'
+import { ConnectionInformation } from 'theme/Device/ConnectionInformation'
+import { emojify } from 'theme/Emojify'
+import { ReportedTime } from 'theme/ReportedTime'
+import { Toggle } from 'theme/Toggle'
 import styles from './Info.module.css'
 
 const RoamInfo = ({
@@ -132,8 +128,8 @@ export const InfoHeader = ({
 	device,
 	state,
 }: {
-	device: Device
-	state?: DeviceState
+	device: GoliothDevice
+	state?: DeviceTwin
 }) => {
 	const { bat, env, roam, gnss, dev } = useDeviceInfo({ device })
 	const expectedSendIntervalInSeconds = useExpectedSendIntervalInSeconds(state)

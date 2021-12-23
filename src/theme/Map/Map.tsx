@@ -1,31 +1,30 @@
-import React, { useState } from 'react'
-import type { Device } from 'api/api'
-import {
-	MapContainer,
-	TileLayer,
-	Marker,
-	Popup,
-	Circle,
-	Polyline,
-	MapConsumer,
-	useMapEvents,
-} from 'react-leaflet'
+import type { GoliothDevice } from 'api/api'
+import { formatDistanceToNow } from 'date-fns'
+import { useChartDateRange } from 'hooks/useChartDateRange'
+import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
+import type { Position } from 'hooks/useMapData'
+import { useMapData } from 'hooks/useMapData'
+import { useMapSettings } from 'hooks/useMapSettings'
 import type { LeafletEvent, Map as LeafletMap } from 'leaflet'
 import { icon, Point } from 'leaflet'
-import { NoMap } from './NoMap'
-import { useMapData } from 'hooks/useMapData'
-import type { Position } from 'hooks/useMapData'
-import { useMapSettings } from 'hooks/useMapSettings'
-import { toFixed } from 'utils/toFixed'
+import React, { useState } from 'react'
+import {
+	Circle,
+	MapConsumer,
+	MapContainer,
+	Marker,
+	Polyline,
+	Popup,
+	TileLayer,
+	useMapEvents,
+} from 'react-leaflet'
+import { SignalQuality } from 'theme/Device/SignalQuality'
+import styles from 'theme/Map/Map.module.css'
 import { nullOrUndefined } from 'utils/nullOrUndefined'
-import { formatDistanceToNow } from 'date-fns'
-import { SignalQuality } from 'ui/components/Device/SignalQuality'
-import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
-import { useChartDateRange } from 'hooks/useChartDateRange'
-
-import styles from 'ui/components/Map/Map.module.css'
-
+import { toFixed } from 'utils/toFixed'
+import { NoMap } from './NoMap'
 import logo from '/logo.svg'
+
 const marker = icon({
 	iconUrl: logo,
 	iconSize: new Point(50, 50),
@@ -76,7 +75,7 @@ const HeadingMarker = ({
 	</MapConsumer>
 )
 
-export const Map = ({ device }: { device: Device }) => {
+export const Map = ({ device }: { device: GoliothDevice }) => {
 	const { settings, update: updateSettings } = useMapSettings()
 	const { startDate, endDate } = useChartDateRange()
 	const locationHistory = useDeviceHistory({

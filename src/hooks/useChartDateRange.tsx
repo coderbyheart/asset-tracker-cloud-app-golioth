@@ -1,10 +1,10 @@
+import { sub } from 'date-fns'
 import React, {
 	createContext,
-	useContext,
 	FunctionComponent,
+	useContext,
 	useState,
 } from 'react'
-import { sub } from 'date-fns'
 import { dateFreezer, withLocalStorage } from 'utils/withLocalStorage'
 
 const defaultStart = sub(new Date(), { months: 1 })

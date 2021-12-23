@@ -1,11 +1,11 @@
-import type { Device } from 'api/api'
-import { useDeviceUpdate } from 'hooks/useDeviceUpdate'
+import type { GoliothDevice } from 'api/api'
 import { useGlobalDevice } from 'hooks/useGlobalDevice'
+import { useUpdateDevice } from 'hooks/useUpdateDevice'
 import React, { useState } from 'react'
 
-export const Personalization = ({ device }: { device: Device }) => {
+export const Personalization = ({ device }: { device: GoliothDevice }) => {
 	const [name, setName] = useState<string>(device.name ?? '')
-	const update = useDeviceUpdate({ device })
+	const update = useUpdateDevice({ device })
 	const { state, setDevice } = useGlobalDevice()
 	return (
 		<form className="row justify-content-center">

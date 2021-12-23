@@ -1,5 +1,5 @@
 import React from 'react'
-import { emojify } from 'ui/components/Emojify'
+import { emojify } from 'theme/Emojify'
 
 export const NoMap = () => (
 	<div

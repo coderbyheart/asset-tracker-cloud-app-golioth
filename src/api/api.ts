@@ -1,6 +1,17 @@
 import { sub } from 'date-fns'
+import type {
+	DeviceHistory,
+	DeviceHistoryDatum,
+	DeviceSensor,
+	DeviceState,
+} from 'device/state'
+import { DataModules } from 'device/state'
 import * as jose from 'jose'
+import rfdc from 'rfdc'
 import { filterNull } from 'utils/filterNull'
+import { objectToArray } from './objectToArray'
+
+const clone = rfdc()
 
 export const headers = {
 	'content-type': 'application/json; charset=utf-8',
@@ -25,14 +36,14 @@ export class ApiError extends Error {
 	}
 }
 
-export type Project = {
+export type GoliothProject = {
 	id: string
 	name: string
 	createdAt: Date
 	updatedAt: Date
 }
 
-export type Device = {
+export type GoliothDevice = {
 	id: string
 	projectId: string
 	hardwareIds: string[]
@@ -45,60 +56,6 @@ export type Device = {
 	status: string
 }
 
-export type DeviceState = {
-	reported?: {
-		cfg?: {
-			acc?: number
-			acct?: number
-			act?: boolean
-			actwt?: number
-			gpst?: number
-			mvres?: number
-			mvt?: number
-		}
-	}
-	desired?: {
-		cfg?: {
-			acc?: number
-			acct?: number
-			act?: boolean
-			actwt?: number
-			gpst?: number
-			mvres?: number
-			mvt?: number
-		}
-	}
-}
-
-export type Battery = number
-export type Environment = {
-	temp: number
-	hum: number
-}
-export type GNSS = {
-	acc: number
-	alt: number
-	hdg: number
-	lat: number
-	lng: number
-	spd: number
-}
-export type Roaming = {
-	area: number
-	mccmnc: number
-	cell: number
-	ip: string
-	rsrp: number
-	band: string
-	nw: string
-}
-export type DeviceInfo = {
-	iccid: string
-	modV: string
-	brdV: string
-}
-export type DeviceSensor = Battery | GNSS | Environment | Roaming | DeviceInfo
-
 type QueryParameters = {
 	limit?: number
 	page?: number
@@ -106,17 +63,15 @@ type QueryParameters = {
 	endDate?: Date
 }
 
-const toDevice = (project: Pick<Project, 'id'>) => (d: any) =>
+const toDevice = (project: Pick<GoliothProject, 'id'>) => (d: any) =>
 	({
 		...d,
 		createdAt: new Date(d.createdAt),
 		updatedAt: new Date(d.updatedAt),
 		lastReport: new Date(d.lastReport),
 		projectId: project.id,
-	} as Device)
+	} as GoliothDevice)
 
-export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
-export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
 export const api = ({
 	jwtKey: { id, secret },
 	endpoint,
@@ -124,12 +79,15 @@ export const api = ({
 	jwtKey: JWTKey
 	endpoint: URL
 }): {
-	projects: () => Promise<Project[]>
-	project: (_: Pick<Project, 'id'>) => {
-		devices: () => Promise<Device[]>
-		device: (_: Pick<Device, 'id'>) => {
-			get: () => Promise<Device>
-			state: () => Promise<Record<string, any>>
+	projects: () => Promise<GoliothProject[]>
+	project: (_: Pick<GoliothProject, 'id'>) => {
+		devices: () => Promise<GoliothDevice[]>
+		device: (_: Pick<GoliothDevice, 'id'>) => {
+			get: () => Promise<GoliothDevice>
+			state: {
+				get: () => Promise<Record<string, any>>
+				update: (_: DeviceState) => Promise<void>
+			}
 			history: <T extends DeviceSensor>(
 				_: {
 					path: string[]
@@ -140,7 +98,7 @@ export const api = ({
 					sensors: string[]
 				} & QueryParameters,
 			) => Promise<{ [K in keyof T]: DeviceHistoryDatum<T[K]> }>
-			update: (_: { name: string }) => Promise<Device>
+			update: (_: { name: string }) => Promise<GoliothDevice>
 		}
 	}
 } => {
@@ -164,7 +122,7 @@ export const api = ({
 			}))
 			return projects
 		},
-		project: (project: Pick<Project, 'id'>) => ({
+		project: (project: Pick<GoliothProject, 'id'>) => ({
 			devices: async () => {
 				const res = await fetch(`${base}/projects/${project.id}/devices`, {
 					method: 'GET',
@@ -178,7 +136,7 @@ export const api = ({
 				const { list } = await res.json()
 				return Object.values(list as Record<string, any>).map(toDevice(project))
 			},
-			device: (device: Pick<Device, 'id'>) => ({
+			device: (device: Pick<GoliothDevice, 'id'>) => ({
 				get: async () => {
 					const res = await fetch(
 						`${base}/projects/${project.id}/devices/${device.id}`,
@@ -194,20 +152,63 @@ export const api = ({
 					if (!ok) throw new ApiError(`Failed to fetch device!`, httpStatusCode)
 					return toDevice(project)((await res.json()).data)
 				},
-				state: async () => {
-					const res = await fetch(
-						`${base}/projects/${project.id}/devices/${device.id}/data`,
-						{
-							method: 'GET',
-							headers: {
-								...headers,
-								Authorization: `Bearer ${await getToken({ id, secret })}`,
+				state: {
+					get: async () => {
+						const res = await fetch(
+							`${base}/projects/${project.id}/devices/${device.id}/data`,
+							{
+								method: 'GET',
+								headers: {
+									...headers,
+									Authorization: `Bearer ${await getToken({ id, secret })}`,
+								},
 							},
-						},
-					)
-					const { ok, status: httpStatusCode } = res
-					if (!ok) throw new ApiError(`Failed to fetch device!`, httpStatusCode)
-					return (await res.json()).data
+						)
+						const { ok, status: httpStatusCode } = res
+						if (!ok)
+							throw new ApiError(`Failed to fetch device!`, httpStatusCode)
+
+						const state = (await res.json()).data
+						return {
+							desired: {
+								...state.desired,
+								cfg: {
+									...state.desired?.cfg,
+									nod: objectToArray(state.desired.nod),
+								},
+							},
+							reported: {
+								...state.reported,
+								cfg: {
+									...state.desired?.cfg,
+									nod: objectToArray(state.reported.nod),
+								},
+							},
+						}
+					},
+					update: async (patch) => {
+						const update = clone(patch) as any
+						if (update.cfg?.nod !== undefined) {
+							update.cfg.nod = Object.values(DataModules).reduce(
+								(nod, module) => ({
+									...nod,
+									[module]: patch.cfg?.nod?.includes(module) ?? false,
+								}),
+								{} as Record<string, boolean>,
+							)
+						}
+						await fetch(
+							`${base}/projects/${project.id}/devices/${device.id}/data/desired`,
+							{
+								method: 'PATCH',
+								headers: {
+									...headers,
+									Authorization: `Bearer ${await getToken({ id, secret })}`,
+								},
+								body: JSON.stringify(update),
+							},
+						)
+					},
 				},
 				history: async <T extends DeviceSensor>({
 					path,

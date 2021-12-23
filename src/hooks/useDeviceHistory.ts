@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
+import type { GoliothDevice } from 'api/api'
 import type {
 	Battery,
-	Device,
 	DeviceHistory,
 	DeviceInfo,
 	DeviceSensor,
 	Environment,
 	GNSS,
 	Roaming,
-} from 'api/api'
+} from 'device/state'
 import { useApi } from 'hooks/useApi'
+import { useEffect, useState } from 'react'
 
 export enum SensorProperties {
 	Battery = 'bat',
@@ -32,31 +32,31 @@ type SharedArgs = {
 type useDeviceHistoryType = {
 	(
 		_: {
-			device: Device
+			device: GoliothDevice
 			sensor: SensorProperties.GNSS
 		} & SharedArgs,
 	): DeviceHistory<GNSS>
 	(
 		_: {
-			device: Device
+			device: GoliothDevice
 			sensor: SensorProperties.Battery
 		} & SharedArgs,
 	): DeviceHistory<Battery>
 	(
 		_: {
-			device: Device
+			device: GoliothDevice
 			sensor: SensorProperties.Environment
 		} & SharedArgs,
 	): DeviceHistory<Environment>
 	(
 		_: {
-			device: Device
+			device: GoliothDevice
 			sensor: SensorProperties.Roaming
 		} & SharedArgs,
 	): DeviceHistory<Roaming>
 	(
 		_: {
-			device: Device
+			device: GoliothDevice
 			sensor: SensorProperties.Device
 		} & SharedArgs,
 	): DeviceHistory<DeviceInfo>
@@ -69,7 +69,7 @@ export const useDeviceHistory: useDeviceHistoryType = <T extends DeviceSensor>({
 	startDate,
 	endDate,
 }: {
-	device: Device
+	device: GoliothDevice
 	sensor: PropertyName
 	limit?: number
 	startDate?: Date

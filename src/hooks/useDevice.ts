@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import type { Device, DeviceState } from 'api/api'
+import type { GoliothDevice } from 'api/api'
+import type { DeviceTwin } from 'device/state'
 import { useApi } from 'hooks/useApi'
+import { useEffect, useState } from 'react'
 
 export const useDevice = ({
 	projectId,
@@ -9,19 +10,19 @@ export const useDevice = ({
 	projectId?: string
 	deviceId?: string
 }): {
-	info?: Device
-	state?: DeviceState
+	info?: GoliothDevice
+	state?: DeviceTwin
 } => {
 	const [{ info, state }, setDevice] = useState<{
-		info?: Device
-		state?: DeviceState
+		info?: GoliothDevice
+		state?: DeviceTwin
 	}>({})
 	const api = useApi()
 
 	useEffect(() => {
 		if (projectId === undefined || deviceId === undefined) return
 		const d = api.project({ id: projectId }).device({ id: deviceId })
-		Promise.all([d.state(), d.get()])
+		Promise.all([d.state.get(), d.get()])
 			.then(([state, info]) => {
 				setDevice({ state, info: { ...info, projectId } })
 			})

@@ -8,12 +8,19 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier/)
 [![ESLint: TypeScript](https://img.shields.io/badge/ESLint-TypeScript-blue.svg)](https://github.com/typescript-eslint/typescript-eslint)
 [![React](https://github.com/aleen42/badges/raw/master/src/react.svg)](https://reactjs.org/)
+[![Bootstrap 5](https://img.shields.io/badge/Bootstrap-5-ffffff?labelColor=7952b3)](https://getbootstrap.com/docs/5.0/)
 [![CSS modules](https://img.shields.io/badge/CSS-modules-yellow)](https://github.com/css-modules/css-modules)
 [![Vite](https://github.com/aleen42/badges/raw/master/src/vitejs.svg)](https://vitejs.dev/)
 
 The Cat Tracker Web Application is a reference single-page application (SPA)
 developed using [Vite](https://vitejs.dev/) with [React](https://reactjs.org/)
 in [TypeScript](https://www.typescriptlang.org/).
+
+The UI components are themed using
+[Bootstrap 5](https://getbootstrap.com/docs/5.0/) and
+[CSS modules](https://github.com/css-modules/css-modules). All complex UI logic
+is extracted using [React hooks](https://reactjs.org/docs/hooks-custom.html) to
+allow re-use when changing the UI framework.
 
 > :information_source:
 > [Read the complete nRF Asset Tracker documentation](https://nordicsemiconductor.github.io/asset-tracker-cloud-docs/).

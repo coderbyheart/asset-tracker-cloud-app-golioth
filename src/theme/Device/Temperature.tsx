@@ -1,11 +1,11 @@
-import React from 'react'
-import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
-import type { Device } from 'api/api'
-import { HistoricalDataChart } from '../HistoricalDataChart'
-import { ChartDateRange } from '../ChartDateRange'
+import type { GoliothDevice } from 'api/api'
 import { useChartDateRange } from 'hooks/useChartDateRange'
+import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
+import React from 'react'
+import { ChartDateRange } from '../ChartDateRange'
+import { HistoricalDataChart } from '../HistoricalDataChart'
 
-export const Temperature = ({ device }: { device: Device }) => {
+export const Temperature = ({ device }: { device: GoliothDevice }) => {
 	const { startDate, endDate } = useChartDateRange()
 	const TemperatureHistory = useDeviceHistory({
 		device,
