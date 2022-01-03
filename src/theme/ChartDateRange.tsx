@@ -13,7 +13,7 @@ export const ChartDateRange = () => {
 	return (
 		<form className="mt-2 me-2 mb-2 ms-2">
 			<fieldset className="row">
-				<div className="col-sm-6">
+				<div className="col-6">
 					<div className="row">
 						<div className="col-sm-5">
 							<label
@@ -44,7 +44,7 @@ export const ChartDateRange = () => {
 						</div>
 					</div>
 				</div>
-				<div className="col-sm-6">
+				<div className="col-6">
 					<div className="row">
 						<div className="col-sm-5">
 							<label
