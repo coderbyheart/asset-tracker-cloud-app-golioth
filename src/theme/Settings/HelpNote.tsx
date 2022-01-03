@@ -1,5 +1,5 @@
 import introJs from 'intro.js'
-import React from 'react'
+import React, { useState } from 'react'
 import { emojify } from 'theme/Emojify'
 import { withLocalStorage } from 'utils/withLocalStorage'
 
@@ -11,32 +11,35 @@ const storedHidden = withLocalStorage<boolean>({
 })
 
 export const HelpNote = () => {
-	if (storedHidden.get()) return null
+	const [hidden, setHidden] = useState<boolean>(storedHidden.get())
+	if (hidden) return null
 	return (
 		<div
-			className="alert alert-info alert-dismissible fade show mt-4"
+			className="alert alert-info mt-4 d-flex justify-content-between align-items-center"
 			role="alert"
 		>
-			Click
-			<button
-				type="button"
-				className="btn btn-link"
-				onClick={() => {
-					window.requestAnimationFrame(() => {
-						intro.start()
-					})
-				}}
-			>
-				{emojify('💁')} Help
-			</button>
-			to view a detailed description of the settings.
+			<span>
+				Click
+				<button
+					type="button"
+					className="btn btn-link"
+					onClick={() => {
+						window.requestAnimationFrame(() => {
+							intro.start()
+						})
+					}}
+				>
+					{emojify('💁')} Help
+				</button>
+				to view a detailed description of the settings.
+			</span>
 			<button
 				type="button"
 				className="btn-close"
-				data-bs-dismiss="alert"
 				aria-label="Close"
 				onClick={() => {
 					storedHidden.set(true)
+					setHidden(true)
 				}}
 			></button>
 		</div>
