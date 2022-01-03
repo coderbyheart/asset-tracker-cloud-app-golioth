@@ -49,6 +49,39 @@ export type DeviceInfo = {
 	modV: string
 	brdV: string
 }
-export type DeviceSensor = Battery | GNSS | Environment | Roaming | DeviceInfo
+export type DeviceSensor =
+	| Battery
+	| GNSS
+	| Environment
+	| Roaming
+	| DeviceInfo
+	| NCellMeasReport
 export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
 export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
+
+export type NCellMeasReport = {
+	reportId: string
+	nw: string
+	mcc: number
+	mnc: number
+	cell: number
+	area: number
+	earfcn: number
+	adv: number
+	rsrp: number
+	rsrq: number
+	nmr?: {
+		earfcn: number
+		cell: number
+		rsrp: number
+		rsrq: number
+	}[]
+	reportedAt: Date
+	receivedAt: Date
+	unresolved?: boolean
+	position?: {
+		lat: number
+		lng: number
+		accuracy: number
+	}
+}

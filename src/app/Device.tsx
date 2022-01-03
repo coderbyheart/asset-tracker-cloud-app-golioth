@@ -9,6 +9,7 @@ import { Collapsable } from 'theme/Collapsable'
 import { Battery } from 'theme/Device/Battery'
 import { DeviceInformation } from 'theme/Device/DeviceInformation'
 import { InfoHeader } from 'theme/Device/Info'
+import { NeighborCellMeasurementsReport } from 'theme/Device/NeighborCellMeasurementsReport'
 import { Personalization } from 'theme/Device/Personalization'
 import { Temperature } from 'theme/Device/Temperature'
 import { emojify } from 'theme/Emojify'
@@ -71,6 +72,9 @@ const DeviceInfo = ({
 							id="cat:information"
 						>
 							<DeviceInformation device={device} state={state} />
+						</Collapsable>
+						<Collapsable title={emojify('🗧 Neighboring cells')} id="cat:ncell">
+							<NeighborCellMeasurementsReport device={device} state={state} />
 						</Collapsable>
 						<Collapsable title={emojify('🔋 Battery')} id="cat:battery">
 							<Battery device={device} />
