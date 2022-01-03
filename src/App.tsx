@@ -39,7 +39,7 @@ const AppRoot = () => {
 						<Navbar />
 					</header>
 					<MapSettingsProvider>
-						<main className="container mt-4">
+						<main className="container">
 							{!isAuthenticated && (
 								<Routes>
 									<Route index element={<Navigate to="/login" />} />

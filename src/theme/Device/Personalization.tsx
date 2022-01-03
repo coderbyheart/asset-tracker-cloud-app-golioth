@@ -9,7 +9,7 @@ export const Personalization = ({ device }: { device: GoliothDevice }) => {
 	const { state, setDevice } = useGlobalDevice()
 	return (
 		<form
-			className="row justify-content-center"
+			className="justify-content-center"
 			data-intro="Use this form to give your device a recognizable name."
 		>
 			<label htmlFor="name">Customize the name of your device</label>

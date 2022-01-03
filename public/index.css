@@ -19,3 +19,21 @@ html {
 main h4 {
   font-size: 100%;
 }
+
+@media (max-width: 576px) {
+  .card {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
+  main > .row > * {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 576px) {
+  main {
+    margin-top: 1.5rem;
+  }
+}
