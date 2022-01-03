@@ -1,6 +1,7 @@
 import type { GoliothDevice } from 'api/api'
 import type {
 	Battery,
+	Button,
 	DeviceHistory,
 	DeviceInfo,
 	DeviceSensor,
@@ -19,6 +20,7 @@ export enum SensorProperties {
 	// GNSS = 'gnss',
 	Roaming = 'roam',
 	Device = 'dev',
+	Button = 'btn',
 }
 
 type PropertyName = SensorProperties | string
@@ -60,6 +62,12 @@ type useDeviceHistoryType = {
 			sensor: SensorProperties.Device
 		} & SharedArgs,
 	): DeviceHistory<DeviceInfo>
+	(
+		_: {
+			device: GoliothDevice
+			sensor: SensorProperties.Button
+		} & SharedArgs,
+	): DeviceHistory<Button>
 }
 
 export const useDeviceHistory: useDeviceHistoryType = <T extends DeviceSensor>({

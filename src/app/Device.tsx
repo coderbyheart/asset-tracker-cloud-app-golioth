@@ -8,6 +8,7 @@ import { useParams } from 'react-router'
 import { Collapsable } from 'theme/Collapsable'
 import { Battery } from 'theme/Device/Battery'
 import { DeviceInformation } from 'theme/Device/DeviceInformation'
+import { HistoricalButtonPresses } from 'theme/Device/HistoricalButtonPresses'
 import { InfoHeader } from 'theme/Device/Info'
 import { NeighborCellMeasurementsReport } from 'theme/Device/NeighborCellMeasurementsReport'
 import { Personalization } from 'theme/Device/Personalization'
@@ -85,6 +86,9 @@ const DeviceInfo = ({
 						</Collapsable>
 						<Collapsable title={emojify('🌡️ Temperature')} id="cat:temperature">
 							<Temperature device={device} />
+						</Collapsable>
+						<Collapsable title={emojify('🚨 Button')} id="cat:button">
+							<HistoricalButtonPresses device={device} />
 						</Collapsable>
 					</div>
 				</div>

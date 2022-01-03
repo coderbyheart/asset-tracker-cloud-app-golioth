@@ -23,6 +23,7 @@ export type DeviceTwin = {
 }
 
 export type Battery = number
+export type Button = number
 export type Environment = {
 	temp: number
 	hum: number
@@ -56,6 +57,7 @@ export type DeviceSensor =
 	| Roaming
 	| DeviceInfo
 	| NCellMeasReport
+	| Button
 export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
 export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
 
