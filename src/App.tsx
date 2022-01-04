@@ -18,6 +18,7 @@ import {
 	Route,
 	Routes,
 } from 'react-router-dom'
+import { DevicesMap } from 'theme/Map/DevicesMap'
 import { Navbar } from 'theme/Navbar'
 
 const PUBLIC_API_ENDPOINT = new URL(
@@ -35,49 +36,46 @@ const AppRoot = () => {
 		<GlobalDeviceProvider>
 			<GlobalChartDateRangeProvider>
 				<Router basename={import.meta.env.BASE_URL ?? '/'}>
-					<header>
-						<Navbar />
-					</header>
+					<Navbar />
 					<MapSettingsProvider>
-						<main className="container">
-							{!isAuthenticated && (
-								<Routes>
-									<Route index element={<Navigate to="/login" />} />
-									<Route path="/login" element={<Login />} />
-								</Routes>
-							)}
-							{isAuthenticated && jwtKey !== undefined && (
-								<ApiProvider jwtKey={jwtKey} endpoint={PUBLIC_API_ENDPOINT}>
-									<Routes>
-										<Route path="/login" element={<Navigate to="/devices" />} />
-										<Route path="/" element={<Navigate to="/devices" />} />
-										<Route path="/devices" element={<Devices />} />
-										<Route
-											path="/project/:projectId/device/:deviceId"
-											element={<Device />}
-										/>
-									</Routes>
-								</ApiProvider>
-							)}
+						{!isAuthenticated && (
 							<Routes>
-								<Route
-									path="/about"
-									element={
-										<About
-											version={
-												import.meta.env.PUBLIC_VERSION ?? '0.0.0-development'
-											}
-											homepage={
-												new URL(
-													import.meta.env.PUBLIC_HOMEPAGE ??
-														'https://github.com/NordicSemiconductor/asset-tracker-cloud-app-golioth-js',
-												)
-											}
-										/>
-									}
-								/>
+								<Route index element={<Navigate to="/login" />} />
+								<Route path="/login" element={<Login />} />
 							</Routes>
-						</main>
+						)}
+						{isAuthenticated && jwtKey !== undefined && (
+							<ApiProvider jwtKey={jwtKey} endpoint={PUBLIC_API_ENDPOINT}>
+								<Routes>
+									<Route path="/login" element={<Navigate to="/devices" />} />
+									<Route path="/" element={<Navigate to="/devices" />} />
+									<Route path="/devices" element={<Devices />} />
+									<Route path="/map" element={<DevicesMap />} />
+									<Route
+										path="/project/:projectId/device/:deviceId"
+										element={<Device />}
+									/>
+								</Routes>
+							</ApiProvider>
+						)}
+						<Routes>
+							<Route
+								path="/about"
+								element={
+									<About
+										version={
+											import.meta.env.PUBLIC_VERSION ?? '0.0.0-development'
+										}
+										homepage={
+											new URL(
+												import.meta.env.PUBLIC_HOMEPAGE ??
+													'https://github.com/NordicSemiconductor/asset-tracker-cloud-app-golioth-js',
+											)
+										}
+									/>
+								}
+							/>
+						</Routes>
 					</MapSettingsProvider>
 				</Router>
 			</GlobalChartDateRangeProvider>

@@ -5,8 +5,7 @@ import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 import type { Position } from 'hooks/useMapData'
 import { useMapData } from 'hooks/useMapData'
 import { useMapSettings } from 'hooks/useMapSettings'
-import type { LeafletEvent, Map as LeafletMap } from 'leaflet'
-import { icon, Point } from 'leaflet'
+import type { Map as LeafletMap } from 'leaflet'
 import React, { useState } from 'react'
 import {
 	Circle,
@@ -16,31 +15,14 @@ import {
 	Polyline,
 	Popup,
 	TileLayer,
-	useMapEvents,
 } from 'react-leaflet'
 import { SignalQuality } from 'theme/Device/SignalQuality'
 import styles from 'theme/Map/Map.module.css'
 import { nullOrUndefined } from 'utils/nullOrUndefined'
 import { toFixed } from 'utils/toFixed'
+import { EventHandler } from './EventHandler'
+import { markerIcon } from './MarkerIcon'
 import { NoMap } from './NoMap'
-import logo from '/logo.svg'
-
-const marker = icon({
-	iconUrl: logo,
-	iconSize: new Point(50, 50),
-	iconAnchor: new Point(25, 30),
-})
-
-const EventHandler = ({
-	onZoomEnd,
-}: {
-	onZoomEnd: (args: { event: LeafletEvent; map: LeafletMap }) => void
-}) => {
-	const map = useMapEvents({
-		zoomend: (event) => onZoomEnd({ event, map }),
-	})
-	return null
-}
 
 const HeadingMarker = ({
 	heading,
@@ -112,7 +94,7 @@ export const Map = ({ device }: { device: GoliothDevice }) => {
 				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			<Marker position={center} icon={marker}>
+			<Marker position={center} icon={markerIcon}>
 				<Popup>{device.name}</Popup>
 			</Marker>
 			{deviceLocation?.position.accuracy !== undefined && (

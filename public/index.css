@@ -33,7 +33,7 @@ main h4 {
 }
 
 @media (min-width: 576px) {
-  main {
+  main.container {
     margin-top: 1.5rem;
   }
 }
