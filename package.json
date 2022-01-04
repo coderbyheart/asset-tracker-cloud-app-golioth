@@ -47,11 +47,11 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@nordicsemiconductor/asset-tracker-cloud-code-style": "10.0.6",
+    "@nordicsemiconductor/asset-tracker-cloud-code-style": "10.0.7",
     "@types/classnames": "2.3.1",
     "@types/intro.js": "3.0.2",
     "@types/jest": "27.4.0",
-    "@types/leaflet": "1.7.7",
+    "@types/leaflet": "1.7.8",
     "@types/react": "17.0.38",
     "@types/react-dom": "17.0.11",
     "@types/twemoji": "12.1.2",
