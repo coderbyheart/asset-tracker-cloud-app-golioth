@@ -43,12 +43,6 @@ export const About = ({
 							</a>{' '}
 							documentation.
 						</p>
-						<dl>
-							<dt>Version</dt>
-							<dd>
-								<code>{version}</code>
-							</dd>
-						</dl>
 					</div>
 				</div>
 				<div
@@ -58,11 +52,21 @@ export const About = ({
 					<div className="card-header">Environment</div>
 					<div className="card-body">
 						<dl>
+							<dt>Version</dt>
+							<dd>
+								<code>{version}</code>
+							</dd>
 							{Object.entries(import.meta.env).map(([k, v]) => (
 								<React.Fragment key={k}>
 									<dt>{k}</dt>
 									<dd>
-										<code>{v === undefined ? 'N/A' : JSON.stringify(v)}</code>
+										<code>
+											{v === undefined
+												? 'N/A'
+												: typeof v === 'string'
+												? v
+												: JSON.stringify(v)}
+										</code>
 									</dd>
 								</React.Fragment>
 							))}
