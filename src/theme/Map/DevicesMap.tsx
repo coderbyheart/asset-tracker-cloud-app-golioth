@@ -1,12 +1,8 @@
-import type { GoliothDevice } from 'api/api'
-import type { GNSS } from 'device/state'
-import { useApi } from 'hooks/useApi'
 import { useCurrentProject } from 'hooks/useCurrentProject'
-import { SensorProperties } from 'hooks/useDeviceHistory'
-import { useDevices } from 'hooks/useDevices'
+import { useDeviceLocations } from 'hooks/useDeviceLocations'
 import type { Position } from 'hooks/useMapData'
 import type { Map as LeafletMap } from 'leaflet'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { Link } from 'react-router-dom'
 import styles from 'theme/Map/DevicesMap.module.css'
@@ -16,35 +12,8 @@ import { markerIcon } from './MarkerIcon'
 
 export const DevicesMap = () => {
 	const [map, setmap] = useState<LeafletMap>()
-	const [positions, setPositions] = useState<
-		{
-			device: GoliothDevice
-			position: GNSS
-			ts: Date
-		}[]
-	>([])
-
 	const { project } = useCurrentProject()
-	const devices = useDevices(project)
-	const api = useApi()
-
-	useEffect(() => {
-		if (project === undefined) return
-		Promise.all(
-			devices.map(async (device) =>
-				api
-					.project(project)
-					.device(device)
-					.history<GNSS>({
-						path: [SensorProperties.GNSS, 'v'],
-						limit: 1,
-					})
-					.then(([{ v, ts }]) => ({ position: v, device, ts })),
-			),
-		)
-			.then(setPositions)
-			.catch(console.error)
-	}, [project, devices, api])
+	const positions = useDeviceLocations()
 
 	const center: Position = {
 		lat: 63.421057567379194,
