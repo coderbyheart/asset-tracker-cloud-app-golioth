@@ -1,4 +1,5 @@
 import type { GoliothDevice } from 'api/api'
+import { expectedSendIntervalInSeconds } from 'device/expectedSendIntervalInSeconds'
 import type {
 	Battery,
 	DeviceHistoryDatum,
@@ -9,7 +10,6 @@ import type {
 	Roaming,
 } from 'device/state'
 import { useDeviceInfo } from 'hooks/useDeviceInfo'
-import { useExpectedSendIntervalInSeconds } from 'hooks/useGlobalDevice'
 import React from 'react'
 import { ConnectionInformation } from 'theme/Device/ConnectionInformation'
 import { emojify } from 'theme/Emojify'
@@ -132,27 +132,18 @@ export const InfoHeader = ({
 	state?: DeviceTwin
 }) => {
 	const { bat, env, roam, gnss, dev } = useDeviceInfo({ device })
-	const expectedSendIntervalInSeconds = useExpectedSendIntervalInSeconds(state)
+	const expectedInterval = expectedSendIntervalInSeconds(state)
 
 	return (
 		<>
 			<RoamInfo
 				roam={roam}
-				expectedSendIntervalInSeconds={expectedSendIntervalInSeconds}
+				expectedSendIntervalInSeconds={expectedInterval}
 				dev={dev}
 			/>
-			<GNSSInfo
-				gnss={gnss}
-				expectedSendIntervalInSeconds={expectedSendIntervalInSeconds}
-			/>
-			<BatteryInfo
-				bat={bat}
-				expectedSendIntervalInSeconds={expectedSendIntervalInSeconds}
-			/>
-			<EnvInfo
-				env={env}
-				expectedSendIntervalInSeconds={expectedSendIntervalInSeconds}
-			/>
+			<GNSSInfo gnss={gnss} expectedSendIntervalInSeconds={expectedInterval} />
+			<BatteryInfo bat={bat} expectedSendIntervalInSeconds={expectedInterval} />
+			<EnvInfo env={env} expectedSendIntervalInSeconds={expectedInterval} />
 		</>
 	)
 }

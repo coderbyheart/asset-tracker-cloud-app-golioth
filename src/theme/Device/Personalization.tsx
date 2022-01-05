@@ -1,12 +1,12 @@
 import type { GoliothDevice } from 'api/api'
-import { useGlobalDevice } from 'hooks/useGlobalDevice'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import { useUpdateDevice } from 'hooks/useUpdateDevice'
 import React, { useState } from 'react'
 
 export const Personalization = ({ device }: { device: GoliothDevice }) => {
 	const [name, setName] = useState<string>(device.name ?? '')
 	const update = useUpdateDevice({ device })
-	const { state, setDevice } = useGlobalDevice()
+	const { state, setDevice } = useCurrentDevice()
 	return (
 		<form
 			className="justify-content-center"

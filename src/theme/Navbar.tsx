@@ -2,7 +2,7 @@ import introJs from 'intro.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { useGlobalDevice } from '../hooks/useGlobalDevice'
+import { useCurrentDevice } from '../hooks/useCurrentDevice'
 import { emojify } from './Emojify'
 import logo from '/logo.svg'
 
@@ -10,7 +10,7 @@ const intro = introJs()
 
 export const Navbar = () => {
 	const { isAuthenticated, logout } = useAuth()
-	const { info } = useGlobalDevice()
+	const { info } = useCurrentDevice()
 	return (
 		<header>
 			<nav

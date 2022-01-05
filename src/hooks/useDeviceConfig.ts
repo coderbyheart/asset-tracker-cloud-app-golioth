@@ -1,14 +1,14 @@
 import { defaultConfig } from 'device/defaultConfig'
 import type { DeviceConfig } from 'device/state'
 import { useApi } from 'hooks/useApi'
-import { useGlobalDevice } from './useGlobalDevice'
+import { useCurrentDevice } from './useCurrentDevice'
 
 export const useDeviceConfig = (): {
 	update: (patch: Partial<DeviceConfig>) => Promise<void>
 	desired: Partial<DeviceConfig>
 	reported: Partial<DeviceConfig>
 } => {
-	const { info: device, state, setDevice } = useGlobalDevice()
+	const { info: device, state, setDevice } = useCurrentDevice()
 	const api = useApi()
 	const reported: Partial<DeviceConfig> = state?.reported?.cfg ?? {}
 	const desired: Partial<DeviceConfig> = state?.desired?.cfg ?? {}

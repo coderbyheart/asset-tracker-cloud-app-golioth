@@ -15,9 +15,7 @@ import { useEffect, useState } from 'react'
 export enum SensorProperties {
 	Battery = 'bat',
 	Environment = 'env',
-	GNSS = 'gps',
-	// FIXME: https://github.com/NordicSemiconductor/asset-tracker-cloud-docs/pull/352
-	// GNSS = 'gnss',
+	GNSS = 'gnss',
 	Roaming = 'roam',
 	Device = 'dev',
 	Button = 'btn',

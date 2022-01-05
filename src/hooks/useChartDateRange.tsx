@@ -22,7 +22,7 @@ const storedEndDate = withLocalStorage<Date>({
 	freezer: dateFreezer,
 })
 
-export const GlobalChartDateRangeContext = createContext<{
+export const CurrentChartDateRangeContext = createContext<{
 	startDate: Date
 	endDate: Date
 	setStartDate: (_: Date) => void
@@ -38,15 +38,15 @@ export const GlobalChartDateRangeContext = createContext<{
 	defaultEnd,
 })
 
-export const useChartDateRange = () => useContext(GlobalChartDateRangeContext)
+export const useChartDateRange = () => useContext(CurrentChartDateRangeContext)
 
-export const GlobalChartDateRangeProvider: FunctionComponent = ({
+export const CurrentChartDateRangeProvider: FunctionComponent = ({
 	children,
 }) => {
 	const [startDate, setStartDate] = useState<Date>(storedStartDate.get())
 	const [endDate, setEndDate] = useState<Date>(storedEndDate.get())
 	return (
-		<GlobalChartDateRangeContext.Provider
+		<CurrentChartDateRangeContext.Provider
 			value={{
 				startDate,
 				endDate,
@@ -65,6 +65,6 @@ export const GlobalChartDateRangeProvider: FunctionComponent = ({
 			}}
 		>
 			{children}
-		</GlobalChartDateRangeContext.Provider>
+		</CurrentChartDateRangeContext.Provider>
 	)
 }

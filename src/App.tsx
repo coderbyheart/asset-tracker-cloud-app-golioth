@@ -8,9 +8,10 @@ import {
 	defaults as authContextDefaults,
 	useAuth,
 } from 'hooks/useAuth'
-import { GlobalChartDateRangeProvider } from 'hooks/useChartDateRange'
-import { GlobalDeviceProvider } from 'hooks/useGlobalDevice'
-import { MapSettingsProvider } from 'hooks/useMapSettings'
+import { CurrentChartDateRangeProvider } from 'hooks/useChartDateRange'
+import { CurrentDeviceProvider } from 'hooks/useCurrentDevice'
+import { CurrentProjectProvider } from 'hooks/useCurrentProject'
+import { ProjectsProvider } from 'hooks/useProjects'
 import React from 'react'
 import {
 	BrowserRouter as Router,
@@ -33,53 +34,54 @@ const AppRoot = () => {
 	const jwtKey = useAuth().jwtKey ?? authContextDefaults.jwtKey
 
 	return (
-		<GlobalDeviceProvider>
-			<GlobalChartDateRangeProvider>
-				<Router basename={import.meta.env.BASE_URL ?? '/'}>
-					<Navbar />
-					<MapSettingsProvider>
-						{!isAuthenticated && (
-							<Routes>
-								<Route index element={<Navigate to="/login" />} />
-								<Route path="/login" element={<Login />} />
-							</Routes>
-						)}
-						{isAuthenticated && jwtKey !== undefined && (
-							<ApiProvider jwtKey={jwtKey} endpoint={PUBLIC_API_ENDPOINT}>
-								<Routes>
-									<Route path="/login" element={<Navigate to="/devices" />} />
-									<Route path="/" element={<Navigate to="/devices" />} />
-									<Route path="/devices" element={<Devices />} />
-									<Route path="/map" element={<DevicesMap />} />
-									<Route
-										path="/project/:projectId/device/:deviceId"
-										element={<Device />}
-									/>
-								</Routes>
-							</ApiProvider>
-						)}
-						<Routes>
-							<Route
-								path="/about"
-								element={
-									<About
-										version={
-											import.meta.env.PUBLIC_VERSION ?? '0.0.0-development'
-										}
-										homepage={
-											new URL(
-												import.meta.env.PUBLIC_HOMEPAGE ??
-													'https://github.com/NordicSemiconductor/asset-tracker-cloud-app-golioth-js',
-											)
-										}
-									/>
-								}
-							/>
-						</Routes>
-					</MapSettingsProvider>
-				</Router>
-			</GlobalChartDateRangeProvider>
-		</GlobalDeviceProvider>
+		<Router basename={import.meta.env.BASE_URL ?? '/'}>
+			<Navbar />
+
+			{!isAuthenticated && (
+				<Routes>
+					<Route index element={<Navigate to="/login" />} />
+					<Route path="/login" element={<Login />} />
+				</Routes>
+			)}
+			{isAuthenticated && jwtKey !== undefined && (
+				<ApiProvider jwtKey={jwtKey} endpoint={PUBLIC_API_ENDPOINT}>
+					<ProjectsProvider>
+						<CurrentProjectProvider>
+							<CurrentDeviceProvider>
+								<CurrentChartDateRangeProvider>
+									<Routes>
+										<Route path="/login" element={<Navigate to="/devices" />} />
+										<Route path="/" element={<Navigate to="/devices" />} />
+										<Route path="/devices" element={<Devices />} />
+										<Route path="/map" element={<DevicesMap />} />
+										<Route
+											path="/project/:projectId/device/:deviceId"
+											element={<Device />}
+										/>
+									</Routes>
+								</CurrentChartDateRangeProvider>
+							</CurrentDeviceProvider>
+						</CurrentProjectProvider>
+					</ProjectsProvider>
+				</ApiProvider>
+			)}
+			<Routes>
+				<Route
+					path="/about"
+					element={
+						<About
+							version={import.meta.env.PUBLIC_VERSION ?? '0.0.0-development'}
+							homepage={
+								new URL(
+									import.meta.env.PUBLIC_HOMEPAGE ??
+										'https://github.com/NordicSemiconductor/asset-tracker-cloud-app-golioth-js',
+								)
+							}
+						/>
+					}
+				/>
+			</Routes>
+		</Router>
 	)
 }
 

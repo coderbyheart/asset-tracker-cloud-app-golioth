@@ -1,8 +1,8 @@
 import type { GoliothDevice } from 'api/api'
+import { expectedSendIntervalInSeconds } from 'device/expectedSendIntervalInSeconds'
 import type { DeviceTwin, NCellMeasReport } from 'device/state'
 import { useApi } from 'hooks/useApi'
 import { useChartDateRange } from 'hooks/useChartDateRange'
-import { useExpectedSendIntervalInSeconds } from 'hooks/useGlobalDevice'
 import { useEffect, useState } from 'react'
 import { ChartDateRange } from 'theme/ChartDateRange'
 import styles from 'theme/Device/DeviceInformation.module.css'
@@ -17,7 +17,7 @@ export const NeighborCellMeasurementsReport = ({
 	state?: DeviceTwin
 }) => {
 	const { startDate, endDate } = useChartDateRange()
-	const expectedSendIntervalInSeconds = useExpectedSendIntervalInSeconds(state)
+	const expectedInterval = expectedSendIntervalInSeconds(state)
 	const api = useApi()
 	const [nCellMeasReport, setNcellMeasReport] = useState<{
 		v: NCellMeasReport
@@ -38,7 +38,7 @@ export const NeighborCellMeasurementsReport = ({
 				setNcellMeasReport(res[0])
 			})
 			.catch(console.error)
-	}, [device, startDate, endDate])
+	}, [device, startDate, endDate, api])
 
 	if (nCellMeasReport === undefined)
 		return (
@@ -83,7 +83,7 @@ export const NeighborCellMeasurementsReport = ({
 			)}
 			<ReportedTime
 				reportedAt={nCellMeasReport.ts}
-				staleAfterSeconds={expectedSendIntervalInSeconds}
+				staleAfterSeconds={expectedInterval}
 			/>
 		</div>
 	)

@@ -1,7 +1,7 @@
 import type { GoliothDevice } from 'api/api'
+import { expectedSendIntervalInSeconds } from 'device/expectedSendIntervalInSeconds'
 import type { DeviceTwin } from 'device/state'
 import { useDeviceInfo } from 'hooks/useDeviceInfo'
-import { useExpectedSendIntervalInSeconds } from 'hooks/useGlobalDevice'
 import React from 'react'
 import styles from 'theme/Device/DeviceInformation.module.css'
 import { ReportedTime } from 'theme/ReportedTime'
@@ -14,7 +14,7 @@ export const DeviceInformation = ({
 	state?: DeviceTwin
 }) => {
 	const { roam, dev } = useDeviceInfo({ device })
-	const expectedSendIntervalInSeconds = useExpectedSendIntervalInSeconds(state)
+	const expectedInterval = expectedSendIntervalInSeconds(state)
 	if (dev === undefined) return null
 	return (
 		<div className={styles.deviceInformation}>
@@ -83,7 +83,7 @@ export const DeviceInformation = ({
 			</dl>
 			<ReportedTime
 				reportedAt={roam?.ts ?? dev.ts}
-				staleAfterSeconds={expectedSendIntervalInSeconds}
+				staleAfterSeconds={expectedInterval}
 			/>
 		</div>
 	)

@@ -80,25 +80,25 @@ export const api = ({
 	endpoint: URL
 }): {
 	projects: () => Promise<GoliothProject[]>
-	project: (_: Pick<GoliothProject, 'id'>) => {
+	project: (project: Pick<GoliothProject, 'id'>) => {
 		devices: () => Promise<GoliothDevice[]>
-		device: (_: Pick<GoliothDevice, 'id'>) => {
+		device: (device: Pick<GoliothDevice, 'id'>) => {
 			get: () => Promise<GoliothDevice>
 			state: {
 				get: () => Promise<Record<string, any>>
-				update: (_: DeviceState) => Promise<void>
+				update: (state: DeviceState) => Promise<void>
 			}
 			history: <T extends DeviceSensor>(
-				_: {
+				query: {
 					path: string[]
 				} & QueryParameters,
 			) => Promise<DeviceHistory<T>>
 			multiHistory: <T extends Record<string, DeviceSensor>>(
-				_: {
+				query: {
 					sensors: string[]
 				} & QueryParameters,
 			) => Promise<{ [K in keyof T]: DeviceHistoryDatum<T[K]> }>
-			update: (_: { name: string }) => Promise<GoliothDevice>
+			update: (properties: { name: string }) => Promise<GoliothDevice>
 		}
 	}
 } => {

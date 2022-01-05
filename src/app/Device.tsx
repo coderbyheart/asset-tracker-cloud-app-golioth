@@ -1,8 +1,8 @@
 import type { GoliothDevice as ApiDevice } from 'api/api'
 import type { DeviceTwin } from 'device/state'
 import { useAutoUpdateDevice } from 'hooks/useAutoUpdateDevice'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import { useDevice } from 'hooks/useDevice'
-import { useGlobalDevice } from 'hooks/useGlobalDevice'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Collapsable } from 'theme/Collapsable'
@@ -21,7 +21,7 @@ import { Settings } from '../theme/Settings/Settings'
 
 export const Device = () => {
 	const { projectId, deviceId } = useParams()
-	const { setDevice, info: device, state: deviceState } = useGlobalDevice()
+	const { setDevice, info: device, state: deviceState } = useCurrentDevice()
 	const { info, state } = useDevice({ projectId, deviceId })
 	useAutoUpdateDevice()
 
