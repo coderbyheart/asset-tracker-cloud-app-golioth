@@ -1,12 +1,12 @@
-import type { DeviceTwin } from 'device/state'
+import type { AssetTwin } from 'asset/state'
 
 const defaultExpectedIntervalInSeconds = 120
 
 /**
- * Calculate the interval in which the device is expected to publish data
+ * Calculate the interval in which the asset is expected to publish data
  */
-export const expectedSendIntervalInSeconds = (state?: DeviceTwin): number =>
-	(state?.reported?.cfg?.act ?? true // default device mode is active
+export const expectedSendIntervalInSeconds = (state?: AssetTwin): number =>
+	(state?.reported?.cfg?.act ?? true // default asset mode is active
 		? state?.reported?.cfg?.actwt ?? defaultExpectedIntervalInSeconds // default active wait time is 120 seconds
 		: state?.reported?.cfg?.mvt ?? 3600) + // default movement timeout is 3600
 	(state?.reported?.cfg?.gpst ?? 60) + // default GPS timeout is 60 seconds

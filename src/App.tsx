@@ -1,6 +1,6 @@
 import { About } from 'app/About'
-import { Device } from 'app/Device'
-import { Devices } from 'app/Devices'
+import { Asset } from 'app/Asset'
+import { Assets } from 'app/Assets'
 import { Login } from 'app/Login'
 import { ApiProvider } from 'hooks/useApi'
 import {
@@ -9,7 +9,7 @@ import {
 	useAuth,
 } from 'hooks/useAuth'
 import { CurrentChartDateRangeProvider } from 'hooks/useChartDateRange'
-import { CurrentDeviceProvider } from 'hooks/useCurrentDevice'
+import { CurrentAssetProvider } from 'hooks/useCurrentAsset'
 import { CurrentProjectProvider } from 'hooks/useCurrentProject'
 import { ProjectsProvider } from 'hooks/useProjects'
 import React from 'react'
@@ -19,7 +19,7 @@ import {
 	Route,
 	Routes,
 } from 'react-router-dom'
-import { DevicesMap } from 'theme/Map/DevicesMap'
+import { AssetsMap } from 'theme/Map/AssetsMap'
 import { Navbar } from 'theme/Navbar'
 
 const PUBLIC_API_ENDPOINT = new URL(
@@ -47,20 +47,20 @@ const AppRoot = () => {
 				<ApiProvider jwtKey={jwtKey} endpoint={PUBLIC_API_ENDPOINT}>
 					<ProjectsProvider>
 						<CurrentProjectProvider>
-							<CurrentDeviceProvider>
+							<CurrentAssetProvider>
 								<CurrentChartDateRangeProvider>
 									<Routes>
-										<Route path="/login" element={<Navigate to="/devices" />} />
-										<Route path="/" element={<Navigate to="/devices" />} />
-										<Route path="/devices" element={<Devices />} />
-										<Route path="/map" element={<DevicesMap />} />
+										<Route path="/login" element={<Navigate to="/assets" />} />
+										<Route path="/" element={<Navigate to="/assets" />} />
+										<Route path="/assets" element={<Assets />} />
+										<Route path="/map" element={<AssetsMap />} />
 										<Route
-											path="/project/:projectId/device/:deviceId"
-											element={<Device />}
+											path="/project/:projectId/asset/:assetId"
+											element={<Asset />}
 										/>
 									</Routes>
 								</CurrentChartDateRangeProvider>
-							</CurrentDeviceProvider>
+							</CurrentAssetProvider>
 						</CurrentProjectProvider>
 					</ProjectsProvider>
 				</ApiProvider>

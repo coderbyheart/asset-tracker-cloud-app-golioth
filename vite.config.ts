@@ -31,7 +31,7 @@ export default defineConfig({
 		alias: [
 			{ find: 'app/', replacement: '/src/app/' },
 			{ find: 'api/', replacement: '/src/api/' },
-			{ find: 'device/', replacement: '/src/device/' },
+			{ find: 'asset/', replacement: '/src/asset/' },
 			{ find: 'hooks/', replacement: '/src/hooks/' },
 			{ find: 'components/', replacement: '/src/components/' },
 			{ find: 'theme/', replacement: '/src/theme/' },

@@ -1,7 +1,7 @@
-import type { GoliothDevice } from 'api/api'
+import type { Device } from 'api/golioth'
 import { formatDistanceToNow } from 'date-fns'
+import { SensorProperties, useAssetHistory } from 'hooks/useAssetHistory'
 import { useChartDateRange } from 'hooks/useChartDateRange'
-import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 import type { Position } from 'hooks/useMapData'
 import { useMapData } from 'hooks/useMapData'
 import { useMapSettings } from 'hooks/useMapSettings'
@@ -16,7 +16,7 @@ import {
 	Popup,
 	TileLayer,
 } from 'react-leaflet'
-import { SignalQuality } from 'theme/Device/SignalQuality'
+import { SignalQuality } from 'theme/Asset/SignalQuality'
 import styles from 'theme/Map/Map.module.css'
 import { nullOrUndefined } from 'utils/nullOrUndefined'
 import { toFixed } from 'utils/toFixed'
@@ -57,22 +57,22 @@ const HeadingMarker = ({
 	</MapConsumer>
 )
 
-export const Map = ({ device }: { device: GoliothDevice }) => {
+export const Map = ({ asset }: { asset: Device }) => {
 	const { settings, update: updateSettings } = useMapSettings()
 	const { startDate, endDate } = useChartDateRange()
-	const locationHistory = useDeviceHistory({
-		device,
+	const locationHistory = useAssetHistory({
+		asset,
 		sensor: SensorProperties.GNSS,
 		limit: settings.enabledLayers.history ? undefined : 1,
 		startDate,
 		endDate,
 	})
-	const { deviceLocation, center, history } = useMapData({
+	const { assetLocation, center, history } = useMapData({
 		locationHistory,
 	})
 	const [map, setmap] = useState<LeafletMap>()
 
-	if (deviceLocation === undefined || center === undefined) return <NoMap /> // No location data at all to display
+	if (assetLocation === undefined || center === undefined) return <NoMap /> // No location data at all to display
 
 	if (map && settings.follow) {
 		map.flyTo(center, settings.zoom)
@@ -95,19 +95,19 @@ export const Map = ({ device }: { device: GoliothDevice }) => {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 			<Marker position={center} icon={markerIcon}>
-				<Popup>{device.name}</Popup>
+				<Popup>{asset.name}</Popup>
 			</Marker>
-			{deviceLocation?.position.accuracy !== undefined && (
+			{assetLocation?.position.accuracy !== undefined && (
 				<Circle
-					center={deviceLocation.position}
-					radius={deviceLocation.position.accuracy}
+					center={assetLocation.position}
+					radius={assetLocation.position.accuracy}
 				/>
 			)}
 			{settings.enabledLayers.headings &&
-				deviceLocation?.position.heading !== undefined && (
+				assetLocation?.position.heading !== undefined && (
 					<HeadingMarker
-						position={deviceLocation.position}
-						heading={deviceLocation.position.heading}
+						position={assetLocation.position}
+						heading={assetLocation.position.heading}
 						mapZoom={settings.zoom}
 					/>
 				)}

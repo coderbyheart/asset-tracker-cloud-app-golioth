@@ -1,15 +1,15 @@
-import type { GoliothDevice } from 'api/api'
+import type { Device } from 'api/golioth'
+import { SensorProperties, useAssetHistory } from 'hooks/useAssetHistory'
 import { useChartDateRange } from 'hooks/useChartDateRange'
-import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 import React from 'react'
 import { ChartDateRange } from '../ChartDateRange'
 import { HistoricalDataChart } from '../HistoricalDataChart'
 
-export const RSRP = ({ device }: { device: GoliothDevice }) => {
+export const Battery = ({ asset }: { asset: Device }) => {
 	const { startDate, endDate } = useChartDateRange()
-	const RSRPHistory = useDeviceHistory({
-		device,
-		sensor: SensorProperties.Roaming,
+	const batteryHistory = useAssetHistory({
+		asset,
+		sensor: SensorProperties.Battery,
 		startDate,
 		endDate,
 	})
@@ -18,9 +18,9 @@ export const RSRP = ({ device }: { device: GoliothDevice }) => {
 		<>
 			<ChartDateRange />
 			<HistoricalDataChart
-				data={RSRPHistory.map(({ v, ts }) => ({
+				data={batteryHistory.map(({ v, ts }) => ({
 					date: new Date(ts),
-					value: v.rsrp,
+					value: v / 1000,
 				}))}
 				type="line"
 			/>

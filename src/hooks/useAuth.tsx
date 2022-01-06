@@ -1,5 +1,5 @@
-import type { JWTKey } from 'api/api'
-import { api, ApiError } from 'api/api'
+import type { JWTKey } from 'api/golioth'
+import { api, ApiError } from 'api/golioth'
 import React, {
 	createContext,
 	FunctionComponent,

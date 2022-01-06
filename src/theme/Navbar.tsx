@@ -2,7 +2,7 @@ import introJs from 'intro.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { useCurrentDevice } from '../hooks/useCurrentDevice'
+import { useCurrentAsset } from '../hooks/useCurrentAsset'
 import { emojify } from './Emojify'
 import logo from '/logo.svg'
 
@@ -10,7 +10,7 @@ const intro = introJs()
 
 export const Navbar = () => {
 	const { isAuthenticated, logout } = useAuth()
-	const { info } = useCurrentDevice()
+	const { info } = useCurrentAsset()
 	return (
 		<header>
 			<nav
@@ -27,7 +27,7 @@ export const Navbar = () => {
 							alt=""
 							width="30"
 							height="24"
-							className="d-inline-block align-text-top"
+							className="d-inline-block align-text-top me-1"
 						/>
 						{info && <span>{info.name}</span>}
 						{!info && (
@@ -50,8 +50,8 @@ export const Navbar = () => {
 					<div className="collapse navbar-collapse" id="navbarTogglerDemo02">
 						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 							<li className="nav-item">
-								<Link className="nav-link" to="/devices">
-									{emojify(`🐱 Devices`)}
+								<Link className="nav-link" to="/assets">
+									{emojify(`📦 Assets`)}
 								</Link>
 							</li>
 							<li className="nav-item">

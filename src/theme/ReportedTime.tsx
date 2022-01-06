@@ -14,7 +14,7 @@ const OldWarning = ({
 	return (
 		<abbr
 			className="ps-1"
-			title={`The device is expected to report updates roughly every ${staleAfterSeconds} seconds, but the data is older.`}
+			title={`The asset is expected to report updates roughly every ${staleAfterSeconds} seconds, but the data is older.`}
 		>
 			{emojify('⚠️')}
 		</abbr>

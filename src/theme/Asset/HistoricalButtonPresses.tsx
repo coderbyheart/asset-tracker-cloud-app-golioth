@@ -1,6 +1,6 @@
-import type { GoliothDevice } from 'api/api'
+import type { Device } from 'api/golioth'
+import { SensorProperties, useAssetHistory } from 'hooks/useAssetHistory'
 import { useChartDateRange } from 'hooks/useChartDateRange'
-import { SensorProperties, useDeviceHistory } from 'hooks/useDeviceHistory'
 import React from 'react'
 import { emojify } from 'theme/Emojify'
 import { RelativeTime } from 'theme/RelativeTime'
@@ -21,14 +21,10 @@ const toButtonEmoji = (value: number): JSX.Element => {
 	}
 }
 
-export const HistoricalButtonPresses = ({
-	device,
-}: {
-	device: GoliothDevice
-}) => {
+export const HistoricalButtonPresses = ({ asset }: { asset: Device }) => {
 	const { startDate, endDate } = useChartDateRange()
-	const buttonHistory = useDeviceHistory({
-		device,
+	const buttonHistory = useAssetHistory({
+		asset,
 		sensor: SensorProperties.Button,
 		startDate,
 		endDate,

@@ -1,4 +1,4 @@
-import type { DeviceHistory, DeviceHistoryDatum, GNSS } from 'device/state'
+import type { AssetHistory, AssetHistoryDatum, GNSS } from 'asset/state'
 
 export type Position = { lat: number; lng: number }
 
@@ -31,7 +31,7 @@ export type Roaming = {
 
 const toLocation =
 	(batch = false) =>
-	(locationHistory: DeviceHistoryDatum<GNSS>) => ({
+	(locationHistory: AssetHistoryDatum<GNSS>) => ({
 		location: {
 			position: {
 				lat: locationHistory.v.lat,
@@ -50,24 +50,24 @@ const toLocation =
 export const useMapData = ({
 	locationHistory,
 }: {
-	locationHistory: DeviceHistory<GNSS>
+	locationHistory: AssetHistory<GNSS>
 }): {
-	deviceLocation?: Location
+	assetLocation?: Location
 	center?: Position
 	history: {
 		location: Location
 		roaming?: Roaming
 	}[]
 } => {
-	let deviceLocation: Location | undefined = undefined
+	let assetLocation: Location | undefined = undefined
 	const firstLocation = locationHistory[0]
 	if (firstLocation !== undefined) {
-		deviceLocation = toLocation(false)(firstLocation).location
+		assetLocation = toLocation(false)(firstLocation).location
 	}
-	const center = deviceLocation?.position
+	const center = assetLocation?.position
 
 	return {
-		deviceLocation,
+		assetLocation,
 		center,
 		history: locationHistory.slice(1)?.map(toLocation(false)) ?? [],
 	}

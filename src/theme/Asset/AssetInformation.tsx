@@ -1,32 +1,32 @@
-import type { GoliothDevice } from 'api/api'
-import { expectedSendIntervalInSeconds } from 'device/expectedSendIntervalInSeconds'
-import type { DeviceTwin } from 'device/state'
-import { useDeviceInfo } from 'hooks/useDeviceInfo'
+import type { Device } from 'api/golioth'
+import { expectedSendIntervalInSeconds } from 'asset/expectedSendIntervalInSeconds'
+import type { AssetTwin } from 'asset/state'
+import { useAssetInfo } from 'hooks/useAssetInfo'
 import React from 'react'
-import styles from 'theme/Device/DeviceInformation.module.css'
+import styles from 'theme/Asset/AssetInformation.module.css'
 import { ReportedTime } from 'theme/ReportedTime'
 
-export const DeviceInformation = ({
-	device,
+export const AssetInformation = ({
+	asset,
 	state,
 }: {
-	device: GoliothDevice
-	state?: DeviceTwin
+	asset: Device
+	state?: AssetTwin
 }) => {
-	const { roam, dev } = useDeviceInfo({ device })
+	const { roam, dev } = useAssetInfo({ asset })
 	const expectedInterval = expectedSendIntervalInSeconds(state)
 	if (dev === undefined) return null
 	return (
-		<div className={styles.deviceInformation}>
+		<div className={styles.assetInformation}>
 			<h4>Golioth</h4>
 			<dl>
-				<dt>Device ID</dt>
+				<dt>Asset ID</dt>
 				<dd>
-					<code>{device.id}</code>
+					<code>{asset.id}</code>
 				</dd>
 				<dt>Project ID</dt>
 				<dd>
-					<code>{device.projectId}</code>
+					<code>{asset.projectId}</code>
 				</dd>
 			</dl>
 			<h4>Hard- and Software</h4>

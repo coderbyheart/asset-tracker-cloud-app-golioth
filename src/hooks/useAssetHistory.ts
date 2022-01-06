@@ -1,14 +1,14 @@
-import type { GoliothDevice } from 'api/api'
+import type { Device } from 'api/golioth'
 import type {
+	AssetHistory,
+	AssetInfo,
+	AssetSensor,
 	Battery,
 	Button,
-	DeviceHistory,
-	DeviceInfo,
-	DeviceSensor,
 	Environment,
 	GNSS,
 	Roaming,
-} from 'device/state'
+} from 'asset/state'
 import { useApi } from 'hooks/useApi'
 import { useEffect, useState } from 'react'
 
@@ -17,7 +17,7 @@ export enum SensorProperties {
 	Environment = 'env',
 	GNSS = 'gnss',
 	Roaming = 'roam',
-	Device = 'dev',
+	Asset = 'dev',
 	Button = 'btn',
 }
 
@@ -29,69 +29,69 @@ type SharedArgs = {
 	endDate?: Date
 }
 
-type useDeviceHistoryType = {
+type useAssetHistoryType = {
 	(
 		_: {
-			device: GoliothDevice
+			asset: Device
 			sensor: SensorProperties.GNSS
 		} & SharedArgs,
-	): DeviceHistory<GNSS>
+	): AssetHistory<GNSS>
 	(
 		_: {
-			device: GoliothDevice
+			asset: Device
 			sensor: SensorProperties.Battery
 		} & SharedArgs,
-	): DeviceHistory<Battery>
+	): AssetHistory<Battery>
 	(
 		_: {
-			device: GoliothDevice
+			asset: Device
 			sensor: SensorProperties.Environment
 		} & SharedArgs,
-	): DeviceHistory<Environment>
+	): AssetHistory<Environment>
 	(
 		_: {
-			device: GoliothDevice
+			asset: Device
 			sensor: SensorProperties.Roaming
 		} & SharedArgs,
-	): DeviceHistory<Roaming>
+	): AssetHistory<Roaming>
 	(
 		_: {
-			device: GoliothDevice
-			sensor: SensorProperties.Device
+			asset: Device
+			sensor: SensorProperties.Asset
 		} & SharedArgs,
-	): DeviceHistory<DeviceInfo>
+	): AssetHistory<AssetInfo>
 	(
 		_: {
-			device: GoliothDevice
+			asset: Device
 			sensor: SensorProperties.Button
 		} & SharedArgs,
-	): DeviceHistory<Button>
+	): AssetHistory<Button>
 }
 
-export const useDeviceHistory: useDeviceHistoryType = <T extends DeviceSensor>({
-	device,
+export const useAssetHistory: useAssetHistoryType = <T extends AssetSensor>({
+	asset,
 	sensor,
 	limit,
 	startDate,
 	endDate,
 }: {
-	device: GoliothDevice
+	asset: Device
 	sensor: PropertyName
 	limit?: number
 	startDate?: Date
 	endDate?: Date
-}): DeviceHistory<T> => {
-	const [history, setHistory] = useState<DeviceHistory<T>>([])
+}): AssetHistory<T> => {
+	const [history, setHistory] = useState<AssetHistory<T>>([])
 	const api = useApi()
 
 	useEffect(() => {
 		api
-			.project({ id: device.projectId })
-			.device({ id: device.id })
+			.project({ id: asset.projectId })
+			.device({ id: asset.id })
 			.history<T>({ path: [sensor, 'v'], limit, startDate, endDate })
 			.then(setHistory)
 			.catch(console.error)
-	}, [device, api, sensor, limit, startDate, endDate])
+	}, [asset, api, sensor, limit, startDate, endDate])
 
 	return history
 }

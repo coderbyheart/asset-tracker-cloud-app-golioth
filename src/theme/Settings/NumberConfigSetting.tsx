@@ -43,7 +43,7 @@ export const NumberConfigSetting = ({
 					reported={reported}
 					onNotReported={
 						<span className="input-group-text text-danger">
-							<abbr title={'Device has not reported this setting, yet.'}>
+							<abbr title={'Asset has not reported this setting, yet.'}>
 								{emojify('❓')}
 							</abbr>
 						</span>
@@ -51,7 +51,7 @@ export const NumberConfigSetting = ({
 					onOutDated={(current) => (
 						<span className="input-group-text">
 							<abbr
-								title={`Device has an outdated value. Current value: ${JSON.stringify(
+								title={`Asset has an outdated value. Current value: ${JSON.stringify(
 									current,
 								)}.`}
 							>

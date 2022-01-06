@@ -3,7 +3,7 @@ export enum DataModules {
 	NeigboringCellMeasurements = 'ncell',
 }
 
-export type DeviceConfig = {
+export type AssetConfig = {
 	act: boolean
 	actwt: number
 	mvres: number
@@ -13,13 +13,13 @@ export type DeviceConfig = {
 	nod: DataModules[]
 }
 
-export type DeviceState = {
-	cfg?: Partial<DeviceConfig>
+export type AssetState = {
+	cfg?: Partial<AssetConfig>
 }
 
-export type DeviceTwin = {
-	reported?: DeviceState
-	desired?: DeviceState
+export type AssetTwin = {
+	reported?: AssetState
+	desired?: AssetState
 }
 
 export type Battery = number
@@ -45,21 +45,21 @@ export type Roaming = {
 	band: string
 	nw: string
 }
-export type DeviceInfo = {
+export type AssetInfo = {
 	iccid: string
 	modV: string
 	brdV: string
 }
-export type DeviceSensor =
+export type AssetSensor =
 	| Battery
 	| GNSS
 	| Environment
 	| Roaming
-	| DeviceInfo
+	| AssetInfo
 	| NCellMeasReport
 	| Button
-export type DeviceHistoryDatum<T extends DeviceSensor> = { ts: Date; v: T }
-export type DeviceHistory<T extends DeviceSensor> = DeviceHistoryDatum<T>[]
+export type AssetHistoryDatum<T extends AssetSensor> = { ts: Date; v: T }
+export type AssetHistory<T extends AssetSensor> = AssetHistoryDatum<T>[]
 
 export type NCellMeasReport = {
 	reportId: string

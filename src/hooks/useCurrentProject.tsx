@@ -1,4 +1,4 @@
-import type { GoliothProject } from 'api/api'
+import type { Project } from 'api/golioth'
 import React, {
 	createContext,
 	FunctionComponent,
@@ -9,9 +9,9 @@ import React, {
 import { useProjects } from './useProjects'
 
 export const CurrentProjectContext = createContext<{
-	project?: GoliothProject
-	setProject: (_?: GoliothProject) => void
-	projects: GoliothProject[]
+	project?: Project
+	setProject: (_?: Project) => void
+	projects: Project[]
 }>({
 	setProject: () => undefined,
 	projects: [],
@@ -21,7 +21,7 @@ export const useCurrentProject = () => useContext(CurrentProjectContext)
 
 export const CurrentProjectProvider: FunctionComponent = ({ children }) => {
 	const projects = useProjects()
-	const [project, setProject] = useState<GoliothProject>()
+	const [project, setProject] = useState<Project>()
 
 	useEffect(() => {
 		if (projects.length > 0 && project === undefined) {

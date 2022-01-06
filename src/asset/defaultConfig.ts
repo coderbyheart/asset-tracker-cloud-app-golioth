@@ -1,6 +1,6 @@
-import type { DataModules, DeviceConfig } from 'device/state'
+import type { AssetConfig, DataModules } from 'asset/state'
 
-export const defaultConfig: DeviceConfig = {
+export const defaultConfig: AssetConfig = {
 	act: false, // Whether to enable the active mode
 	actwt: 60, //In active mode: wait this amount of seconds until sending the next update. The actual interval will be this time plus the time it takes to get a GPS fix.
 	mvres: 300, // (movement resolution) In passive mode: Time in seconds to wait after detecting movement before sending the next update

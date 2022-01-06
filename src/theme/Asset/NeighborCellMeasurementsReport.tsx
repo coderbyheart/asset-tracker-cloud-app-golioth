@@ -1,20 +1,20 @@
-import type { GoliothDevice } from 'api/api'
-import { expectedSendIntervalInSeconds } from 'device/expectedSendIntervalInSeconds'
-import type { DeviceTwin, NCellMeasReport } from 'device/state'
+import type { Device } from 'api/golioth'
+import { expectedSendIntervalInSeconds } from 'asset/expectedSendIntervalInSeconds'
+import type { AssetTwin, NCellMeasReport } from 'asset/state'
 import { useApi } from 'hooks/useApi'
 import { useChartDateRange } from 'hooks/useChartDateRange'
 import { useEffect, useState } from 'react'
+import styles from 'theme/Asset/AssetInformation.module.css'
 import { ChartDateRange } from 'theme/ChartDateRange'
-import styles from 'theme/Device/DeviceInformation.module.css'
 import { ReportedTime } from 'theme/ReportedTime'
 import { NoData } from './NoData'
 
 export const NeighborCellMeasurementsReport = ({
-	device,
+	asset,
 	state,
 }: {
-	device: GoliothDevice
-	state?: DeviceTwin
+	asset: Device
+	state?: AssetTwin
 }) => {
 	const { startDate, endDate } = useChartDateRange()
 	const expectedInterval = expectedSendIntervalInSeconds(state)
@@ -26,8 +26,8 @@ export const NeighborCellMeasurementsReport = ({
 
 	useEffect(() => {
 		api
-			.project({ id: device.projectId })
-			.device({ id: device.id })
+			.project({ id: asset.projectId })
+			.device({ id: asset.id })
 			.history<NCellMeasReport>({
 				path: ['ncellmeas'],
 				limit: 1,
@@ -38,7 +38,7 @@ export const NeighborCellMeasurementsReport = ({
 				setNcellMeasReport(res[0])
 			})
 			.catch(console.error)
-	}, [device, startDate, endDate, api])
+	}, [asset, startDate, endDate, api])
 
 	if (nCellMeasReport === undefined)
 		return (
@@ -51,7 +51,7 @@ export const NeighborCellMeasurementsReport = ({
 	const report = nCellMeasReport.v
 
 	return (
-		<div className={styles.deviceInformation}>
+		<div className={styles.assetInformation}>
 			{(report.nmr?.length ?? 0) === 0 && (
 				<NoData>No neighboring cells found.</NoData>
 			)}
@@ -59,7 +59,7 @@ export const NeighborCellMeasurementsReport = ({
 				<ol>
 					{report.nmr?.map((cell, k) => (
 						<li key={k}>
-							<dl className={styles.DeviceInformation}>
+							<dl className={styles.AssetInformation}>
 								<dt>RSRP</dt>
 								<dd>
 									<code>{cell.rsrp}</code>

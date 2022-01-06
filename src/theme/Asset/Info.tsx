@@ -1,17 +1,17 @@
-import type { GoliothDevice } from 'api/api'
-import { expectedSendIntervalInSeconds } from 'device/expectedSendIntervalInSeconds'
+import type { Device } from 'api/golioth'
+import { expectedSendIntervalInSeconds } from 'asset/expectedSendIntervalInSeconds'
 import type {
+	AssetHistoryDatum,
+	AssetInfo,
+	AssetTwin,
 	Battery,
-	DeviceHistoryDatum,
-	DeviceInfo,
-	DeviceTwin,
 	Environment,
 	GNSS,
 	Roaming,
-} from 'device/state'
-import { useDeviceInfo } from 'hooks/useDeviceInfo'
+} from 'asset/state'
+import { useAssetInfo } from 'hooks/useAssetInfo'
 import React from 'react'
-import { ConnectionInformation } from 'theme/Device/ConnectionInformation'
+import { ConnectionInformation } from 'theme/Asset/ConnectionInformation'
 import { emojify } from 'theme/Emojify'
 import { ReportedTime } from 'theme/ReportedTime'
 import { Toggle } from 'theme/Toggle'
@@ -23,12 +23,12 @@ const RoamInfo = ({
 	expectedSendIntervalInSeconds,
 }: {
 	expectedSendIntervalInSeconds: number
-	roam?: DeviceHistoryDatum<Roaming>
-	dev?: DeviceHistoryDatum<DeviceInfo>
+	roam?: AssetHistoryDatum<Roaming>
+	dev?: AssetHistoryDatum<AssetInfo>
 }) => {
 	if (roam === undefined) return null
 	return (
-		<Toggle className={styles.deviceInfoToggle}>
+		<Toggle className={styles.assetInfoToggle}>
 			<div className={styles.info}>
 				<ConnectionInformation
 					mccmnc={roam.v.mccmnc}
@@ -47,13 +47,13 @@ const BatteryInfo = ({
 	bat,
 	expectedSendIntervalInSeconds,
 }: {
-	bat?: DeviceHistoryDatum<Battery>
+	bat?: AssetHistoryDatum<Battery>
 	expectedSendIntervalInSeconds: number
 }) => {
 	if (bat === undefined) return null
 
 	return (
-		<Toggle className={styles.deviceInfoToggle}>
+		<Toggle className={styles.assetInfoToggle}>
 			<div className={styles.info}>
 				<span>
 					<span>{emojify(`🔋 ${bat.v / 1000}V`)}</span>
@@ -71,12 +71,12 @@ const GNSSInfo = ({
 	gnss,
 	expectedSendIntervalInSeconds,
 }: {
-	gnss?: DeviceHistoryDatum<GNSS>
+	gnss?: AssetHistoryDatum<GNSS>
 	expectedSendIntervalInSeconds: number
 }) => {
 	if (gnss?.v?.spd === undefined && gnss?.v?.alt === undefined) return null
 	return (
-		<Toggle className={styles.deviceInfoToggle}>
+		<Toggle className={styles.assetInfoToggle}>
 			<div className={styles.info}>
 				<span>
 					{gnss.v.spd !== undefined && (
@@ -99,7 +99,7 @@ const EnvInfo = ({
 	env,
 	expectedSendIntervalInSeconds,
 }: {
-	env?: DeviceHistoryDatum<Environment>
+	env?: AssetHistoryDatum<Environment>
 	expectedSendIntervalInSeconds: number
 }) => {
 	if (
@@ -109,7 +109,7 @@ const EnvInfo = ({
 		return null
 
 	return (
-		<Toggle className={styles.deviceInfoToggle}>
+		<Toggle className={styles.assetInfoToggle}>
 			<div className={styles.info}>
 				<span>
 					{env.v.temp && <span>{emojify(`🌡️ ${env.v.temp}°C`)}</span>}
@@ -125,13 +125,13 @@ const EnvInfo = ({
 }
 
 export const InfoHeader = ({
-	device,
+	asset,
 	state,
 }: {
-	device: GoliothDevice
-	state?: DeviceTwin
+	asset: Device
+	state?: AssetTwin
 }) => {
-	const { bat, env, roam, gnss, dev } = useDeviceInfo({ device })
+	const { bat, env, roam, gnss, dev } = useAssetInfo({ asset })
 	const expectedInterval = expectedSendIntervalInSeconds(state)
 
 	return (

@@ -1,7 +1,7 @@
 {
   "name": "@nordicsemiconductor/asset-tracker-cloud-app-golioth",
   "version": "0.0.0-development",
-  "description": "nRF Asset Tracker Web Application for Golioth",
+  "description": "nRF Asset Tracker (Golioth)",
   "type": "module",
   "scripts": {
     "start": "vite",

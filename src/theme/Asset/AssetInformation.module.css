@@ -1,22 +1,22 @@
-.deviceInformation dl {
+.assetInformation dl {
   display: grid;
   grid-template: auto / 1fr 2fr;
 }
-.deviceInformation dt,
+.assetInformation dt,
 dd {
   font-weight: normal;
   padding: 0;
   margin: 0;
   border-bottom: 1px solid #f0f0f0;
 }
-.deviceInformation dt {
+.assetInformation dt {
   padding-right: 1rem;
 }
-.deviceInformation dt {
+.assetInformation dt {
   flex-grow: 1;
 }
 
-.deviceInformation :global(.reportedTime) {
+.assetInformation :global(.reportedTime) {
   font-size: 85%;
   opacity: 0.75;
 }

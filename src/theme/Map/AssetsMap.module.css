@@ -1,7 +1,7 @@
-.devicesMap {
+.assetsMap {
   position: relative;
 }
-.devicesMap :global(.project-selector) {
+.assetsMap :global(.project-selector) {
   position: absolute;
   top: 1rem;
   right: 1rem;

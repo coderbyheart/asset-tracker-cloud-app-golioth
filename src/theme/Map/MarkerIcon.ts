@@ -1,8 +1,12 @@
 import { icon, Point } from 'leaflet'
-import logo from '/logo.svg'
+import marker from '/marker.svg'
+
+const width = 37.80887
+const height = 50.2832
+const scaling = 0.7
 
 export const markerIcon = icon({
-	iconUrl: logo,
-	iconSize: new Point(50, 50),
-	iconAnchor: new Point(25, 30),
+	iconUrl: marker,
+	iconSize: new Point(width * scaling, height * scaling),
+	iconAnchor: new Point((width * scaling) / 2, height * scaling - 2),
 })

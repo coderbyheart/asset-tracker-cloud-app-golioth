@@ -1,4 +1,4 @@
-.deviceInfoToggle .info {
+.assetInfoToggle .info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -9,36 +9,36 @@
   padding: 0.5rem;
 }
 
-.deviceInfoToggle .info > span:first-child {
+.assetInfoToggle .info > span:first-child {
   display: flex;
 }
 
-.deviceInfoToggle .info > span:first-child > * {
+.assetInfoToggle .info > span:first-child > * {
   padding-right: 1rem;
 }
 
-.deviceInfoToggle .info :global(.reportedTime) {
+.assetInfoToggle .info :global(.reportedTime) {
   display: flex;
   font-size: 85%;
   opacity: 0.75;
   text-align: right;
 }
 
-.deviceInfoToggle .info :global(.reportedTime) :global(.textWithIcon) {
+.assetInfoToggle .info :global(.reportedTime) :global(.textWithIcon) {
   width: auto;
   display: inline-block;
 }
 
-.deviceInfoToggle .info :global(.reportedTime) time {
+.assetInfoToggle .info :global(.reportedTime) time {
   margin-left: 0.25rem;
 }
 
-.deviceInfoToggle + .deviceInfoToggle {
+.assetInfoToggle + .assetInfoToggle {
   border-top: 1px solid #dcdcdc;
 }
-.deviceInfoToggle[data-toggled="0"] time {
+.assetInfoToggle[data-toggled="0"] time {
   display: none;
 }
-.deviceInfoToggle[data-toggled="1"] time {
+.assetInfoToggle[data-toggled="1"] time {
   display: inline-block;
 }

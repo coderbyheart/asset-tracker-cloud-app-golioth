@@ -1,11 +1,11 @@
-import { sub } from 'date-fns'
 import type {
-	DeviceHistory,
-	DeviceHistoryDatum,
-	DeviceSensor,
-	DeviceState,
-} from 'device/state'
-import { DataModules } from 'device/state'
+	AssetHistory,
+	AssetHistoryDatum,
+	AssetSensor,
+	AssetState,
+} from 'asset/state'
+import { DataModules } from 'asset/state'
+import { sub } from 'date-fns'
 import * as jose from 'jose'
 import rfdc from 'rfdc'
 import { filterNull } from 'utils/filterNull'
@@ -36,14 +36,14 @@ export class ApiError extends Error {
 	}
 }
 
-export type GoliothProject = {
+export type Project = {
 	id: string
 	name: string
 	createdAt: Date
 	updatedAt: Date
 }
 
-export type GoliothDevice = {
+export type Device = {
 	id: string
 	projectId: string
 	hardwareIds: string[]
@@ -63,14 +63,14 @@ type QueryParameters = {
 	endDate?: Date
 }
 
-const toDevice = (project: Pick<GoliothProject, 'id'>) => (d: any) =>
+const toAsset = (project: Pick<Project, 'id'>) => (d: any) =>
 	({
 		...d,
 		createdAt: new Date(d.createdAt),
 		updatedAt: new Date(d.updatedAt),
 		lastReport: new Date(d.lastReport),
 		projectId: project.id,
-	} as GoliothDevice)
+	} as Device)
 
 export const api = ({
 	jwtKey: { id, secret },
@@ -79,26 +79,26 @@ export const api = ({
 	jwtKey: JWTKey
 	endpoint: URL
 }): {
-	projects: () => Promise<GoliothProject[]>
-	project: (project: Pick<GoliothProject, 'id'>) => {
-		devices: () => Promise<GoliothDevice[]>
-		device: (device: Pick<GoliothDevice, 'id'>) => {
-			get: () => Promise<GoliothDevice>
+	projects: () => Promise<Project[]>
+	project: (project: Pick<Project, 'id'>) => {
+		devices: () => Promise<Device[]>
+		device: (device: Pick<Device, 'id'>) => {
+			get: () => Promise<Device>
 			state: {
 				get: () => Promise<Record<string, any>>
-				update: (state: DeviceState) => Promise<void>
+				update: (state: AssetState) => Promise<void>
 			}
-			history: <T extends DeviceSensor>(
+			history: <T extends AssetSensor>(
 				query: {
 					path: string[]
 				} & QueryParameters,
-			) => Promise<DeviceHistory<T>>
-			multiHistory: <T extends Record<string, DeviceSensor>>(
+			) => Promise<AssetHistory<T>>
+			multiHistory: <T extends Record<string, AssetSensor>>(
 				query: {
 					sensors: string[]
 				} & QueryParameters,
-			) => Promise<{ [K in keyof T]: DeviceHistoryDatum<T[K]> }>
-			update: (properties: { name: string }) => Promise<GoliothDevice>
+			) => Promise<{ [K in keyof T]: AssetHistoryDatum<T[K]> }>
+			update: (properties: { name: string }) => Promise<Device>
 		}
 	}
 } => {
@@ -122,7 +122,7 @@ export const api = ({
 			}))
 			return projects
 		},
-		project: (project: Pick<GoliothProject, 'id'>) => ({
+		project: (project: Pick<Project, 'id'>) => ({
 			devices: async () => {
 				const res = await fetch(`${base}/projects/${project.id}/devices`, {
 					method: 'GET',
@@ -134,9 +134,9 @@ export const api = ({
 				const { ok, status: httpStatusCode } = res
 				if (!ok) throw new ApiError(`Failed to fetch devices!`, httpStatusCode)
 				const { list } = await res.json()
-				return Object.values(list as Record<string, any>).map(toDevice(project))
+				return Object.values(list as Record<string, any>).map(toAsset(project))
 			},
-			device: (device: Pick<GoliothDevice, 'id'>) => ({
+			device: (device: Pick<Device, 'id'>) => ({
 				get: async () => {
 					const res = await fetch(
 						`${base}/projects/${project.id}/devices/${device.id}`,
@@ -150,7 +150,7 @@ export const api = ({
 					)
 					const { ok, status: httpStatusCode } = res
 					if (!ok) throw new ApiError(`Failed to fetch device!`, httpStatusCode)
-					return toDevice(project)((await res.json()).data)
+					return toAsset(project)((await res.json()).data)
 				},
 				state: {
 					get: async () => {
@@ -211,7 +211,7 @@ export const api = ({
 						)
 					},
 				},
-				history: async <T extends DeviceSensor>({
+				history: async <T extends AssetSensor>({
 					path,
 					limit,
 					page,
@@ -269,9 +269,9 @@ export const api = ({
 					return items.map(({ time, ...rest }) => ({
 						...rest,
 						ts: new Date(time),
-					})) as DeviceHistory<T>
+					})) as AssetHistory<T>
 				},
-				multiHistory: async <T extends Record<string, DeviceSensor>>({
+				multiHistory: async <T extends Record<string, AssetSensor>>({
 					sensors,
 					limit,
 					page,
@@ -283,7 +283,7 @@ export const api = ({
 					page?: number
 					startDate?: Date
 					endDate?: Date
-				}): Promise<{ [K in keyof T]: DeviceHistoryDatum<T[K]> }> => {
+				}): Promise<{ [K in keyof T]: AssetHistoryDatum<T[K]> }> => {
 					// Build a query for all requested sensors
 					const res = await fetch(
 						`${base}/projects/${project.id}/devices/${device.id}/stream`,
@@ -314,7 +314,7 @@ export const api = ({
 					)
 
 					// Go over the items
-					const result = {} as { [K in keyof T]: DeviceHistoryDatum<T[K]> }
+					const result = {} as { [K in keyof T]: AssetHistoryDatum<T[K]> }
 					const items = (await res.json()).list as Record<string, any>[]
 					for (const sensor of sensors) {
 						const reading = items
@@ -343,7 +343,7 @@ export const api = ({
 							}),
 						},
 					)
-					return toDevice(project)((await res.json()).data)
+					return toAsset(project)((await res.json()).data)
 				},
 			}),
 		}),

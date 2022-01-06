@@ -1,9 +1,9 @@
+import type { AssetConfig } from 'asset/state'
+import { DataModules } from 'asset/state'
 import cx from 'classnames'
 import { OutDatedWarning } from 'components/Settings/OutDatedWarning'
-import type { DeviceConfig } from 'device/state'
-import { DataModules } from 'device/state'
 import equal from 'fast-deep-equal'
-import { useDeviceConfig } from 'hooks/useDeviceConfig'
+import { useAssetConfig } from 'hooks/useAssetConfig'
 import React, { useState } from 'react'
 import { emojify } from 'theme/Emojify'
 import { NumberConfigSetting } from 'theme/Settings/NumberConfigSetting'
@@ -21,13 +21,13 @@ const buttonClass = (
 	})
 
 export const Settings = () => {
-	const { reported: r, desired, update } = useDeviceConfig()
+	const { reported: r, desired, update } = useAssetConfig()
 
-	const [newDesired, setNewDesired] = useState<Partial<DeviceConfig>>(desired)
+	const [newDesired, setNewDesired] = useState<Partial<AssetConfig>>(desired)
 
 	const hasChanges = !equal(newDesired, desired)
 
-	const updateConfig = (cfg: Partial<DeviceConfig>) => {
+	const updateConfig = (cfg: Partial<AssetConfig>) => {
 		const updated = {
 			...newDesired,
 			...cfg,
@@ -47,7 +47,7 @@ export const Settings = () => {
 
 	return (
 		<form className={styles.SettingsForm}>
-			<fieldset data-intro={'This sets the operation mode of the device.'}>
+			<fieldset data-intro={'This sets the operation mode of the asset.'}>
 				<legend>Mode</legend>
 				<div className="input-group mb-2">
 					<div className="btn-group" role="group">
@@ -59,7 +59,7 @@ export const Settings = () => {
 									type="button"
 									className={'btn btn-danger'}
 									disabled={true}
-									title={'Device has not reported this setting, yet.'}
+									title={'Asset has not reported this setting, yet.'}
 								>
 									{emojify('❓')}
 								</button>
@@ -69,7 +69,7 @@ export const Settings = () => {
 									type="button"
 									className={'btn btn-outline-danger '}
 									disabled={true}
-									title={`Device has an outdated value. Current value: ${JSON.stringify(
+									title={`Asset has an outdated value. Current value: ${JSON.stringify(
 										current,
 									)}.`}
 								>
@@ -81,7 +81,7 @@ export const Settings = () => {
 							type="button"
 							className={buttonClass('info', isActive)}
 							data-intro={
-								'In <em>Passive</em> mode, the device will wait for movement (triggered by the accelerometer) before sending an update to the cloud.'
+								'In <em>Passive</em> mode, the asset will wait for movement (triggered by the accelerometer) before sending an update to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({ act: false })
@@ -93,7 +93,7 @@ export const Settings = () => {
 							type="button"
 							className={buttonClass('success', !isActive)}
 							data-intro={
-								'In <em>Active</em> mode, the device will send an update in a configurable interval.'
+								'In <em>Active</em> mode, the asset will send an update in a configurable interval.'
 							}
 							onClick={() => {
 								updateConfig({ act: true })
@@ -192,7 +192,7 @@ export const Settings = () => {
 									type="button"
 									className={'btn btn-danger'}
 									disabled={true}
-									title={'Device has not reported this setting, yet.'}
+									title={'Asset has not reported this setting, yet.'}
 								>
 									{emojify('❓')}
 								</button>
@@ -202,7 +202,7 @@ export const Settings = () => {
 									type="button"
 									className={'btn btn-outline-danger'}
 									disabled={true}
-									title={`Device has an outdated value. Current value: ${JSON.stringify(
+									title={`Asset has an outdated value. Current value: ${JSON.stringify(
 										current,
 									)}.`}
 								>
@@ -221,7 +221,7 @@ export const Settings = () => {
 								newDesired.nod?.includes(DataModules.GNSS) ?? false,
 							)}
 							data-intro={
-								'In <em>Enabled</em> mode, the device will use GPS to send location data to the cloud.'
+								'In <em>Enabled</em> mode, the asset will use GPS to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
@@ -241,7 +241,7 @@ export const Settings = () => {
 									!newDesired.nod?.includes(DataModules.GNSS),
 							)}
 							data-intro={
-								'In <em>Disabled</em> mode, the device will not use GPS to send location data to the cloud.'
+								'In <em>Disabled</em> mode, the asset will not use GPS to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
@@ -266,7 +266,7 @@ export const Settings = () => {
 									type="button"
 									className={'btn btn-danger'}
 									disabled={true}
-									title={'Device has not reported this setting, yet.'}
+									title={'Asset has not reported this setting, yet.'}
 								>
 									{emojify('❓')}
 								</button>
@@ -276,7 +276,7 @@ export const Settings = () => {
 									type="button"
 									className={'btn btn-outline-danger'}
 									disabled={true}
-									title={`Device has an outdated value. Current value: ${JSON.stringify(
+									title={`Asset has an outdated value. Current value: ${JSON.stringify(
 										current,
 									)}.`}
 								>
@@ -302,7 +302,7 @@ export const Settings = () => {
 								) ?? false,
 							)}
 							data-intro={
-								'In <em>Enabled</em> mode, the device will use Neighbor Cell Measurements to send location data to the cloud.'
+								'In <em>Enabled</em> mode, the asset will use Neighbor Cell Measurements to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
@@ -324,7 +324,7 @@ export const Settings = () => {
 									),
 							)}
 							data-intro={
-								'In <em>Disabled</em> mode, the device will not use Neighbor Cell Measurements to send location data to the cloud.'
+								'In <em>Disabled</em> mode, the asset will not use Neighbor Cell Measurements to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
