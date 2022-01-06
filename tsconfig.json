@@ -15,14 +15,13 @@
     "importsNotUsedAsValues": "error",
     "baseUrl": "src",
     "paths": {
-      "api/*": ["api/*"],
-      "app/*": ["app/*"],
+      "golioth/*": ["golioth/*"],
       "asset/*": ["asset/*"],
       "hooks/*": ["hooks/*"],
       "components/*": ["components/*"],
-      "theme/*": ["theme/*"],
+      "themed/*": ["themed/*"],
       "utils/*": ["utils/*"]
     }
   },
-  "include": ["src", "types", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"]
 }

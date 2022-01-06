@@ -29,12 +29,11 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: [
-			{ find: 'app/', replacement: '/src/app/' },
-			{ find: 'api/', replacement: '/src/api/' },
+			{ find: 'golioth/', replacement: '/src/golioth/' },
 			{ find: 'asset/', replacement: '/src/asset/' },
 			{ find: 'hooks/', replacement: '/src/hooks/' },
 			{ find: 'components/', replacement: '/src/components/' },
-			{ find: 'theme/', replacement: '/src/theme/' },
+			{ find: 'themed/', replacement: '/src/themed/' },
 			{ find: 'utils/', replacement: '/src/utils/' },
 		],
 	},

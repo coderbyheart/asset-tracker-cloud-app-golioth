@@ -1,4 +1,4 @@
-import { nullOrUndefined } from './nullOrUndefined'
+import { nullOrUndefined } from 'utils/nullOrUndefined'
 
 describe('nullOrUndefined', () => {
 	it('should return true for undefined', () => {
