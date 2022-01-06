@@ -1,7 +1,7 @@
 import * as am5 from '@amcharts/amcharts5'
 import * as am5xy from '@amcharts/amcharts5/xy'
+import { nanoid } from 'nanoid'
 import React, { useLayoutEffect, useRef } from 'react'
-import { v4 } from 'uuid'
 
 export const HistoricalDataChart = ({
 	data,
@@ -14,7 +14,7 @@ export const HistoricalDataChart = ({
 	min?: number
 	max?: number
 }) => {
-	const uuid = useRef<string>(v4())
+	const uuid = useRef<string>(nanoid())
 
 	useLayoutEffect(() => {
 		const root = am5.Root.new(uuid.current)
