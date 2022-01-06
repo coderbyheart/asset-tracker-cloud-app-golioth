@@ -77,6 +77,22 @@ const AssetInfo = ({
 								<AssetInformation asset={asset} state={state} />
 							</Collapsable>
 							<Collapsable
+								title={emojify('🌩️ Firmware Upgrade over-the-air (FOTA)')}
+								id="cat:fota"
+							>
+								<div className="alert alert-info" role="alert">
+									Manage the firmware of your asset through the{' '}
+									<a
+										href="https://console.golioth.io/"
+										target="_blank"
+										rel="nofollow noreferrer"
+									>
+										Golioth Console
+									</a>
+									.
+								</div>
+							</Collapsable>
+							<Collapsable
 								title={emojify('🗧 Neighboring cells')}
 								id="cat:ncell"
 							>
