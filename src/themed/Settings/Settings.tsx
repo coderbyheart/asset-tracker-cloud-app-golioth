@@ -182,7 +182,9 @@ export const Settings = () => {
 			<fieldset data-intro={'This sets which Data Modules to sample.'}>
 				<legend>Data Sampling</legend>
 				<div className="input-group mb-2">
-					<label className="form-label">GPS: </label>
+					<label className="form-label" htmlFor="nod-gps">
+						GPS:
+					</label>
 					<div className="btn-group" role="group">
 						<OutDatedWarning
 							desired={newDesired.nod}
@@ -193,6 +195,7 @@ export const Settings = () => {
 									className={'btn btn-danger'}
 									disabled={true}
 									title={'Asset has not reported this setting, yet.'}
+									id="nod-gps"
 								>
 									{emojify('❓')}
 								</button>
@@ -256,7 +259,9 @@ export const Settings = () => {
 					</div>
 				</div>
 				<div className="input-group mb-2">
-					<label className="form-label">Neighbor Cell Measurements:</label>
+					<label className="form-label" htmlFor="nod-ncell">
+						Neighbor Cell Measurements:
+					</label>
 					<div className="btn-group" role="group">
 						<OutDatedWarning
 							desired={newDesired.nod}
@@ -267,6 +272,7 @@ export const Settings = () => {
 									className={'btn btn-danger'}
 									disabled={true}
 									title={'Asset has not reported this setting, yet.'}
+									id="nod-ncell"
 								>
 									{emojify('❓')}
 								</button>

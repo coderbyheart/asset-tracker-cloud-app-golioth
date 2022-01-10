@@ -29,38 +29,47 @@ export const Collapsable = ({
 }) => {
 	const { collapsed, toggle } = useCollapsed(id)
 
+	const handleKey = (e: React.KeyboardEvent<HTMLElement>) => {
+		if (e.code === 'Enter') {
+			e.stopPropagation()
+			e.preventDefault()
+			toggle()
+		}
+	}
+
+	const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		e.stopPropagation()
+		e.preventDefault()
+		toggle()
+	}
+
 	if (collapsed)
 		return (
 			<section className={styles.collapsable} id={id}>
-				<header onClick={toggle}>
+				<header
+					onClick={handleClick}
+					role={'button'}
+					tabIndex={0}
+					onKeyDown={handleKey}
+					aria-expanded="false"
+				>
 					<div>{title}</div>
-					<button
-						className="toggle"
-						title={'Expand'}
-						onClick={toggle}
-						aria-expanded="false"
-						aria-controls={id}
-					>
-						<Chevron />
-					</button>
+					<Chevron />
 				</header>
 			</section>
 		)
 
 	return (
 		<section className={styles.collapsable}>
-			<header onClick={toggle}>
+			<header
+				onClick={handleClick}
+				role={'button'}
+				tabIndex={0}
+				onKeyDown={handleKey}
+				aria-expanded="true"
+			>
 				<div>{title}</div>
-				<button
-					className="toggle"
-					color={'link'}
-					title={'Collapse'}
-					onClick={toggle}
-					aria-expanded="true"
-					aria-controls={id}
-				>
-					<Chevron />
-				</button>
+				<Chevron />
 			</header>
 			<div>{children}</div>
 		</section>

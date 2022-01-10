@@ -48,6 +48,7 @@ export const Login = () => {
 										value={id}
 										disabled={loggingIn}
 										onChange={({ target: { value } }) => setId(value)}
+										autoComplete="off"
 									/>
 									<div id="jwtKeyHelp" className="form-text">
 										The identifier of your Golioth API JWT key.
@@ -68,6 +69,7 @@ export const Login = () => {
 										value={secret}
 										disabled={loggingIn}
 										onChange={({ target: { value } }) => setSecret(value)}
+										autoComplete="off"
 									/>
 									<div id="jwtSecretHelp" className="form-text">
 										The secret of your Golioth API JWT key.

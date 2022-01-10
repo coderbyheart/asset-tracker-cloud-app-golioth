@@ -15,9 +15,11 @@ export const useCollapsed = (
 	const [collapsed, setCollapsed] = useState<boolean>(storedCollapsed.get())
 
 	const toggle = () => {
-		const state = !collapsed
-		setCollapsed(state)
-		storedCollapsed.set(state)
+		setCollapsed((collapsed) => {
+			const state = !collapsed
+			storedCollapsed.set(state)
+			return state
+		})
 	}
 
 	return {

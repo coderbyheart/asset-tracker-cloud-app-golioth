@@ -14,10 +14,27 @@ export const Toggle = ({
 		setToggled(state)
 	}
 
+	const handleKey = (e: React.KeyboardEvent<HTMLElement>) => {
+		if (e.code === 'Enter') {
+			e.stopPropagation()
+			e.preventDefault()
+			toggle()
+		}
+	}
+
+	const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		e.stopPropagation()
+		e.preventDefault()
+		toggle()
+	}
+
 	return (
 		<div
 			className={`${className} toggle`}
-			onClick={toggle}
+			onClick={handleClick}
+			role={'button'}
+			tabIndex={0}
+			onKeyDown={handleKey}
 			data-toggled={toggled ? '1' : '0'}
 		>
 			{children}
