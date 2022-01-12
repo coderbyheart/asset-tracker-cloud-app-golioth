@@ -45,6 +45,10 @@ export const AssetInformation = ({
 						<code>—</code>
 					</abbr>
 				</dd>
+				<dt>IMEI</dt>
+				<dd>
+					<code>{dev.v.imei}</code>
+				</dd>
 			</dl>
 			<h4>Connection</h4>
 			<dl>

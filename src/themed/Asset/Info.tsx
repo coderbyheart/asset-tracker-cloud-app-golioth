@@ -102,11 +102,7 @@ const EnvInfo = ({
 	env?: AssetHistoryDatum<Environment>
 	expectedSendIntervalInSeconds: number
 }) => {
-	if (
-		env === undefined ||
-		(env?.v.temp === undefined && env?.v.hum === undefined)
-	)
-		return null
+	if (env === undefined) return null
 
 	return (
 		<Toggle className={styles.assetInfoToggle}>
@@ -114,6 +110,9 @@ const EnvInfo = ({
 				<span>
 					{env.v.temp && <span>{emojify(`🌡️ ${env.v.temp}°C`)}</span>}
 					{env.v.hum && <span>{emojify(`💦 ${Math.round(env.v.hum)}%`)}</span>}
+					{env.v.atmp && (
+						<span>{emojify(`🌤️ ${Math.round(env.v.atmp * 10)}`)}</span>
+					)}
 				</span>
 				<ReportedTime
 					reportedAt={new Date(env.ts)}

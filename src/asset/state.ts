@@ -27,6 +27,7 @@ export type Button = number
 export type Environment = {
 	temp: number
 	hum: number
+	atmp: number
 }
 export type GNSS = {
 	acc: number
@@ -47,6 +48,7 @@ export type Roaming = {
 }
 export type AssetInfo = {
 	iccid: string
+	imei: string
 	modV: string
 	brdV: string
 }
