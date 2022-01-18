@@ -20,8 +20,8 @@ export const About = ({
 							<p>
 								This is the web application of the <em>nRF Asset Tracker</em>{' '}
 								which aims to provide a concrete end-to-end sample for an IoT
-								product in the asset tracker space, a Cat Tracker. You can find
-								the source code on{' '}
+								product in the asset tracker space. You can find the source code
+								on{' '}
 								<a
 									href={homepage.toString()}
 									target="_blank"
