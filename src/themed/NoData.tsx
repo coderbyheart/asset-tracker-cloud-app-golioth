@@ -1,5 +1,5 @@
 import React from 'react'
-import { emojify } from 'themed/Emojify'
+import { IconWithText, XIcon } from './FeatherIcon'
 
 export const NoData = ({ children }: { children?: string }) => (
 	<div
@@ -12,6 +12,9 @@ export const NoData = ({ children }: { children?: string }) => (
 			alignItems: 'center',
 		}}
 	>
-		{emojify(`❌ ${children ?? 'No data.'}`)}
+		<IconWithText>
+			<XIcon />
+			{children ?? 'No data.'}
+		</IconWithText>
 	</div>
 )

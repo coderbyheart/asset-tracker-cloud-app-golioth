@@ -5,7 +5,7 @@ import { OutDatedWarning } from 'components/OutDatedWarning'
 import equal from 'fast-deep-equal'
 import { useAssetConfig } from 'golioth/hooks/useAssetConfig'
 import React, { useState } from 'react'
-import { emojify } from 'themed/Emojify'
+import { CircleIcon, UnknownIcon } from 'themed/FeatherIcon'
 import { NumberConfigSetting } from 'themed/Settings/NumberConfigSetting'
 import styles from 'themed/Settings/Settings.module.css'
 
@@ -57,23 +57,27 @@ export const Settings = () => {
 							onNotReported={
 								<button
 									type="button"
-									className={'btn btn-danger'}
+									className={
+										'btn btn-danger d-flex justify-content-center align-items-center'
+									}
 									disabled={true}
 									title={'Asset has not reported this setting, yet.'}
 								>
-									{emojify('❓')}
+									<UnknownIcon />
 								</button>
 							}
 							onOutDated={(current) => (
 								<button
 									type="button"
-									className={'btn btn-outline-danger '}
+									className={
+										'btn btn-outline-danger d-flex justify-content-center align-items-center'
+									}
 									disabled={true}
 									title={`Asset has an outdated value. Current value: ${JSON.stringify(
 										current,
 									)}.`}
 								>
-									{emojify('⭕')}
+									<CircleIcon />
 								</button>
 							)}
 						/>
@@ -197,7 +201,7 @@ export const Settings = () => {
 									title={'Asset has not reported this setting, yet.'}
 									id="nod-gps"
 								>
-									{emojify('❓')}
+									<UnknownIcon />
 								</button>
 							}
 							onOutDated={(current) => (
@@ -209,7 +213,7 @@ export const Settings = () => {
 										current,
 									)}.`}
 								>
-									{emojify('⭕')}
+									<CircleIcon />
 								</button>
 							)}
 							isEqual={(desired, reported) => {
@@ -274,7 +278,7 @@ export const Settings = () => {
 									title={'Asset has not reported this setting, yet.'}
 									id="nod-ncell"
 								>
-									{emojify('❓')}
+									<UnknownIcon />
 								</button>
 							}
 							onOutDated={(current) => (
@@ -286,7 +290,7 @@ export const Settings = () => {
 										current,
 									)}.`}
 								>
-									{emojify('⭕')}
+									<CircleIcon />
 								</button>
 							)}
 							isEqual={(desired, reported) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { emojify } from 'themed/Emojify'
+import { IconWithText, XIcon } from 'themed/FeatherIcon'
 
 export const NoMap = () => (
 	<div
@@ -11,6 +11,9 @@ export const NoMap = () => (
 			alignItems: 'center',
 		}}
 	>
-		{emojify('❌ No position known.')}
+		<IconWithText>
+			<XIcon />
+			No position known.
+		</IconWithText>
 	</div>
 )

@@ -1,7 +1,13 @@
 import { useReportedTime } from 'hooks/useReportedTime'
 import React, { HTMLProps } from 'react'
-import { emojify } from 'themed/Emojify'
 import { RelativeTime } from 'themed/RelativeTime'
+import {
+	AlertIcon,
+	ClockIcon,
+	CloudIcon,
+	IconWithText,
+	OutdatedDataIcon,
+} from './FeatherIcon'
 
 const OldWarning = ({
 	reportIsOld,
@@ -16,7 +22,7 @@ const OldWarning = ({
 			className="ps-1"
 			title={`The asset is expected to report updates roughly every ${staleAfterSeconds} seconds, but the data is older.`}
 		>
-			{emojify('⚠️')}
+			<AlertIcon />
 		</abbr>
 	)
 }
@@ -35,22 +41,26 @@ export const ReportedTime = ({
 		})
 	return (
 		<span className={'reportedTime'} {...restProps}>
-			{reportIsOld ? emojify('🤷 ') : emojify('🕒 ')}
-			<RelativeTime ts={reportedAt} key={reportedAt.toISOString()} />
+			<IconWithText>
+				{reportIsOld ? <OutdatedDataIcon /> : <ClockIcon />}
+				<RelativeTime ts={reportedAt} key={reportedAt.toISOString()} />
+				{staleAfterSeconds !== undefined && (
+					<OldWarning
+						reportIsOld={reportIsOld}
+						staleAfterSeconds={staleAfterSeconds}
+					/>
+				)}
+			</IconWithText>
 			{receivedAt !== undefined &&
 				reportedTimeIsOutDated &&
 				relativeTimesHaveDiff && (
 					<span className="ms-2">
-						{emojify('☁️ ')}
-						<RelativeTime ts={receivedAt} key={receivedAt.toISOString()} />
+						<IconWithText>
+							<CloudIcon />
+							<RelativeTime ts={receivedAt} key={receivedAt.toISOString()} />
+						</IconWithText>
 					</span>
 				)}
-			{staleAfterSeconds !== undefined && (
-				<OldWarning
-					reportIsOld={reportIsOld}
-					staleAfterSeconds={staleAfterSeconds}
-				/>
-			)}
 		</span>
 	)
 }

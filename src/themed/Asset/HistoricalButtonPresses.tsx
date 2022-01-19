@@ -6,19 +6,18 @@ import {
 import { useChartDateRange } from 'hooks/useChartDateRange'
 import React from 'react'
 import { ChartDateRange } from 'themed/ChartDateRange'
-import { emojify } from 'themed/Emojify'
 import { RelativeTime } from 'themed/RelativeTime'
 
 const toButtonEmoji = (value: number): JSX.Element => {
 	switch (value) {
 		case 1:
-			return emojify('1️⃣')
+			return <span>1️⃣</span>
 		case 2:
-			return emojify('2️⃣')
+			return <span>2️⃣</span>
 		case 3:
-			return emojify('3️⃣')
+			return <span>3️⃣</span>
 		case 4:
-			return emojify('4️⃣')
+			return <span>4️⃣</span>
 		default:
 			return <span>{value}</span>
 	}

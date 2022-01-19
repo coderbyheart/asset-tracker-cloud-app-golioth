@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { emojify } from 'themed/Emojify'
+import { SettingsIcon } from 'themed/FeatherIcon'
 import styles from 'themed/Map/ShowSettingsButton.module.css'
 
 export const ShowSettingsButton = ({
@@ -24,7 +24,7 @@ export const ShowSettingsButton = ({
 				aria-expanded="false"
 				className={styles.showSettingsButton}
 			>
-				{emojify('⚙️')}
+				<SettingsIcon />
 				<span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ export const ShowSettingsButton = ({
 			aria-expanded="true"
 			className={styles.showSettingsButton}
 		>
-			{emojify('⚙️')}
+			<SettingsIcon />
 			<span>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,6 @@
 import introJs from 'intro.js'
 import React, { useState } from 'react'
-import { emojify } from 'themed/Emojify'
+import { HelpIcon, IconWithText } from 'themed/FeatherIcon'
 import { withLocalStorage } from 'utils/withLocalStorage'
 
 const intro = introJs()
@@ -29,7 +29,10 @@ export const HelpNote = () => {
 						})
 					}}
 				>
-					{emojify('💁')} Help
+					<IconWithText>
+						<HelpIcon />
+						Help
+					</IconWithText>
 				</button>
 				to view a detailed description of the settings.
 			</span>

@@ -1,6 +1,6 @@
 import { RSRP, SignalQualityTriangle } from '@nordicsemiconductor/rsrp-bar'
 import React from 'react'
-import { emojify } from 'themed/Emojify'
+import { XSquareIcon } from 'themed/FeatherIcon'
 
 export const SignalQuality = ({ dbm }: { dbm: number }) => (
 	<RSRP
@@ -19,7 +19,9 @@ export const SignalQuality = ({ dbm }: { dbm: number }) => (
 			</>
 		)}
 		renderInvalid={() => (
-			<abbr title={`Unexpected value ${dbm} reported!`}>{emojify('❎')}</abbr>
+			<abbr title={`Unexpected value ${dbm} reported!`}>
+				<XSquareIcon />
+			</abbr>
 		)}
 	/>
 )

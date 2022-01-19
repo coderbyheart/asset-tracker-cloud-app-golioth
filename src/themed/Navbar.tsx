@@ -3,7 +3,14 @@ import { useCurrentAsset } from 'golioth/hooks/useCurrentAsset'
 import introJs from 'intro.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { emojify } from 'themed/Emojify'
+import {
+	HelpIcon,
+	IconWithText,
+	InfoIcon,
+	LogoutIcon,
+	MapIcon,
+	ParcelIcon,
+} from './FeatherIcon'
 import logo from '/logo.svg'
 
 const intro = introJs()
@@ -51,17 +58,21 @@ export const Navbar = () => {
 						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 							<li className="nav-item">
 								<Link className="nav-link" to="/assets">
-									{emojify(`📦 Assets`)}
+									<ParcelIcon /> Assets
 								</Link>
 							</li>
 							<li className="nav-item">
 								<Link className="nav-link" to="/map">
-									{emojify(`🗺️ Map`)}
+									<IconWithText>
+										<MapIcon /> Map
+									</IconWithText>
 								</Link>
 							</li>
 							<li className="nav-item">
 								<Link className="nav-link" to="/about">
-									{emojify(`ℹ️ About`)}
+									<IconWithText>
+										<InfoIcon /> About
+									</IconWithText>
 								</Link>
 							</li>
 							<li className="nav-item">
@@ -73,7 +84,9 @@ export const Navbar = () => {
 										intro.start()
 									}}
 								>
-									{emojify(`💁 Help`)}
+									<IconWithText>
+										<HelpIcon /> Help
+									</IconWithText>
 								</button>
 							</li>
 						</ul>
@@ -85,7 +98,10 @@ export const Navbar = () => {
 									className="btn btn-outline-light"
 									onClick={logout}
 								>
-									{emojify('🚪')} Log out
+									<IconWithText>
+										<LogoutIcon />
+										Log out
+									</IconWithText>
 								</button>
 							</form>
 						)}

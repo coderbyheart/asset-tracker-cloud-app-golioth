@@ -3,7 +3,7 @@ import { isSome, none } from 'fp-ts/lib/Option'
 import { filter as filterOperator, Operator as Op } from 'mcc-mnc-list'
 import React from 'react'
 import { SignalQuality } from 'themed/Asset/SignalQuality'
-import { emojify } from 'themed/Emojify'
+import { CellularIcon, IconWithText, SmartphoneIcon } from 'themed/FeatherIcon'
 import { ReportedTime } from 'themed/ReportedTime'
 import { TextWithIcon } from 'themed/TextWithIcon'
 
@@ -37,14 +37,16 @@ export const ConnectionInformation = ({
 					</>
 				</TextWithIcon>
 				<abbr title={'Network mode'}>
-					{emojify(`📶 ${networkMode ?? '?'}`)}
+					<IconWithText>
+						<CellularIcon size={16} />
+						{networkMode ?? '?'}
+					</IconWithText>
 				</abbr>
 				<abbr title={'SIM issuer'}>
-					{emojify(
-						`📱 ${
-							isSome(maybeSimIssuer) ? maybeSimIssuer.value.companyName : '?'
-						}`,
-					)}
+					<IconWithText>
+						<SmartphoneIcon size={16} />
+						{isSome(maybeSimIssuer) ? maybeSimIssuer.value.companyName : '?'}
+					</IconWithText>
 				</abbr>
 			</span>
 			<ReportedTime

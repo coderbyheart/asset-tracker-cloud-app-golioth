@@ -3,17 +3,12 @@ import fs from 'fs'
 import path from 'path'
 import { defineConfig } from 'vite'
 
-const {
-	version,
-	homepage,
-	dependencies: { twemoji },
-} = JSON.parse(
+const { version, homepage } = JSON.parse(
 	fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'),
 )
 
 process.env.PUBLIC_VERSION ?? version ?? Date.now()
 process.env.PUBLIC_HOMEPAGE = homepage
-process.env.PUBLIC_TWEMOJI_VERSION = twemoji
 
 // https://vitejs.dev/config/
 export default defineConfig({

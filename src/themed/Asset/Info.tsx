@@ -13,7 +13,15 @@ import { useAssetInfo } from 'golioth/hooks/useAssetInfo'
 import React from 'react'
 import { ConnectionInformation } from 'themed/Asset/ConnectionInformation'
 import styles from 'themed/Asset/Info.module.css'
-import { emojify } from 'themed/Emojify'
+import {
+	AirplaneIcon,
+	BatteryIcon,
+	CloudIcon,
+	CloudRainIcon,
+	IconWithText,
+	ThermometerIcon,
+	TruckIcon,
+} from 'themed/FeatherIcon'
 import { ReportedTime } from 'themed/ReportedTime'
 import { Toggle } from 'themed/Toggle'
 
@@ -55,9 +63,10 @@ const BatteryInfo = ({
 	return (
 		<Toggle className={styles.assetInfoToggle}>
 			<div className={styles.info}>
-				<span>
-					<span>{emojify(`🔋 ${bat.v / 1000}V`)}</span>
-				</span>
+				<IconWithText>
+					<BatteryIcon />
+					{bat.v / 1000}V
+				</IconWithText>
 				<ReportedTime
 					reportedAt={new Date(bat.ts)}
 					staleAfterSeconds={expectedSendIntervalInSeconds}
@@ -80,10 +89,16 @@ const GNSSInfo = ({
 			<div className={styles.info}>
 				<span>
 					{gnss.v.spd !== undefined && (
-						<span>{emojify(` 🏃${Math.round(gnss.v.spd)}m/s`)}</span>
+						<IconWithText>
+							<TruckIcon />
+							{Math.round(gnss.v.spd)}m/s
+						</IconWithText>
 					)}
 					{gnss.v.alt !== undefined && (
-						<span>{emojify(`✈️ ${Math.round(gnss.v.alt)}m`)}</span>
+						<IconWithText>
+							<AirplaneIcon />
+							{Math.round(gnss.v.alt)}m
+						</IconWithText>
 					)}
 				</span>
 				<ReportedTime
@@ -108,10 +123,23 @@ const EnvInfo = ({
 		<Toggle className={styles.assetInfoToggle}>
 			<div className={styles.info}>
 				<span>
-					{env.v.temp && <span>{emojify(`🌡️ ${env.v.temp}°C`)}</span>}
-					{env.v.hum && <span>{emojify(`💦 ${Math.round(env.v.hum)}%`)}</span>}
+					{env.v.temp && (
+						<IconWithText>
+							<ThermometerIcon />
+							{env.v.temp}°C
+						</IconWithText>
+					)}
+					{env.v.hum && (
+						<IconWithText>
+							<CloudRainIcon />
+							{Math.round(env.v.hum)}%
+						</IconWithText>
+					)}
 					{env.v.atmp && (
-						<span>{emojify(`🌤️ ${Math.round(env.v.atmp * 10)}`)}</span>
+						<IconWithText>
+							<CloudIcon />
+							{Math.round(env.v.atmp * 10)}
+						</IconWithText>
 					)}
 				</span>
 				<ReportedTime

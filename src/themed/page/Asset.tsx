@@ -14,7 +14,17 @@ import { Personalization } from 'themed/Asset/Personalization'
 import { RSRP } from 'themed/Asset/RSRP'
 import { Temperature } from 'themed/Asset/Temperature'
 import { Collapsable } from 'themed/Collapsable'
-import { emojify } from 'themed/Emojify'
+import {
+	BatteryIcon,
+	BellIcon,
+	CellularIcon,
+	CloudLightningIcon,
+	IconWithText,
+	InfoIcon,
+	NeighboringCellsIcon,
+	SettingsIcon,
+	ThermometerIcon,
+} from 'themed/FeatherIcon'
 import { MapWithSettings } from 'themed/Map/MapWithSettings'
 import { HelpNote } from 'themed/Settings/HelpNote'
 import { Settings } from 'themed/Settings/Settings'
@@ -61,7 +71,15 @@ const AssetInfo = ({
 							</div>
 						)}
 						<div className="card-body">
-							<Collapsable title={emojify('⚙️ Settings')} id="cat:settings">
+							<Collapsable
+								title={
+									<IconWithText>
+										<SettingsIcon size={22} />
+										Settings
+									</IconWithText>
+								}
+								id="cat:settings"
+							>
 								<h4>Personalization</h4>
 								<Personalization asset={asset} />
 								<div data-intro="This allows you change the run-time configuration of the asset.">
@@ -71,13 +89,23 @@ const AssetInfo = ({
 								</div>
 							</Collapsable>
 							<Collapsable
-								title={emojify('ℹ️ Asset Information')}
+								title={
+									<IconWithText>
+										<InfoIcon size={22} />
+										Asset Information
+									</IconWithText>
+								}
 								id="cat:information"
 							>
 								<AssetInformation asset={asset} state={state} />
 							</Collapsable>
 							<Collapsable
-								title={emojify('🌩️ Firmware Upgrade over-the-air (FOTA)')}
+								title={
+									<IconWithText>
+										<CloudLightningIcon size={22} />
+										Firmware Upgrade over-the-air (FOTA)
+									</IconWithText>
+								}
 								id="cat:fota"
 							>
 								<div className="alert alert-info" role="alert">
@@ -93,24 +121,58 @@ const AssetInfo = ({
 								</div>
 							</Collapsable>
 							<Collapsable
-								title={emojify('🗧 Neighboring cells')}
+								title={
+									<IconWithText>
+										<NeighboringCellsIcon size={22} />
+										Neighboring cells
+									</IconWithText>
+								}
 								id="cat:ncell"
 							>
 								<NeighborCellMeasurementsReport asset={asset} state={state} />
 							</Collapsable>
-							<Collapsable title={emojify('📶 RSRP')} id="cat:rsrp">
+							<Collapsable
+								title={
+									<IconWithText>
+										<CellularIcon size={22} />
+										RSRP
+									</IconWithText>
+								}
+								id="cat:rsrp"
+							>
 								<RSRP asset={asset} />
 							</Collapsable>
-							<Collapsable title={emojify('🔋 Battery')} id="cat:battery">
+							<Collapsable
+								title={
+									<IconWithText>
+										<BatteryIcon size={22} />
+										Battery
+									</IconWithText>
+								}
+								id="cat:battery"
+							>
 								<Battery asset={asset} />
 							</Collapsable>
 							<Collapsable
-								title={emojify('🌡️ Temperature')}
+								title={
+									<IconWithText>
+										<ThermometerIcon size={22} />
+										Temperature
+									</IconWithText>
+								}
 								id="cat:temperature"
 							>
 								<Temperature asset={asset} />
 							</Collapsable>
-							<Collapsable title={emojify('🚨 Button')} id="cat:button">
+							<Collapsable
+								title={
+									<IconWithText>
+										<BellIcon size={22} />
+										Button
+									</IconWithText>
+								}
+								id="cat:button"
+							>
 								<HistoricalButtonPresses asset={asset} />
 							</Collapsable>
 						</div>

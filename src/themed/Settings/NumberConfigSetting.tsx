@@ -1,6 +1,6 @@
 import { OutDatedWarning } from 'components/OutDatedWarning'
 import React, { useState } from 'react'
-import { emojify } from 'themed/Emojify'
+import { CircleIcon, UnknownIcon } from 'themed/FeatherIcon'
 
 export const NumberConfigSetting = ({
 	label,
@@ -43,19 +43,23 @@ export const NumberConfigSetting = ({
 					reported={reported}
 					onNotReported={
 						<span className="input-group-text text-danger">
-							<abbr title={'Asset has not reported this setting, yet.'}>
-								{emojify('❓')}
+							<abbr
+								title={'Asset has not reported this setting, yet.'}
+								className=" d-flex justify-content-center align-items-center"
+							>
+								<UnknownIcon />
 							</abbr>
 						</span>
 					}
 					onOutDated={(current) => (
-						<span className="input-group-text">
+						<span className="input-group-text d-flex justify-content-center align-items-center">
 							<abbr
+								className=" d-flex justify-content-center align-items-center"
 								title={`Asset has an outdated value. Current value: ${JSON.stringify(
 									current,
 								)}.`}
 							>
-								{emojify('⭕')}
+								<CircleIcon />
 							</abbr>
 						</span>
 					)}

@@ -23,6 +23,7 @@ const userZoomSetting = withLocalStorage<number>({
 	defaultValue: 13,
 })
 
+// FIXME: store other settings in local storage as well
 const defaults: Settings = {
 	follow: true,
 	enabledLayers: {

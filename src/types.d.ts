@@ -22,6 +22,5 @@ interface ImportMeta {
 		PUBLIC_API_ENDPOINT?: string
 		PUBLIC_VERSION: string
 		PUBLIC_HOMEPAGE?: string
-		PUBLIC_TWEMOJI_VERSION: string
 	}
 }
