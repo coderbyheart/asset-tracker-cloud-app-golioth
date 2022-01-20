@@ -18,13 +18,7 @@ export type Settings = {
 	zoom: number
 }
 
-const userZoomSetting = withLocalStorage<number>({
-	key: 'map:zoom',
-	defaultValue: 13,
-})
-
-// FIXME: store other settings in local storage as well
-const defaults: Settings = {
+const defaultSettings: Settings = {
 	follow: true,
 	enabledLayers: {
 		headings: true,
@@ -32,21 +26,26 @@ const defaults: Settings = {
 		multicellLocations: true,
 		history: true,
 	},
-	zoom: userZoomSetting.get(),
+	zoom: 13,
 }
+
+const userSettings = withLocalStorage<Settings>({
+	key: 'map:settings',
+	defaultValue: defaultSettings,
+})
 
 export const MapSettingsContext = createContext<{
 	settings: Settings
 	update: (_: Partial<Settings>) => void
 }>({
-	settings: defaults,
+	settings: defaultSettings,
 	update: () => undefined,
 })
 
 export const useMapSettings = () => useContext(MapSettingsContext)
 
 export const MapSettingsProvider: FunctionComponent = ({ children }) => {
-	const [settings, update] = useState<Settings>(defaults)
+	const [settings, update] = useState<Settings>(userSettings.get())
 	return (
 		<MapSettingsContext.Provider
 			value={{
@@ -55,7 +54,7 @@ export const MapSettingsProvider: FunctionComponent = ({ children }) => {
 					update((settings) => {
 						const updated = { ...settings, ...newSettings }
 						if (equal(updated, settings)) return settings
-						userZoomSetting.set(updated.zoom)
+						userSettings.set(updated)
 						return updated
 					})
 				},
