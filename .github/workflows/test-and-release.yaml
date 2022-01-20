@@ -24,7 +24,7 @@ jobs:
       - name: Build
         env:
           BASE_URL: /asset-tracker-cloud-app-golioth/
-          VERSION: ${{ github.sha }}
+          PUBLIC_VERSION: ${{ github.sha }}
         run: npm run build
       - uses: actions/upload-artifact@v2
         with:
