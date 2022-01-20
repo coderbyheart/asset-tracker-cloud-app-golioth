@@ -6,11 +6,11 @@
   cursor: pointer;
 }
 
-.collapsable > header[aria-expanded="false"] svg {
+.collapsable > header[aria-expanded="false"] > svg {
   transform: rotate(0);
 }
 
-.collapsable > header[aria-expanded="true"] svg {
+.collapsable > header[aria-expanded="true"] > svg {
   transform: rotate(180deg);
 }
 
