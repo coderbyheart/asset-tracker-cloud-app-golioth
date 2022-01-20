@@ -10,13 +10,16 @@ type IconOptions = {
 	/** defaults to 20 */
 	size?: number
 	title: string
+	className?: string
 }
 
 // Must be wrapped in an element: https://github.com/reactjs/rfcs/pull/129
 const wrapSvg = (options: IconOptions) => (f: typeof featherIcons[0]) =>
 	(
 		<span
-			className={styles.iconContainer}
+			className={`${options.className ?? ''} ${
+				styles.iconContainer
+			} feather-icon`}
 			style={{
 				height: `${options.size ?? 20}px`,
 				width: `${options.size ?? 20}px`,
@@ -415,6 +418,14 @@ export const SmartphoneIcon = (options?: TypedIconOptions) => (
 )
 export const BellIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} title="Bell" type="bell" />
+)
+
+export const ChevronDownIcon = (options?: TypedIconOptions) => (
+	<FeatherIcon {...options} title="⌄" type="chevron-down" />
+)
+
+export const ChevronUpIcon = (options?: TypedIconOptions) => (
+	<FeatherIcon {...options} title="^" type="chevron-up" />
 )
 
 export const IconWithText: FunctionComponent<PropsWithChildren<any>> = ({

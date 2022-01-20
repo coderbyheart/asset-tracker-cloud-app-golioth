@@ -4,13 +4,16 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  animation: spin 4s linear infinite;
 }
 
-.collapsable > header[aria-expanded="false"] > svg {
+.chevron {
   transform: rotate(0);
+  transition-duration: 0.25s;
+  transition-property: transform;
 }
 
-.collapsable > header[aria-expanded="true"] > svg {
+.collapsable > header[aria-expanded="true"] .chevron {
   transform: rotate(180deg);
 }
 

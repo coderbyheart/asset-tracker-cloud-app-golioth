@@ -4,6 +4,7 @@ import type { Device } from 'golioth/golioth'
 import { useAssetInfo } from 'golioth/hooks/useAssetInfo'
 import React from 'react'
 import styles from 'themed/Asset/AssetInformation.module.css'
+import { NoData } from 'themed/NoData'
 import { ReportedTime } from 'themed/ReportedTime'
 
 export const AssetInformation = ({
@@ -15,7 +16,7 @@ export const AssetInformation = ({
 }) => {
 	const { roam, dev } = useAssetInfo({ asset })
 	const expectedInterval = expectedSendIntervalInSeconds(state)
-	if (dev === undefined) return null
+	if (dev === undefined) return <NoData />
 	return (
 		<div className={styles.assetInformation}>
 			<h4>Golioth</h4>

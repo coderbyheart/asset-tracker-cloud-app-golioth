@@ -24,3 +24,13 @@
 .showSettingsButton[aria-expanded="true"] {
   background-color: #f7f7f7;
 }
+
+.chevron {
+  transform: rotate(0);
+  transition-duration: 0.25s;
+  transition-property: transform;
+}
+
+.showSettingsButton[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}

@@ -1,22 +1,7 @@
 import { useCollapsed } from 'hooks/useCollapsed'
 import React from 'react'
 import styles from 'themed/Collapsable.module.css'
-
-const Chevron = () => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		width="24"
-		height="24"
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		strokeWidth="2"
-		strokeLinecap="square"
-		strokeLinejoin="miter"
-	>
-		<polyline points="6 9 12 15 18 9"></polyline>
-	</svg>
-)
+import { ChevronDownIcon } from './FeatherIcon'
 
 export const Collapsable = ({
 	id,
@@ -54,7 +39,7 @@ export const Collapsable = ({
 					aria-expanded="false"
 				>
 					<div>{title}</div>
-					<Chevron />
+					<ChevronDownIcon className={styles.chevron} />
 				</header>
 			</section>
 		)
@@ -69,7 +54,7 @@ export const Collapsable = ({
 				aria-expanded="true"
 			>
 				<div>{title}</div>
-				<Chevron />
+				<ChevronDownIcon className={styles.chevron} />
 			</header>
 			<div>{children}</div>
 		</section>
