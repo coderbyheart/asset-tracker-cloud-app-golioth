@@ -3,7 +3,7 @@ import { Map } from 'components/Map/Map'
 import { MapSettings } from 'components/Map/Settings'
 import { ShowSettingsButton } from 'components/Map/ShowSettingsButton'
 import { MapSettingsProvider } from 'hooks/useMapSettings'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const MapWithSettings = ({ asset }: { asset: ApiAsset }) => {
 	const [showSettings, toggleSettings] = useState<boolean>(false)

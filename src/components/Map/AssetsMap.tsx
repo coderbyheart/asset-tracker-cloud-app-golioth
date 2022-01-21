@@ -6,7 +6,7 @@ import { useAssetLocations } from 'hooks/useAssetLocation'
 import { useCurrentProject } from 'hooks/useCurrentProject'
 import type { Position } from 'hooks/useMapData'
 import type { Map as LeafletMap } from 'leaflet'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { Link } from 'react-router-dom'
 

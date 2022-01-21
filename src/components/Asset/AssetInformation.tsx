@@ -5,7 +5,6 @@ import styles from 'components/Asset/AssetInformation.module.css'
 import { NoData } from 'components/NoData'
 import { ReportedTime } from 'components/ReportedTime'
 import { useAssetInfo } from 'hooks/useAssetInfo'
-import React from 'react'
 
 export const AssetInformation = ({
 	device,

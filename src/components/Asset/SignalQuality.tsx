@@ -1,6 +1,5 @@
 import { RSRP, SignalQualityTriangle } from '@nordicsemiconductor/rsrp-bar'
 import { XSquareIcon } from 'components/FeatherIcon'
-import React from 'react'
 
 export const SignalQuality = ({ dbm }: { dbm: number }) => (
 	<RSRP

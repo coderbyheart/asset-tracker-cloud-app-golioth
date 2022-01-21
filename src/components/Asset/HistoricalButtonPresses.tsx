@@ -3,7 +3,6 @@ import { ChartDateRange } from 'components/ChartDateRange'
 import { RelativeTime } from 'components/RelativeTime'
 import { SensorProperties, useAssetHistory } from 'hooks/useAssetHistory'
 import { useChartDateRange } from 'hooks/useChartDateRange'
-import React from 'react'
 
 const toButtonEmoji = (value: number): JSX.Element => {
 	switch (value) {

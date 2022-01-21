@@ -1,11 +1,6 @@
 import type { JWTKey } from 'api/golioth'
 import { api, ApiError } from 'api/golioth'
-import React, {
-	createContext,
-	FunctionComponent,
-	useContext,
-	useState,
-} from 'react'
+import { createContext, FunctionComponent, useContext, useState } from 'react'
 import { withLocalStorage } from 'utils/withLocalStorage'
 
 type AuthInfo = {

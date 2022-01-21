@@ -1,6 +1,6 @@
 import type { JWTKey } from 'api/golioth'
 import { api } from 'api/golioth'
-import React, { createContext, FunctionComponent, useContext } from 'react'
+import { createContext, FunctionComponent, useContext } from 'react'
 
 export const ApiContext = createContext<ReturnType<typeof api>>(
 	undefined as unknown as ReturnType<typeof api>,

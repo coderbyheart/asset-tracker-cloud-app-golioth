@@ -9,7 +9,6 @@ import { TextWithIcon } from 'components/TextWithIcon'
 import { identifyIssuer } from 'e118-iin-list'
 import { isSome, none } from 'fp-ts/lib/Option'
 import { filter as filterOperator, Operator as Op } from 'mcc-mnc-list'
-import React from 'react'
 
 export const Operator = ({ op }: { op?: Op }) => (
 	<span className={'operator'}>{op?.brand ?? 'Unknown'}</span>

@@ -1,6 +1,5 @@
 import { ChartDateRange } from 'components/ChartDateRange'
 import { useMapSettings } from 'hooks/useMapSettings'
-import React from 'react'
 
 export const MapSettings = () => {
 	const { settings, update: updateSettings } = useMapSettings()

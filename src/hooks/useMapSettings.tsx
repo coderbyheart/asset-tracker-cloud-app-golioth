@@ -1,10 +1,5 @@
 import equal from 'fast-deep-equal'
-import React, {
-	createContext,
-	FunctionComponent,
-	useContext,
-	useState,
-} from 'react'
+import { createContext, FunctionComponent, useContext, useState } from 'react'
 import { withLocalStorage } from 'utils/withLocalStorage'
 
 export type Settings = {

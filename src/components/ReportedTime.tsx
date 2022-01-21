@@ -1,13 +1,13 @@
-import { RelativeTime } from 'components/RelativeTime'
-import { useReportedTime } from 'hooks/useReportedTime'
-import React, { HTMLProps } from 'react'
 import {
 	AlertIcon,
 	ClockIcon,
 	CloudIcon,
 	IconWithText,
 	OutdatedDataIcon,
-} from './FeatherIcon'
+} from 'components/FeatherIcon'
+import { RelativeTime } from 'components/RelativeTime'
+import { useReportedTime } from 'hooks/useReportedTime'
+import type { HTMLProps } from 'react'
 
 const OldWarning = ({
 	reportIsOld,

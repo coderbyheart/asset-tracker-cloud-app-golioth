@@ -1,8 +1,3 @@
-import { useAuth } from 'hooks/useAuth'
-import { useCurrentDevice } from 'hooks/useCurrentDevice'
-import introJs from 'intro.js'
-import React from 'react'
-import { Link } from 'react-router-dom'
 import {
 	HelpIcon,
 	IconWithText,
@@ -10,7 +5,11 @@ import {
 	LogoutIcon,
 	MapIcon,
 	ParcelIcon,
-} from './FeatherIcon'
+} from 'components/FeatherIcon'
+import { useAuth } from 'hooks/useAuth'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
+import introJs from 'intro.js'
+import { Link } from 'react-router-dom'
 import logo from '/logo.svg'
 
 const intro = introJs()

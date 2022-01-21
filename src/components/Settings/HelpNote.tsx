@@ -1,6 +1,6 @@
 import { HelpIcon, IconWithText } from 'components/FeatherIcon'
 import introJs from 'intro.js'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { withLocalStorage } from 'utils/withLocalStorage'
 
 const intro = introJs()

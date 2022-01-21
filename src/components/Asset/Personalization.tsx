@@ -1,6 +1,6 @@
 import type { Device } from 'api/golioth'
 import { useCurrentDevice } from 'hooks/useCurrentDevice'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const Personalization = ({ asset }: { asset: Device }) => {
 	const [name, setName] = useState<string>(asset.name ?? '')

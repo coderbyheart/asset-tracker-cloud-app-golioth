@@ -7,7 +7,7 @@ import { NumberConfigSetting } from 'components/Settings/NumberConfigSetting'
 import styles from 'components/Settings/Settings.module.css'
 import equal from 'fast-deep-equal'
 import { useCurrentDevice } from 'hooks/useCurrentDevice'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const MAX_INT32 = 2147483647
 

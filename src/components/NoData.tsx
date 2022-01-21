@@ -1,5 +1,4 @@
-import React from 'react'
-import { IconWithText, XIcon } from './FeatherIcon'
+import { IconWithText, XIcon } from 'components/FeatherIcon'
 
 export const NoData = ({ children }: { children?: string }) => (
 	<div

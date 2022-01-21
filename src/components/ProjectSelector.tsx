@@ -1,6 +1,5 @@
 import { useCurrentProject } from 'hooks/useCurrentProject'
 import { useProjects } from 'hooks/useProjects'
-import React from 'react'
 
 export const ProjectSelector = () => {
 	const projects = useProjects()

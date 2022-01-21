@@ -1,7 +1,7 @@
 import type { Device } from 'api/golioth'
 import { useApi } from 'hooks/useApi'
+import { useCurrentProject } from 'hooks/useCurrentProject'
 import { useEffect, useState } from 'react'
-import { useCurrentProject } from './useCurrentProject'
 
 export const useDevices = (): Device[] => {
 	const { project } = useCurrentProject()

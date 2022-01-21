@@ -1,6 +1,6 @@
 import type { Project } from 'api/golioth'
 import { useProjects } from 'hooks/useProjects'
-import React, {
+import {
 	createContext,
 	FunctionComponent,
 	useContext,

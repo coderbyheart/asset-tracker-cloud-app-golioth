@@ -1,13 +1,8 @@
 import type { Device } from 'api/golioth'
 import { defaultConfig } from 'asset/defaultConfig'
 import type { AssetConfig, AssetState, AssetTwin } from 'asset/state'
-import React, {
-	createContext,
-	FunctionComponent,
-	useContext,
-	useState,
-} from 'react'
-import { useApi } from './useApi'
+import { useApi } from 'hooks/useApi'
+import { createContext, FunctionComponent, useContext, useState } from 'react'
 
 export const CurrentDeviceContext = createContext<{
 	device?: Device

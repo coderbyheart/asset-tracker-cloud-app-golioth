@@ -1,6 +1,5 @@
 import { ProjectSelector } from 'components/ProjectSelector'
 import { useDevices } from 'hooks/useDevices'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const Assets = () => {

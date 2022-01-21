@@ -1,6 +1,6 @@
 import { ChevronDownIcon, SettingsIcon } from 'components/FeatherIcon'
 import styles from 'components/Map/ShowSettingsButton.module.css'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const ShowSettingsButton = ({
 	onToggle,

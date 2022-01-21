@@ -1,7 +1,6 @@
 import styles from 'components/Collapsable.module.css'
+import { ChevronDownIcon } from 'components/FeatherIcon'
 import { useCollapsed } from 'hooks/useCollapsed'
-import React from 'react'
-import { ChevronDownIcon } from './FeatherIcon'
 
 export const Collapsable = ({
 	id,

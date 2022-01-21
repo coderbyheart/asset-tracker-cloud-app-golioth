@@ -1,5 +1,4 @@
 import equal from 'fast-deep-equal'
-import React from 'react'
 
 export const OutDatedWarning = <Reported, Desired>({
 	desired,

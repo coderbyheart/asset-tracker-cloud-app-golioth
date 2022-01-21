@@ -1,6 +1,6 @@
 import { CircleIcon, UnknownIcon } from 'components/FeatherIcon'
 import { OutDatedWarning } from 'components/OutDatedWarning'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const NumberConfigSetting = ({
 	label,

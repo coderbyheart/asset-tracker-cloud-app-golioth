@@ -26,7 +26,7 @@ import { Settings } from 'components/Settings/Settings'
 import { useAutoUpdateAsset } from 'hooks/useAutoUpdateAsset'
 import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import { useDevice } from 'hooks/useDevice'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router'
 
 export const Asset = () => {

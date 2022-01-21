@@ -1,5 +1,4 @@
 import { IconWithText, XIcon } from 'components/FeatherIcon'
-import React from 'react'
 
 export const NoMap = () => (
 	<div

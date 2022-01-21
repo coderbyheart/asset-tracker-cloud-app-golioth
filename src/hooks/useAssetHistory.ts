@@ -9,8 +9,8 @@ import type {
 	Roaming,
 } from 'asset/state'
 import { useApi } from 'hooks/useApi'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import { useEffect, useState } from 'react'
-import { useCurrentDevice } from './useCurrentDevice'
 
 export enum SensorProperties {
 	Battery = 'bat',

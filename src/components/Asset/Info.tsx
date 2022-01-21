@@ -23,7 +23,6 @@ import {
 import { ReportedTime } from 'components/ReportedTime'
 import { Toggle } from 'components/Toggle'
 import { useAssetInfo } from 'hooks/useAssetInfo'
-import React from 'react'
 
 const RoamInfo = ({
 	roam,
