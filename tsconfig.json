@@ -15,11 +15,11 @@
     "importsNotUsedAsValues": "error",
     "baseUrl": "src",
     "paths": {
-      "golioth/*": ["golioth/*"],
+      "api/*": ["api/*"],
       "asset/*": ["asset/*"],
       "hooks/*": ["hooks/*"],
       "components/*": ["components/*"],
-      "themed/*": ["themed/*"],
+      "pages/*": ["pages/*"],
       "utils/*": ["utils/*"]
     }
   },

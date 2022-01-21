@@ -24,11 +24,11 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: [
-			{ find: 'golioth/', replacement: '/src/golioth/' },
+			{ find: 'api/', replacement: '/src/api/' },
 			{ find: 'asset/', replacement: '/src/asset/' },
 			{ find: 'hooks/', replacement: '/src/hooks/' },
 			{ find: 'components/', replacement: '/src/components/' },
-			{ find: 'themed/', replacement: '/src/themed/' },
+			{ find: 'pages/', replacement: '/src/pages/' },
 			{ find: 'utils/', replacement: '/src/utils/' },
 		],
 	},
