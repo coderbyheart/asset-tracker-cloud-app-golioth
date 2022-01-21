@@ -25,6 +25,7 @@ export const NeighborCellMeasurementsReport = ({
 	}>()
 
 	useEffect(() => {
+		let isMounted = true
 		api
 			.project({ id: asset.projectId })
 			.device({ id: asset.id })
@@ -35,9 +36,13 @@ export const NeighborCellMeasurementsReport = ({
 				endDate,
 			})
 			.then((res) => {
+				if (!isMounted) return
 				setNcellMeasReport(res[0])
 			})
 			.catch(console.error)
+		return () => {
+			isMounted = false
+		}
 	}, [asset, startDate, endDate, api])
 
 	if (nCellMeasReport === undefined)

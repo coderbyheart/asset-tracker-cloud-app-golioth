@@ -1,4 +1,4 @@
-import { CircleIcon, UnknownIcon } from 'components/FeatherIcon'
+import { OutdatedConfigValueIcon, UnknownIcon } from 'components/FeatherIcon'
 import { OutDatedWarning } from 'components/OutDatedWarning'
 import { useState } from 'react'
 
@@ -59,7 +59,7 @@ export const NumberConfigSetting = ({
 									current,
 								)}.`}
 							>
-								<CircleIcon />
+								<OutdatedConfigValueIcon />
 							</abbr>
 						</span>
 					)}

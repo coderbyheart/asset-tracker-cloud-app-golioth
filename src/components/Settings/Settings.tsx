@@ -1,13 +1,15 @@
+import { defaultConfig } from 'asset/defaultConfig'
 import type { AssetConfig } from 'asset/state'
 import { DataModules } from 'asset/state'
 import cx from 'classnames'
-import { CircleIcon, UnknownIcon } from 'components/FeatherIcon'
+import { OutdatedConfigValueIcon, UnknownIcon } from 'components/FeatherIcon'
+import { NoData } from 'components/NoData'
 import { OutDatedWarning } from 'components/OutDatedWarning'
 import { NumberConfigSetting } from 'components/Settings/NumberConfigSetting'
 import styles from 'components/Settings/Settings.module.css'
 import equal from 'fast-deep-equal'
 import { useCurrentDevice } from 'hooks/useCurrentDevice'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const MAX_INT32 = 2147483647
 
@@ -21,17 +23,35 @@ const buttonClass = (
 	})
 
 export const Settings = () => {
-	const { state, updateAssetConfiguration } = useCurrentDevice()
+	const { state } = useCurrentDevice()
+
+	const [currentDesiredConfig, setCurrentDesiredConfig] =
+		useState<AssetConfig>()
+
+	useEffect(() => {
+		if (state === undefined) return
+		setCurrentDesiredConfig({
+			...defaultConfig,
+			...state.desired.cfg,
+		})
+	}, [setCurrentDesiredConfig, state])
+	if (currentDesiredConfig === undefined) return <NoData />
+	return <SettingsUI currentDesiredConfig={currentDesiredConfig} />
+}
+
+const SettingsUI = ({
+	currentDesiredConfig,
+}: {
+	currentDesiredConfig: AssetConfig
+}) => {
+	const { updateAssetConfiguration, state } = useCurrentDevice()
 	const {
-		reported: { cfg },
-		desired,
-	} = state ?? {}
+		reported: { cfg: reportedConfig },
+	} = state ?? { reported: { cfg: {} as Partial<AssetConfig> } }
+	const [newDesiredConfig, setNewDesiredConfig] =
+		useState<Partial<AssetConfig>>(currentDesiredConfig)
 
-	const [newDesiredConfig, setNewDesiredConfig] = useState<
-		Partial<AssetConfig>
-	>(desired.cfg)
-
-	const hasChanges = !equal(newDesiredConfig, desired)
+	const hasChanges = !equal(newDesiredConfig, currentDesiredConfig)
 
 	const updateConfig = (cfg: Partial<AssetConfig>) => {
 		const updated = {
@@ -51,7 +71,7 @@ export const Settings = () => {
 	const isActive =
 		newDesiredConfig.act !== undefined
 			? newDesiredConfig.act === true
-			: cfg.act === true
+			: reportedConfig?.act === true
 
 	return (
 		<form className={styles.SettingsForm}>
@@ -61,7 +81,7 @@ export const Settings = () => {
 					<div className="btn-group" role="group">
 						<OutDatedWarning
 							desired={newDesiredConfig.act}
-							reported={cfg.act}
+							reported={reportedConfig?.act}
 							onNotReported={
 								<button
 									type="button"
@@ -85,7 +105,7 @@ export const Settings = () => {
 										current,
 									)}.`}
 								>
-									<CircleIcon />
+									<OutdatedConfigValueIcon />
 								</button>
 							)}
 						/>
@@ -121,7 +141,7 @@ export const Settings = () => {
 				<NumberConfigSetting
 					id={'gpst'}
 					desired={newDesiredConfig.gpst}
-					reported={cfg.gpst}
+					reported={reportedConfig?.gpst}
 					example={60}
 					onChange={updateConfigProperty('gpst')}
 					minimum={1}
@@ -141,7 +161,7 @@ export const Settings = () => {
 						}
 						id={'mvres'}
 						desired={newDesiredConfig.mvres}
-						reported={cfg.mvres}
+						reported={reportedConfig?.mvres}
 						onChange={updateConfigProperty('mvres')}
 						minimum={1}
 						maximum={MAX_INT32}
@@ -153,7 +173,7 @@ export const Settings = () => {
 						id={'mvt'}
 						example={3600}
 						desired={newDesiredConfig.mvt}
-						reported={cfg.mvt}
+						reported={reportedConfig?.mvt}
 						onChange={updateConfigProperty('mvt')}
 						minimum={1}
 						maximum={MAX_INT32}
@@ -171,7 +191,7 @@ export const Settings = () => {
 					maximum={19.6133}
 					unit={'m/s²'}
 					desired={newDesiredConfig.acct}
-					reported={cfg.acct}
+					reported={reportedConfig?.acct}
 					onChange={updateConfigProperty('acct', parseFloat)}
 				/>
 			</fieldset>
@@ -184,7 +204,7 @@ export const Settings = () => {
 					}
 					id={'actwt'}
 					desired={newDesiredConfig.actwt}
-					reported={cfg.actwt}
+					reported={reportedConfig?.actwt}
 					onChange={updateConfigProperty('actwt')}
 					minimum={1}
 					maximum={MAX_INT32}
@@ -200,11 +220,13 @@ export const Settings = () => {
 					<div className="btn-group" role="group">
 						<OutDatedWarning
 							desired={newDesiredConfig.nod}
-							reported={cfg.nod}
+							reported={reportedConfig?.nod}
 							onNotReported={
 								<button
 									type="button"
-									className={'btn btn-danger'}
+									className={
+										'btn btn-danger d-flex justify-content-center align-items-center'
+									}
 									disabled={true}
 									title={'Asset has not reported this setting, yet.'}
 									id="nod-gps"
@@ -215,13 +237,15 @@ export const Settings = () => {
 							onOutDated={(current) => (
 								<button
 									type="button"
-									className={'btn btn-outline-danger'}
+									className={
+										'btn btn-outline-danger d-flex justify-content-center align-items-center'
+									}
 									disabled={true}
 									title={`Asset has an outdated value. Current value: ${JSON.stringify(
 										current,
 									)}.`}
 								>
-									<CircleIcon />
+									<OutdatedConfigValueIcon />
 								</button>
 							)}
 							isEqual={(desired, reported) => {
@@ -280,11 +304,13 @@ export const Settings = () => {
 					<div className="btn-group" role="group">
 						<OutDatedWarning
 							desired={newDesiredConfig.nod}
-							reported={cfg.nod}
+							reported={reportedConfig?.nod}
 							onNotReported={
 								<button
 									type="button"
-									className={'btn btn-danger'}
+									className={
+										'btn btn-danger d-flex justify-content-center align-items-center'
+									}
 									disabled={true}
 									title={'Asset has not reported this setting, yet.'}
 									id="nod-ncell"
@@ -295,13 +321,15 @@ export const Settings = () => {
 							onOutDated={(current) => (
 								<button
 									type="button"
-									className={'btn btn-outline-danger'}
+									className={
+										'btn btn-outline-danger d-flex justify-content-center align-items-center'
+									}
 									disabled={true}
 									title={`Asset has an outdated value. Current value: ${JSON.stringify(
 										current,
 									)}.`}
 								>
-									<CircleIcon />
+									<OutdatedConfigValueIcon />
 								</button>
 							)}
 							isEqual={(desired, reported) => {

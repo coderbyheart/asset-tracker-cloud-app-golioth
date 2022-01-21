@@ -4,11 +4,7 @@ import { useState } from 'react'
 
 export const Personalization = ({ asset }: { asset: Device }) => {
 	const [name, setName] = useState<string>(asset.name ?? '')
-	const {
-		state,
-		setCurrentDevice: setAsset,
-		updateDeviceSettings: update,
-	} = useCurrentDevice()
+	const { updateDeviceSettings } = useCurrentDevice()
 	return (
 		<form
 			className="justify-content-center"
@@ -32,8 +28,7 @@ export const Personalization = ({ asset }: { asset: Device }) => {
 					className="btn btn-primary ms-3"
 					disabled={name === asset.name}
 					onClick={() => {
-						setAsset({ info: { ...asset, name }, state })
-						update({ name }).catch(console.error)
+						updateDeviceSettings({ name }).catch(console.error)
 					}}
 				>
 					Update

@@ -85,7 +85,10 @@ export const api = ({
 		device: (device: Pick<Device, 'id'>) => {
 			get: () => Promise<Device>
 			state: {
-				get: () => Promise<Record<string, any>>
+				get: () => Promise<{
+					desired: AssetState
+					reported: AssetState
+				}>
 				update: (state: AssetState) => Promise<void>
 			}
 			history: <T extends AssetSensor>(
@@ -168,20 +171,20 @@ export const api = ({
 						if (!ok)
 							throw new ApiError(`Failed to fetch device!`, httpStatusCode)
 
-						const state = (await res.json()).data
+						const state = (await res.json()).data as Record<string, any> | null
 						const result = {
 							desired: {
-								...state.desired,
+								...state?.desired,
 								cfg: {
-									...state.desired?.cfg,
-									nod: objectFlagsToArray(state.desired?.cfg?.nod),
+									...state?.desired?.cfg,
+									nod: objectFlagsToArray(state?.desired?.cfg?.nod),
 								},
 							},
 							reported: {
-								...state.reported,
+								...state?.reported,
 								cfg: {
-									...state.reported?.cfg,
-									nod: objectFlagsToArray(state.reported?.cfg?.nod),
+									...state?.reported?.cfg,
+									nod: objectFlagsToArray(state?.reported?.cfg?.nod),
 								},
 							},
 						}

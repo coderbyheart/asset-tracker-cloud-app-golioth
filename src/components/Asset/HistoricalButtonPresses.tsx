@@ -1,5 +1,6 @@
 import type { Device } from 'api/golioth'
 import { ChartDateRange } from 'components/ChartDateRange'
+import { NoData } from 'components/NoData'
 import { RelativeTime } from 'components/RelativeTime'
 import { SensorProperties, useAssetHistory } from 'hooks/useAssetHistory'
 import { useChartDateRange } from 'hooks/useChartDateRange'
@@ -26,6 +27,14 @@ export const HistoricalButtonPresses = ({ asset }: { asset: Device }) => {
 		startDate,
 		endDate,
 	})
+
+	if (buttonHistory.length === 0)
+		return (
+			<>
+				<ChartDateRange />
+				<NoData />
+			</>
+		)
 
 	return (
 		<>

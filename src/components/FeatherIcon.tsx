@@ -360,8 +360,8 @@ export const XSquareIcon = (options?: TypedIconOptions) => (
 export const UnknownIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} title="❓" type="alert-circle" />
 )
-export const CircleIcon = (options?: TypedIconOptions) => (
-	<FeatherIcon {...options} title="⭕" type="circle" />
+export const OutdatedConfigValueIcon = (options?: TypedIconOptions) => (
+	<FeatherIcon {...options} color="#b00000" title="⭕" type="circle" />
 )
 export const ThermometerIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} title="Thermometer" type="thermometer" />

@@ -18,8 +18,8 @@ export type AssetState = {
 }
 
 export type AssetTwin = {
-	reported?: AssetState
-	desired?: AssetState
+	reported: AssetState
+	desired: AssetState
 }
 
 export type Battery = number

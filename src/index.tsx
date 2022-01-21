@@ -36,7 +36,6 @@ const AppRoot = () => {
 	return (
 		<Router basename={import.meta.env.BASE_URL ?? '/'}>
 			<Navbar />
-
 			{!isAuthenticated && (
 				<Routes>
 					<Route index element={<Navigate to="/login" />} />
