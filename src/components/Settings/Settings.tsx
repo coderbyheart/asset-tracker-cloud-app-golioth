@@ -6,7 +6,7 @@ import { OutDatedWarning } from 'components/OutDatedWarning'
 import { NumberConfigSetting } from 'components/Settings/NumberConfigSetting'
 import styles from 'components/Settings/Settings.module.css'
 import equal from 'fast-deep-equal'
-import { useAssetConfig } from 'hooks/useAssetConfig'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import React, { useState } from 'react'
 
 const MAX_INT32 = 2147483647
@@ -21,18 +21,24 @@ const buttonClass = (
 	})
 
 export const Settings = () => {
-	const { reported: r, desired, update } = useAssetConfig()
+	const { state, updateAssetConfiguration } = useCurrentDevice()
+	const {
+		reported: { cfg },
+		desired,
+	} = state ?? {}
 
-	const [newDesired, setNewDesired] = useState<Partial<AssetConfig>>(desired)
+	const [newDesiredConfig, setNewDesiredConfig] = useState<
+		Partial<AssetConfig>
+	>(desired.cfg)
 
-	const hasChanges = !equal(newDesired, desired)
+	const hasChanges = !equal(newDesiredConfig, desired)
 
 	const updateConfig = (cfg: Partial<AssetConfig>) => {
 		const updated = {
-			...newDesired,
+			...newDesiredConfig,
 			...cfg,
 		}
-		setNewDesired(updated)
+		setNewDesiredConfig(updated)
 	}
 
 	const updateConfigProperty =
@@ -43,7 +49,9 @@ export const Settings = () => {
 		}
 
 	const isActive =
-		newDesired.act !== undefined ? newDesired.act === true : r.act === true
+		newDesiredConfig.act !== undefined
+			? newDesiredConfig.act === true
+			: cfg.act === true
 
 	return (
 		<form className={styles.SettingsForm}>
@@ -52,8 +60,8 @@ export const Settings = () => {
 				<div className="input-group mb-2">
 					<div className="btn-group" role="group">
 						<OutDatedWarning
-							desired={newDesired.act}
-							reported={r.act}
+							desired={newDesiredConfig.act}
+							reported={cfg.act}
 							onNotReported={
 								<button
 									type="button"
@@ -112,8 +120,8 @@ export const Settings = () => {
 				<legend>GPS Timeout</legend>
 				<NumberConfigSetting
 					id={'gpst'}
-					desired={newDesired.gpst}
-					reported={r.gpst}
+					desired={newDesiredConfig.gpst}
+					reported={cfg.gpst}
 					example={60}
 					onChange={updateConfigProperty('gpst')}
 					minimum={1}
@@ -132,8 +140,8 @@ export const Settings = () => {
 							'After detecting movement send an update and wait this amount of time until movement again can trigger the next update.'
 						}
 						id={'mvres'}
-						desired={newDesired.mvres}
-						reported={r.mvres}
+						desired={newDesiredConfig.mvres}
+						reported={cfg.mvres}
 						onChange={updateConfigProperty('mvres')}
 						minimum={1}
 						maximum={MAX_INT32}
@@ -144,8 +152,8 @@ export const Settings = () => {
 						intro={'Send updates to the cloud at least this often.'}
 						id={'mvt'}
 						example={3600}
-						desired={newDesired.mvt}
-						reported={r.mvt}
+						desired={newDesiredConfig.mvt}
+						reported={cfg.mvt}
 						onChange={updateConfigProperty('mvt')}
 						minimum={1}
 						maximum={MAX_INT32}
@@ -162,8 +170,8 @@ export const Settings = () => {
 					minimum={0}
 					maximum={19.6133}
 					unit={'m/s²'}
-					desired={newDesired.acct}
-					reported={r.acct}
+					desired={newDesiredConfig.acct}
+					reported={cfg.acct}
 					onChange={updateConfigProperty('acct', parseFloat)}
 				/>
 			</fieldset>
@@ -175,8 +183,8 @@ export const Settings = () => {
 						'Wait this amount of seconds until sending the next update. The actual interval will be this time plus the time it takes to get a GPS fix.'
 					}
 					id={'actwt'}
-					desired={newDesired.actwt}
-					reported={r.actwt}
+					desired={newDesiredConfig.actwt}
+					reported={cfg.actwt}
 					onChange={updateConfigProperty('actwt')}
 					minimum={1}
 					maximum={MAX_INT32}
@@ -191,8 +199,8 @@ export const Settings = () => {
 					</label>
 					<div className="btn-group" role="group">
 						<OutDatedWarning
-							desired={newDesired.nod}
-							reported={r.nod}
+							desired={newDesiredConfig.nod}
+							reported={cfg.nod}
 							onNotReported={
 								<button
 									type="button"
@@ -225,14 +233,14 @@ export const Settings = () => {
 							type="button"
 							className={buttonClass(
 								'success',
-								newDesired.nod?.includes(DataModules.GNSS) ?? false,
+								newDesiredConfig.nod?.includes(DataModules.GNSS) ?? false,
 							)}
 							data-intro={
 								'In <em>Enabled</em> mode, the asset will use GPS to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
-									nod: [...(newDesired.nod ?? [])].filter(
+									nod: [...(newDesiredConfig.nod ?? [])].filter(
 										(s) => s !== DataModules.GNSS,
 									),
 								})
@@ -244,8 +252,8 @@ export const Settings = () => {
 							type="button"
 							className={buttonClass(
 								'danger',
-								newDesired.nod === undefined ||
-									!newDesired.nod?.includes(DataModules.GNSS),
+								newDesiredConfig.nod === undefined ||
+									!newDesiredConfig.nod?.includes(DataModules.GNSS),
 							)}
 							data-intro={
 								'In <em>Disabled</em> mode, the asset will not use GPS to send location data to the cloud.'
@@ -253,7 +261,10 @@ export const Settings = () => {
 							onClick={() => {
 								updateConfig({
 									nod: [
-										...new Set([...(newDesired.nod ?? []), DataModules.GNSS]),
+										...new Set([
+											...(newDesiredConfig.nod ?? []),
+											DataModules.GNSS,
+										]),
 									],
 								})
 							}}
@@ -268,8 +279,8 @@ export const Settings = () => {
 					</label>
 					<div className="btn-group" role="group">
 						<OutDatedWarning
-							desired={newDesired.nod}
-							reported={r.nod}
+							desired={newDesiredConfig.nod}
+							reported={cfg.nod}
 							onNotReported={
 								<button
 									type="button"
@@ -307,7 +318,7 @@ export const Settings = () => {
 							type="button"
 							className={buttonClass(
 								'success',
-								newDesired.nod?.includes(
+								newDesiredConfig.nod?.includes(
 									DataModules.NeigboringCellMeasurements,
 								) ?? false,
 							)}
@@ -316,7 +327,7 @@ export const Settings = () => {
 							}
 							onClick={() => {
 								updateConfig({
-									nod: [...(newDesired.nod ?? [])].filter(
+									nod: [...(newDesiredConfig.nod ?? [])].filter(
 										(s) => s !== DataModules.NeigboringCellMeasurements,
 									),
 								})
@@ -328,8 +339,8 @@ export const Settings = () => {
 							type="button"
 							className={buttonClass(
 								'danger',
-								newDesired.nod === undefined ||
-									!newDesired.nod?.includes(
+								newDesiredConfig.nod === undefined ||
+									!newDesiredConfig.nod?.includes(
 										DataModules.NeigboringCellMeasurements,
 									),
 							)}
@@ -340,7 +351,7 @@ export const Settings = () => {
 								updateConfig({
 									nod: [
 										...new Set([
-											...(newDesired.nod ?? []),
+											...(newDesiredConfig.nod ?? []),
 											DataModules.NeigboringCellMeasurements,
 										]),
 									],
@@ -359,7 +370,7 @@ export const Settings = () => {
 					className={'btn btn-primary'}
 					disabled={!hasChanges}
 					onClick={() => {
-						update(newDesired).catch(console.error)
+						updateAssetConfiguration(newDesiredConfig).catch(console.error)
 					}}
 				>
 					Update

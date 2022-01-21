@@ -2,8 +2,8 @@ import type { Device } from 'api/golioth'
 import type { GNSS } from 'asset/state'
 import { useApi } from 'hooks/useApi'
 import { SensorProperties } from 'hooks/useAssetHistory'
-import { useAssets } from 'hooks/useAssets'
 import { useCurrentProject } from 'hooks/useCurrentProject'
+import { useDevices } from 'hooks/useDevices'
 import { useEffect, useState } from 'react'
 
 type AssetLocation = {
@@ -13,9 +13,8 @@ type AssetLocation = {
 }
 export const useAssetLocations = (): AssetLocation[] => {
 	const [positions, setPositions] = useState<AssetLocation[]>([])
-
 	const { project } = useCurrentProject()
-	const assets = useAssets(project)
+	const assets = useDevices()
 	const api = useApi()
 
 	useEffect(() => {

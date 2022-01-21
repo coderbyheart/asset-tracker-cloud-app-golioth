@@ -8,7 +8,6 @@ import React from 'react'
 export const Battery = ({ asset }: { asset: Device }) => {
 	const { startDate, endDate } = useChartDateRange()
 	const batteryHistory = useAssetHistory({
-		asset,
 		sensor: SensorProperties.Battery,
 		startDate,
 		endDate,

@@ -1,4 +1,3 @@
-import type { Device } from 'api/golioth'
 import type {
 	AssetHistory,
 	AssetInfo,
@@ -11,6 +10,7 @@ import type {
 } from 'asset/state'
 import { useApi } from 'hooks/useApi'
 import { useEffect, useState } from 'react'
+import { useCurrentDevice } from './useCurrentDevice'
 
 export enum SensorProperties {
 	Battery = 'bat',
@@ -32,50 +32,42 @@ type SharedArgs = {
 type useAssetHistoryType = {
 	(
 		_: {
-			asset: Device
 			sensor: SensorProperties.GNSS
 		} & SharedArgs,
 	): AssetHistory<GNSS>
 	(
 		_: {
-			asset: Device
 			sensor: SensorProperties.Battery
 		} & SharedArgs,
 	): AssetHistory<Battery>
 	(
 		_: {
-			asset: Device
 			sensor: SensorProperties.Environment
 		} & SharedArgs,
 	): AssetHistory<Environment>
 	(
 		_: {
-			asset: Device
 			sensor: SensorProperties.Roaming
 		} & SharedArgs,
 	): AssetHistory<Roaming>
 	(
 		_: {
-			asset: Device
 			sensor: SensorProperties.Asset
 		} & SharedArgs,
 	): AssetHistory<AssetInfo>
 	(
 		_: {
-			asset: Device
 			sensor: SensorProperties.Button
 		} & SharedArgs,
 	): AssetHistory<Button>
 }
 
 export const useAssetHistory: useAssetHistoryType = <T extends AssetSensor>({
-	asset,
 	sensor,
 	limit,
 	startDate,
 	endDate,
 }: {
-	asset: Device
 	sensor: PropertyName
 	limit?: number
 	startDate?: Date
@@ -83,15 +75,17 @@ export const useAssetHistory: useAssetHistoryType = <T extends AssetSensor>({
 }): AssetHistory<T> => {
 	const [history, setHistory] = useState<AssetHistory<T>>([])
 	const api = useApi()
+	const { device } = useCurrentDevice()
 
 	useEffect(() => {
+		if (device === undefined) return
 		api
-			.project({ id: asset.projectId })
-			.device({ id: asset.id })
+			.project({ id: device.projectId })
+			.device({ id: device.id })
 			.history<T>({ path: [sensor, 'v'], limit, startDate, endDate })
 			.then(setHistory)
 			.catch(console.error)
-	}, [asset, api, sensor, limit, startDate, endDate])
+	}, [device, api, sensor, limit, startDate, endDate])
 
 	return history
 }

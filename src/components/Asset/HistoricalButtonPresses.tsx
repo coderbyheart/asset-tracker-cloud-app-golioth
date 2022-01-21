@@ -23,7 +23,6 @@ const toButtonEmoji = (value: number): JSX.Element => {
 export const HistoricalButtonPresses = ({ asset }: { asset: Device }) => {
 	const { startDate, endDate } = useChartDateRange()
 	const buttonHistory = useAssetHistory({
-		asset,
 		sensor: SensorProperties.Button,
 		startDate,
 		endDate,

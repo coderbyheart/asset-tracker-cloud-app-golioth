@@ -1,22 +1,22 @@
 import { useApi } from 'hooks/useApi'
-import { useCurrentAsset } from 'hooks/useCurrentAsset'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import { useEffect } from 'react'
 
 export const useAutoUpdateAsset = (options?: { interval?: number }) => {
-	const { info: asset, setAsset } = useCurrentAsset()
+	const { device, setCurrentDevice: setAsset } = useCurrentDevice()
 	const api = useApi()
 
 	useEffect(() => {
-		if (asset === undefined) return
+		if (device === undefined) return
 
 		const updateState = async () => {
-			if (asset === undefined) return
+			if (device === undefined) return
 			api
-				.project({ id: asset.projectId })
-				.device({ id: asset.id })
+				.project({ id: device.projectId })
+				.device({ id: device.id })
 				.state.get()
 				.then((state) => {
-					setAsset({ info: asset, state })
+					setAsset({ info: device, state })
 				})
 				.catch(console.error)
 		}
@@ -27,5 +27,5 @@ export const useAutoUpdateAsset = (options?: { interval?: number }) => {
 			console.debug(`[useAutoUpdateAsset]`, 'disabled')
 			clearInterval(interval)
 		}
-	}, [asset, api, options, setAsset])
+	}, [device, api, options, setAsset])
 }

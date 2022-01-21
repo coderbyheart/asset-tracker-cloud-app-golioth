@@ -8,7 +8,6 @@ import React from 'react'
 export const Temperature = ({ asset }: { asset: Device }) => {
 	const { startDate, endDate } = useChartDateRange()
 	const TemperatureHistory = useAssetHistory({
-		asset,
 		sensor: SensorProperties.Environment,
 		startDate,
 		endDate,

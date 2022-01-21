@@ -61,7 +61,6 @@ export const Map = ({ asset }: { asset: Device }) => {
 	const { settings, update: updateSettings } = useMapSettings()
 	const { startDate, endDate } = useChartDateRange()
 	const locationHistory = useAssetHistory({
-		asset,
 		sensor: SensorProperties.GNSS,
 		limit: settings.enabledLayers.history ? undefined : 1,
 		startDate,

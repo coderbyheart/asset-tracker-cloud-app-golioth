@@ -1,4 +1,4 @@
-import type { Device as ApiAsset } from 'api/golioth'
+import type { Device } from 'api/golioth'
 import type { AssetTwin } from 'asset/state'
 import { AssetInformation } from 'components/Asset/AssetInformation'
 import { Battery } from 'components/Asset/Battery'
@@ -23,35 +23,35 @@ import {
 import { MapWithSettings } from 'components/Map/MapWithSettings'
 import { HelpNote } from 'components/Settings/HelpNote'
 import { Settings } from 'components/Settings/Settings'
-import { useAsset } from 'hooks/useAsset'
 import { useAutoUpdateAsset } from 'hooks/useAutoUpdateAsset'
-import { useCurrentAsset } from 'hooks/useCurrentAsset'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
+import { useDevice } from 'hooks/useDevice'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 
 export const Asset = () => {
 	const { projectId, assetId } = useParams()
-	const { setAsset, info: asset, state: assetState } = useCurrentAsset()
-	const { info, state } = useAsset({ projectId, assetId })
+	const { setCurrentDevice, device, state: assetState } = useCurrentDevice()
+	const { device: info, state } = useDevice({ projectId, deviceId: assetId })
 	useAutoUpdateAsset()
 
 	// Store the current asset globally
 	useEffect(() => {
-		setAsset({ info, state })
+		setCurrentDevice({ info, state })
 		return () => {
-			setAsset()
+			setCurrentDevice()
 		}
-	}, [info, state, setAsset])
+	}, [info, state, setCurrentDevice])
 
-	if (asset === undefined) return null
-	return <AssetInfo asset={asset} state={assetState} />
+	if (device === undefined) return null
+	return <AssetInfo device={device} state={assetState} />
 }
 
 const AssetInfo = ({
-	asset,
+	device,
 	state,
 }: {
-	asset: ApiAsset
+	device: Device
 	state?: AssetTwin
 }) => {
 	return (
@@ -62,11 +62,11 @@ const AssetInfo = ({
 						{state && (
 							<div className="card-header pt-0 pe-0 pb-0 ps-0">
 								<div data-intro="This map shows the location of your asset.">
-									<MapWithSettings asset={asset} />
+									<MapWithSettings asset={device} />
 								</div>
 								<hr className="mt-0 mb-0" />
 								<div data-intro="This provides on overview of important asset information.">
-									<InfoHeader asset={asset} />
+									<InfoHeader asset={device} />
 								</div>
 							</div>
 						)}
@@ -81,7 +81,7 @@ const AssetInfo = ({
 								id="cat:settings"
 							>
 								<h4>Personalization</h4>
-								<Personalization asset={asset} />
+								<Personalization asset={device} />
 								<div data-intro="This allows you change the run-time configuration of the asset.">
 									<h4 className="mt-4 ">Asset configuration</h4>
 									<HelpNote />
@@ -97,7 +97,7 @@ const AssetInfo = ({
 								}
 								id="cat:information"
 							>
-								<AssetInformation asset={asset} state={state} />
+								<AssetInformation device={device} state={state} />
 							</Collapsable>
 							<Collapsable
 								title={
@@ -129,7 +129,7 @@ const AssetInfo = ({
 								}
 								id="cat:ncell"
 							>
-								<NeighborCellMeasurementsReport asset={asset} state={state} />
+								<NeighborCellMeasurementsReport asset={device} state={state} />
 							</Collapsable>
 							<Collapsable
 								title={
@@ -140,7 +140,7 @@ const AssetInfo = ({
 								}
 								id="cat:rsrp"
 							>
-								<RSRP asset={asset} />
+								<RSRP asset={device} />
 							</Collapsable>
 							<Collapsable
 								title={
@@ -151,7 +151,7 @@ const AssetInfo = ({
 								}
 								id="cat:battery"
 							>
-								<Battery asset={asset} />
+								<Battery asset={device} />
 							</Collapsable>
 							<Collapsable
 								title={
@@ -162,7 +162,7 @@ const AssetInfo = ({
 								}
 								id="cat:temperature"
 							>
-								<Temperature asset={asset} />
+								<Temperature asset={device} />
 							</Collapsable>
 							<Collapsable
 								title={
@@ -173,7 +173,7 @@ const AssetInfo = ({
 								}
 								id="cat:button"
 							>
-								<HistoricalButtonPresses asset={asset} />
+								<HistoricalButtonPresses asset={device} />
 							</Collapsable>
 						</div>
 					</div>

@@ -7,7 +7,7 @@ import {
 	useAuth,
 } from 'hooks/useAuth'
 import { CurrentChartDateRangeProvider } from 'hooks/useChartDateRange'
-import { CurrentAssetProvider } from 'hooks/useCurrentAsset'
+import { CurrentDeviceProvider } from 'hooks/useCurrentDevice'
 import { CurrentProjectProvider } from 'hooks/useCurrentProject'
 import { ProjectsProvider } from 'hooks/useProjects'
 import { About } from 'pages/About'
@@ -47,7 +47,7 @@ const AppRoot = () => {
 				<ApiProvider jwtKey={jwtKey} endpoint={PUBLIC_API_ENDPOINT}>
 					<ProjectsProvider>
 						<CurrentProjectProvider>
-							<CurrentAssetProvider>
+							<CurrentDeviceProvider>
 								<CurrentChartDateRangeProvider>
 									<Routes>
 										<Route path="/login" element={<Navigate to="/assets" />} />
@@ -60,7 +60,7 @@ const AppRoot = () => {
 										/>
 									</Routes>
 								</CurrentChartDateRangeProvider>
-							</CurrentAssetProvider>
+							</CurrentDeviceProvider>
 						</CurrentProjectProvider>
 					</ProjectsProvider>
 				</ApiProvider>

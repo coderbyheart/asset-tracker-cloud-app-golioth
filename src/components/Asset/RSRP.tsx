@@ -8,7 +8,6 @@ import React from 'react'
 export const RSRP = ({ asset }: { asset: Device }) => {
 	const { startDate, endDate } = useChartDateRange()
 	const RSRPHistory = useAssetHistory({
-		asset,
 		sensor: SensorProperties.Roaming,
 		startDate,
 		endDate,

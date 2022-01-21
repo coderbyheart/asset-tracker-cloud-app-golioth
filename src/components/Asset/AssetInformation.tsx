@@ -8,13 +8,13 @@ import { useAssetInfo } from 'hooks/useAssetInfo'
 import React from 'react'
 
 export const AssetInformation = ({
-	asset,
+	device,
 	state,
 }: {
-	asset: Device
+	device: Device
 	state?: AssetTwin
 }) => {
-	const { roam, dev } = useAssetInfo({ asset })
+	const { roam, dev } = useAssetInfo({ asset: device })
 	const expectedInterval = expectedSendIntervalInSeconds(state)
 	if (dev === undefined) return <NoData />
 	return (
@@ -23,11 +23,11 @@ export const AssetInformation = ({
 			<dl>
 				<dt>Asset ID</dt>
 				<dd>
-					<code>{asset.id}</code>
+					<code>{device.id}</code>
 				</dd>
 				<dt>Project ID</dt>
 				<dd>
-					<code>{asset.projectId}</code>
+					<code>{device.projectId}</code>
 				</dd>
 			</dl>
 			<h4>Hard- and Software</h4>

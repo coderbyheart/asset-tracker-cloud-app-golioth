@@ -1,12 +1,14 @@
 import type { Device } from 'api/golioth'
-import { useCurrentAsset } from 'hooks/useCurrentAsset'
-import { useUpdateAsset } from 'hooks/useUpdateAsset'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import React, { useState } from 'react'
 
 export const Personalization = ({ asset }: { asset: Device }) => {
 	const [name, setName] = useState<string>(asset.name ?? '')
-	const update = useUpdateAsset({ asset })
-	const { state, setAsset } = useCurrentAsset()
+	const {
+		state,
+		setCurrentDevice: setAsset,
+		updateDeviceSettings: update,
+	} = useCurrentDevice()
 	return (
 		<form
 			className="justify-content-center"

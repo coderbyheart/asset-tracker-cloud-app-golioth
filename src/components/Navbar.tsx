@@ -1,5 +1,5 @@
 import { useAuth } from 'hooks/useAuth'
-import { useCurrentAsset } from 'hooks/useCurrentAsset'
+import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import introJs from 'intro.js'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -17,7 +17,7 @@ const intro = introJs()
 
 export const Navbar = () => {
 	const { isAuthenticated, logout } = useAuth()
-	const { info } = useCurrentAsset()
+	const { device } = useCurrentDevice()
 	return (
 		<header>
 			<nav
@@ -36,8 +36,8 @@ export const Navbar = () => {
 							height="24"
 							className="d-inline-block align-text-top me-1"
 						/>
-						{info && <span>{info.name}</span>}
-						{!info && (
+						{device && <span>{device.name}</span>}
+						{!device && (
 							<span>
 								nRF Asset Tracker <small>(Golioth)</small>
 							</span>

@@ -1,12 +1,10 @@
 import { ProjectSelector } from 'components/ProjectSelector'
-import { useAssets } from 'hooks/useAssets'
-import { useCurrentProject } from 'hooks/useCurrentProject'
+import { useDevices } from 'hooks/useDevices'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const Assets = () => {
-	const { project } = useCurrentProject()
-	const assets = useAssets(project)
+	const devices = useDevices()
 
 	return (
 		<main className="container">
@@ -21,17 +19,17 @@ export const Assets = () => {
 							<ProjectSelector />
 						</div>
 						<div className="card-body">
-							{assets.map((asset, key) => (
+							{devices.map((device, key) => (
 								<Link
-									key={asset.id}
-									to={`/project/${project?.id}/asset/${asset.id}`}
+									key={device.id}
+									to={`/project/${device.projectId}/asset/${device.id}`}
 									data-intro={
 										key === 0
 											? `Click on a asset to view its details.`
 											: undefined
 									}
 								>
-									{asset.name}
+									{device.name}
 								</Link>
 							))}
 						</div>
