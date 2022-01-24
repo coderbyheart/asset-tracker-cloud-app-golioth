@@ -42,7 +42,7 @@
     "iconoir-react": "2.1.0",
     "inter-ui": "3.19.3",
     "intro.js": "4.3.0",
-    "jose": "4.3.8",
+    "jose": "4.3.9",
     "mcc-mnc-list": "1.1.8",
     "nanoid": "3.2.0",
     "react": "17.0.2",
@@ -52,7 +52,7 @@
     "rfdc": "1.3.0"
   },
   "devDependencies": {
-    "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.12",
+    "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.14",
     "@types/classnames": "2.3.1",
     "@types/feather-icons": "4.7.0",
     "@types/intro.js": "3.0.2",
