@@ -6,8 +6,8 @@ import {
 	MapIcon,
 	ParcelIcon,
 } from 'components/FeatherIcon'
+import { useAsset } from 'hooks/useAsset'
 import { useAuth } from 'hooks/useAuth'
-import { useCurrentDevice } from 'hooks/useCurrentDevice'
 import introJs from 'intro.js'
 import { Link } from 'react-router-dom'
 import logo from '/logo.svg'
@@ -16,7 +16,7 @@ const intro = introJs()
 
 export const Navbar = () => {
 	const { isAuthenticated, logout } = useAuth()
-	const { device } = useCurrentDevice()
+	const { device } = useAsset()
 	return (
 		<header>
 			<nav

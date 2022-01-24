@@ -1,12 +1,12 @@
 import { AssetInfo } from 'components/AssetInfo'
 import { NoData } from 'components/NoData'
-import { useCurrentDevice } from 'hooks/useCurrentDevice'
+import { useAsset } from 'hooks/useAsset'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 export const Asset = () => {
 	const { assetId } = useParams()
-	const { device, state, setDeviceId } = useCurrentDevice()
+	const { device, state, setDeviceId } = useAsset()
 
 	useEffect(() => {
 		setDeviceId(assetId)

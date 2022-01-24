@@ -1,15 +1,14 @@
 import { AssetsMap } from 'components/Map/AssetsMap'
 import { Navbar } from 'components/Navbar'
 import { ApiProvider } from 'hooks/useApi'
+import { AssetProvider } from 'hooks/useAsset'
 import {
 	AuthProvider,
 	defaults as authContextDefaults,
 	useAuth,
 } from 'hooks/useAuth'
 import { CurrentChartDateRangeProvider } from 'hooks/useChartDateRange'
-import { CurrentDeviceProvider } from 'hooks/useCurrentDevice'
-import { CurrentProjectProvider } from 'hooks/useCurrentProject'
-import { ProjectsProvider } from 'hooks/useProjects'
+import { ProjectProvider } from 'hooks/useProject'
 import { About } from 'pages/About'
 import { Asset } from 'pages/Asset'
 import { Assets } from 'pages/Assets'
@@ -44,24 +43,22 @@ const AppRoot = () => {
 			)}
 			{isAuthenticated && jwtKey !== undefined && (
 				<ApiProvider jwtKey={jwtKey} endpoint={PUBLIC_API_ENDPOINT}>
-					<ProjectsProvider>
-						<CurrentProjectProvider>
-							<CurrentDeviceProvider>
-								<CurrentChartDateRangeProvider>
-									<Routes>
-										<Route path="/login" element={<Navigate to="/assets" />} />
-										<Route path="/" element={<Navigate to="/assets" />} />
-										<Route path="/assets" element={<Assets />} />
-										<Route path="/map" element={<AssetsMap />} />
-										<Route
-											path="/project/:projectId/asset/:assetId"
-											element={<Asset />}
-										/>
-									</Routes>
-								</CurrentChartDateRangeProvider>
-							</CurrentDeviceProvider>
-						</CurrentProjectProvider>
-					</ProjectsProvider>
+					<ProjectProvider>
+						<AssetProvider>
+							<CurrentChartDateRangeProvider>
+								<Routes>
+									<Route path="/login" element={<Navigate to="/assets" />} />
+									<Route path="/" element={<Navigate to="/assets" />} />
+									<Route path="/assets" element={<Assets />} />
+									<Route path="/map" element={<AssetsMap />} />
+									<Route
+										path="/project/:projectId/asset/:assetId"
+										element={<Asset />}
+									/>
+								</Routes>
+							</CurrentChartDateRangeProvider>
+						</AssetProvider>
+					</ProjectProvider>
 				</ApiProvider>
 			)}
 			<Routes>

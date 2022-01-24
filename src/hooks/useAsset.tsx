@@ -1,7 +1,7 @@
 import type { Device } from 'api/golioth'
 import type { AssetConfig, AssetTwin } from 'asset/state'
 import { useApi } from 'hooks/useApi'
-import { useCurrentProject } from 'hooks/useCurrentProject'
+import { useProject } from 'hooks/useProject'
 import {
 	createContext,
 	FunctionComponent,
@@ -10,7 +10,7 @@ import {
 	useState,
 } from 'react'
 
-export const CurrentDeviceContext = createContext<{
+export const AssetContext = createContext<{
 	device?: Device
 	state?: AssetTwin
 	updateDeviceSettings: (patch: { name: string }) => Promise<Device>
@@ -26,10 +26,10 @@ export const CurrentDeviceContext = createContext<{
 	setUpdateInterval: () => undefined,
 })
 
-export const useCurrentDevice = () => useContext(CurrentDeviceContext)
+export const useAsset = () => useContext(AssetContext)
 
-export const CurrentDeviceProvider: FunctionComponent = ({ children }) => {
-	const { project } = useCurrentProject()
+export const AssetProvider: FunctionComponent = ({ children }) => {
+	const { project } = useProject()
 	const [deviceId, setDeviceId] = useState<string>()
 	const [currentDevice, setCurrentDevice] = useState<Device>()
 	const [currentDeviceState, setCurrentDeviceState] = useState<AssetTwin>()
@@ -133,7 +133,7 @@ export const CurrentDeviceProvider: FunctionComponent = ({ children }) => {
 			.state.update({ cfg: patch })
 	}
 	return (
-		<CurrentDeviceContext.Provider
+		<AssetContext.Provider
 			value={{
 				setDeviceId,
 				updateDeviceSettings,
@@ -144,6 +144,6 @@ export const CurrentDeviceProvider: FunctionComponent = ({ children }) => {
 			}}
 		>
 			{children}
-		</CurrentDeviceContext.Provider>
+		</AssetContext.Provider>
 	)
 }

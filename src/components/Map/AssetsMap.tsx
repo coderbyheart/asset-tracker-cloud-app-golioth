@@ -3,8 +3,8 @@ import { markerIcon } from 'components/Map/MarkerIcon'
 import { ProjectSelector } from 'components/ProjectSelector'
 import { RelativeTime } from 'components/RelativeTime'
 import { useAssetLocations } from 'hooks/useAssetLocation'
-import { useCurrentProject } from 'hooks/useCurrentProject'
 import type { Position } from 'hooks/useMapData'
+import { useProject } from 'hooks/useProject'
 import type { Map as LeafletMap } from 'leaflet'
 import { useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 
 export const AssetsMap = () => {
 	const [map, setmap] = useState<LeafletMap>()
-	const { project } = useCurrentProject()
+	const { project } = useProject()
 	const positions = useAssetLocations()
 
 	const center: Position = {

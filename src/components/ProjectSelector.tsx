@@ -1,9 +1,7 @@
-import { useCurrentProject } from 'hooks/useCurrentProject'
-import { useProjects } from 'hooks/useProjects'
+import { useProject } from 'hooks/useProject'
 
 export const ProjectSelector = () => {
-	const projects = useProjects()
-	const { project } = useCurrentProject()
+	const { project, projects } = useProject()
 
 	return (
 		<form className="project-selector">

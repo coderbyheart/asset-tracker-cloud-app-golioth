@@ -9,7 +9,7 @@ import type {
 	Roaming,
 } from 'asset/state'
 import { useApi } from 'hooks/useApi'
-import { useCurrentDevice } from 'hooks/useCurrentDevice'
+import { useAsset } from 'hooks/useAsset'
 import { useEffect, useState } from 'react'
 
 export enum SensorProperties {
@@ -75,7 +75,7 @@ export const useAssetHistory: useAssetHistoryType = <T extends AssetSensor>({
 }): AssetHistory<T> => {
 	const [history, setHistory] = useState<AssetHistory<T>>([])
 	const api = useApi()
-	const { device } = useCurrentDevice()
+	const { device } = useAsset()
 
 	useEffect(() => {
 		if (device === undefined) return

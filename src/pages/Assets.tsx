@@ -1,10 +1,10 @@
 import { NoData } from 'components/NoData'
 import { ProjectSelector } from 'components/ProjectSelector'
-import { useDevices } from 'hooks/useDevices'
+import { useProject } from 'hooks/useProject'
 import { Link } from 'react-router-dom'
 
 export const Assets = () => {
-	const devices = useDevices()
+	const { devices } = useProject()
 
 	return (
 		<main className="container">

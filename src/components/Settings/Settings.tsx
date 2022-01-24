@@ -8,7 +8,7 @@ import { OutDatedWarning } from 'components/OutDatedWarning'
 import { NumberConfigSetting } from 'components/Settings/NumberConfigSetting'
 import styles from 'components/Settings/Settings.module.css'
 import equal from 'fast-deep-equal'
-import { useCurrentDevice } from 'hooks/useCurrentDevice'
+import { useAsset } from 'hooks/useAsset'
 import { useEffect, useState } from 'react'
 
 const MAX_INT32 = 2147483647
@@ -23,7 +23,7 @@ const buttonClass = (
 	})
 
 export const Settings = () => {
-	const { state } = useCurrentDevice()
+	const { state } = useAsset()
 
 	const [currentDesiredConfig, setCurrentDesiredConfig] =
 		useState<AssetConfig>()
@@ -44,7 +44,7 @@ const SettingsUI = ({
 }: {
 	currentDesiredConfig: AssetConfig
 }) => {
-	const { updateAssetConfiguration, state } = useCurrentDevice()
+	const { updateAssetConfiguration, state } = useAsset()
 	const {
 		reported: { cfg: reportedConfig },
 	} = state ?? { reported: { cfg: {} as Partial<AssetConfig> } }
