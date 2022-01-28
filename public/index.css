@@ -52,3 +52,7 @@ main h4 {
 .card > .table th:last-child {
   padding-right: 1rem;
 }
+
+a {
+  text-decoration: none;
+}
