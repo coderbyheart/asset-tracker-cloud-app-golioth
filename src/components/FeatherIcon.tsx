@@ -419,13 +419,17 @@ export const SmartphoneIcon = (options?: TypedIconOptions) => (
 export const BellIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} title="Bell" type="bell" />
 )
-
 export const ChevronDownIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} title="⌄" type="chevron-down" />
 )
-
 export const ChevronUpIcon = (options?: TypedIconOptions) => (
 	<FeatherIcon {...options} title="^" type="chevron-up" />
+)
+export const ShowIcon = (options?: TypedIconOptions) => (
+	<FeatherIcon {...options} title="show" type="eye" />
+)
+export const HideIcon = (options?: TypedIconOptions) => (
+	<FeatherIcon {...options} title="hide" type="eye-off" />
 )
 
 export const IconWithText: FunctionComponent<PropsWithChildren<any>> = ({

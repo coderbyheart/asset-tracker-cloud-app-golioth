@@ -1,3 +1,4 @@
+import { HideIcon, ShowIcon } from 'components/FeatherIcon'
 import { useAuth } from 'hooks/useAuth'
 import { useEffect, useState } from 'react'
 
@@ -7,6 +8,7 @@ export const Login = () => {
 	const isValid = id.length > 20 && secret.length > 20
 	const { login } = useAuth()
 	const [loggingIn, setLoggingIn] = useState(false)
+	const [showSecret, setShowSecret] = useState(false)
 
 	useEffect(() => {
 		let isMounted = true
@@ -61,16 +63,42 @@ export const Login = () => {
 									<label htmlFor="jwtSecret" className="form-label">
 										JWT secret
 									</label>
-									<input
-										type="password"
-										className="form-control"
-										id="jwtSecret"
-										aria-describedby="jwtSecretHelp"
-										value={secret}
-										disabled={loggingIn}
-										onChange={({ target: { value } }) => setSecret(value)}
-										autoComplete="off"
-									/>
+									<div className="input-group">
+										<input
+											type={showSecret ? 'text' : 'password'}
+											className="form-control"
+											id="jwtSecret"
+											aria-describedby="jwtSecretHelp"
+											value={secret}
+											disabled={loggingIn}
+											onChange={({ target: { value } }) => setSecret(value)}
+											autoComplete="off"
+										/>
+										{showSecret && (
+											<button
+												className="btn btn-outline-secondary"
+												type="button"
+												title={'hide JWT secret'}
+												onClick={() => {
+													setShowSecret(false)
+												}}
+											>
+												<HideIcon />
+											</button>
+										)}
+										{!showSecret && (
+											<button
+												className="btn btn-outline-secondary"
+												type="button"
+												title={'show JWT secret'}
+												onClick={() => {
+													setShowSecret(true)
+												}}
+											>
+												<ShowIcon />
+											</button>
+										)}
+									</div>
 									<div id="jwtSecretHelp" className="form-text">
 										The secret of your Golioth API JWT key.
 									</div>
