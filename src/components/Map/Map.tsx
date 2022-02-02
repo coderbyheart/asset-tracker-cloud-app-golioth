@@ -67,7 +67,7 @@ export const Map = ({ asset }: { asset: Device }) => {
 		endDate,
 	})
 	const { assetLocation, center, history } = useMapData({
-		locationHistory,
+		locations: locationHistory,
 	})
 	const [map, setmap] = useState<LeafletMap>()
 

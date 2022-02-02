@@ -48,9 +48,9 @@ const toLocation =
 	})
 
 export const useMapData = ({
-	locationHistory,
+	locations,
 }: {
-	locationHistory: AssetHistory<GNSS>
+	locations: AssetHistory<GNSS>
 }): {
 	assetLocation?: Location
 	center?: Position
@@ -60,7 +60,7 @@ export const useMapData = ({
 	}[]
 } => {
 	let assetLocation: Location | undefined = undefined
-	const firstLocation = locationHistory[0]
+	const firstLocation = locations[0]
 	if (firstLocation !== undefined) {
 		assetLocation = toLocation(false)(firstLocation).location
 	}
@@ -69,6 +69,6 @@ export const useMapData = ({
 	return {
 		assetLocation,
 		center,
-		history: locationHistory.slice(1)?.map(toLocation(false)) ?? [],
+		history: locations.slice(1)?.map(toLocation(false)) ?? [],
 	}
 }
