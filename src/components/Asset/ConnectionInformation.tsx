@@ -7,7 +7,6 @@ import {
 import { ReportedTime } from 'components/ReportedTime'
 import { TextWithIcon } from 'components/TextWithIcon'
 import { identifyIssuer } from 'e118-iin-list'
-import { isSome, none } from 'fp-ts/lib/Option'
 import { filter as filterOperator, Operator as Op } from 'mcc-mnc-list'
 
 export const Operator = ({ op }: { op?: Op }) => (
@@ -29,7 +28,7 @@ export const ConnectionInformation = ({
 	reportedAt: Date
 	dataStaleAfterSeconds: number
 }) => {
-	const maybeSimIssuer = iccid !== undefined ? identifyIssuer(iccid) : none
+	const maybeSimIssuer = iccid !== undefined ? identifyIssuer(iccid) : undefined
 	return (
 		<>
 			<span>
@@ -48,7 +47,7 @@ export const ConnectionInformation = ({
 				<abbr title={'SIM issuer'}>
 					<IconWithText>
 						<SmartphoneIcon size={16} />
-						{isSome(maybeSimIssuer) ? maybeSimIssuer.value.companyName : '?'}
+						{maybeSimIssuer !== undefined ? maybeSimIssuer.companyName : '?'}
 					</IconWithText>
 				</abbr>
 			</span>
