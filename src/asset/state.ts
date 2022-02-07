@@ -8,7 +8,7 @@ export type AssetConfig = {
 	actwt: number
 	mvres: number
 	mvt: number
-	gpst: number
+	gnsst: number
 	acct: number
 	nod: DataModules[]
 }

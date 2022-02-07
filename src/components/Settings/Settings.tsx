@@ -139,11 +139,11 @@ const SettingsUI = ({
 			<fieldset data-intro={'How long to try to acquire a GPS fix.'}>
 				<legend>GPS Timeout</legend>
 				<NumberConfigSetting
-					id={'gpst'}
-					desired={newDesiredConfig.gpst}
-					reported={reportedConfig?.gpst}
+					id={'gnsst'}
+					desired={newDesiredConfig.gnsst}
+					reported={reportedConfig?.gnsst}
 					example={60}
-					onChange={updateConfigProperty('gpst')}
+					onChange={updateConfigProperty('gnsst')}
 					minimum={1}
 					maximum={MAX_INT32}
 				/>
