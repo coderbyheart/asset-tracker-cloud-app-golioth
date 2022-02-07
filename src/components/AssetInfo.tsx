@@ -13,7 +13,7 @@ import {
 	BatteryIcon,
 	BellIcon,
 	CellularIcon,
-	CloudLightningIcon,
+	CloudDownloadIcon,
 	IconWithText,
 	InfoIcon,
 	NeighboringCellsIcon,
@@ -79,7 +79,7 @@ export const AssetInfo = ({
 							<Collapsable
 								title={
 									<IconWithText>
-										<CloudLightningIcon size={22} />
+										<CloudDownloadIcon size={22} />
 										Firmware Upgrade over-the-air (FOTA)
 									</IconWithText>
 								}

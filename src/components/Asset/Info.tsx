@@ -12,13 +12,13 @@ import type {
 import { ConnectionInformation } from 'components/Asset/ConnectionInformation'
 import styles from 'components/Asset/Info.module.css'
 import {
-	AirplaneIcon,
+	AltitudeIcon,
 	BatteryIcon,
 	CloudIcon,
 	CloudRainIcon,
 	IconWithText,
+	SpeedIcon,
 	ThermometerIcon,
-	TruckIcon,
 } from 'components/FeatherIcon'
 import { ReportedTime } from 'components/ReportedTime'
 import { Toggle } from 'components/Toggle'
@@ -64,7 +64,7 @@ const BatteryInfo = ({
 			<div className={styles.info}>
 				<IconWithText>
 					<BatteryIcon />
-					{bat.v / 1000}V
+					{bat.v / 1000} V
 				</IconWithText>
 				<ReportedTime
 					reportedAt={new Date(bat.ts)}
@@ -89,14 +89,14 @@ const GNSSInfo = ({
 				<span>
 					{gnss.v.spd !== undefined && (
 						<IconWithText>
-							<TruckIcon />
-							{Math.round(gnss.v.spd)}m/s
+							<SpeedIcon />
+							{Math.round(gnss.v.spd)} m/s
 						</IconWithText>
 					)}
 					{gnss.v.alt !== undefined && (
 						<IconWithText>
-							<AirplaneIcon />
-							{Math.round(gnss.v.alt)}m
+							<AltitudeIcon />
+							{Math.round(gnss.v.alt)} m
 						</IconWithText>
 					)}
 				</span>
@@ -137,7 +137,7 @@ const EnvInfo = ({
 					{env.v.atmp && (
 						<IconWithText>
 							<CloudIcon />
-							{Math.round(env.v.atmp * 10)}
+							{Math.round(env.v.atmp * 10)} hPa
 						</IconWithText>
 					)}
 				</span>

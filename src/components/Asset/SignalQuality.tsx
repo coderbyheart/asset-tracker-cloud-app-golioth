@@ -14,7 +14,7 @@ export const SignalQuality = ({ dbm }: { dbm: number }) => (
 					}}
 					quality={quality}
 				/>
-				<small>{`(${dbm}dBm)`}</small>
+				<small>{`(${dbm} dBm)`}</small>
 			</>
 		)}
 		renderInvalid={() => (
