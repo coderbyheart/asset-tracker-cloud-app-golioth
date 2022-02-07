@@ -136,8 +136,8 @@ const SettingsUI = ({
 					</div>
 				</div>
 			</fieldset>
-			<fieldset data-intro={'How long to try to acquire a GPS fix.'}>
-				<legend>GPS Timeout</legend>
+			<fieldset data-intro={'How long to try to acquire a GNSS fix.'}>
+				<legend>GNSS Timeout</legend>
 				<NumberConfigSetting
 					id={'gnsst'}
 					desired={newDesiredConfig.gnsst}
@@ -200,7 +200,7 @@ const SettingsUI = ({
 				<NumberConfigSetting
 					label={'Active Wait Time'}
 					intro={
-						'Wait this amount of seconds until sending the next update. The actual interval will be this time plus the time it takes to get a GPS fix.'
+						'Wait this amount of seconds until sending the next update. The actual interval will be this time plus the time it takes to get a GNSS fix.'
 					}
 					id={'actwt'}
 					desired={newDesiredConfig.actwt}
@@ -214,8 +214,8 @@ const SettingsUI = ({
 			<fieldset data-intro={'This sets which Data Modules to sample.'}>
 				<legend>Data Sampling</legend>
 				<div className="input-group mb-2">
-					<label className="form-label" htmlFor="nod-gps">
-						GPS:
+					<label className="form-label" htmlFor="nod-gnss">
+						GNSS:
 					</label>
 					<div className="btn-group" role="group">
 						<OutDatedWarning
@@ -229,7 +229,7 @@ const SettingsUI = ({
 									}
 									disabled={true}
 									title={'Asset has not reported this setting, yet.'}
-									id="nod-gps"
+									id="nod-gnss"
 								>
 									<UnknownIcon />
 								</button>
@@ -260,7 +260,7 @@ const SettingsUI = ({
 								newDesiredConfig.nod?.includes(DataModules.GNSS) ?? false,
 							)}
 							data-intro={
-								'In <em>Enabled</em> mode, the asset will use GPS to send location data to the cloud.'
+								'In <em>Enabled</em> mode, the asset will use GNSS to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({
@@ -280,7 +280,7 @@ const SettingsUI = ({
 									!newDesiredConfig.nod?.includes(DataModules.GNSS),
 							)}
 							data-intro={
-								'In <em>Disabled</em> mode, the asset will not use GPS to send location data to the cloud.'
+								'In <em>Disabled</em> mode, the asset will not use GNSS to send location data to the cloud.'
 							}
 							onClick={() => {
 								updateConfig({

@@ -9,5 +9,5 @@ export const expectedSendIntervalInSeconds = (state?: AssetTwin): number =>
 	(state?.reported?.cfg?.act ?? true // default asset mode is active
 		? state?.reported?.cfg?.actwt ?? defaultExpectedIntervalInSeconds // default active wait time is 120 seconds
 		: state?.reported?.cfg?.mvt ?? 3600) + // default movement timeout is 3600
-	(state?.reported?.cfg?.gnsst ?? 60) + // default GPS timeout is 60 seconds
+	(state?.reported?.cfg?.gnsst ?? 60) + // default GNSS timeout is 60 seconds
 	60 // add 1 minute for sending and processing
